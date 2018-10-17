@@ -68,8 +68,10 @@
 		<img src="blueeyes.jpg" class="card" name="back" onclick="flip(1)"/>
 		<img src="exodia.jpg" class="card" name="exodia" onclick="flip(2)"/>
 	</div>*/
-	cartaElegida(arrayCartas());
-	echo tableroCartas(arrayCartas());
+	$arrayCartaAdivinar=arrayCartas();
+	cartaElegida($arrayCartaAdivinar);
+	$arrayTablero=arrayCartas();
+	echo tableroCartas($arrayTablero);
 
 	?>
 

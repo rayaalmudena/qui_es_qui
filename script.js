@@ -1,3 +1,5 @@
+document.getElementById("myBtn").addEventListener("click", flip);
+
 var cardNames = [
 	"mago",
 	"dragon",
