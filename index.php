@@ -39,7 +39,7 @@
 	}
 	function cartaElegida($cartas){
 		$cartaElegida = $cartas[0];
-		echo "<img height='200' src='cartas/$cartaElegida[nombre]' class='cartaElegida' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]'>";
+		echo "<img height='200' src='cartas/$cartaElegida[nombre]' class='cartaElegida cartas' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$carta[nombre]'>";
 	}
 
 	function tableroCartas($cartas){
@@ -48,7 +48,7 @@
 
 		while ($c< count($cartas)){
 			$carta=$cartas[$c];
-			$tabla .="\n\t<td style='border:3px solid grey'><img height='160' src='cartas/$carta[nombre]' class='carta$c carta' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo] name='$carta[nombre]''><td>";
+			$tabla .="\n\t<td style='border:3px solid grey'><img height='160' src='cartas/$carta[nombre]' class='cartas carta' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo] name='$carta[nombre]'><td>";
 			$c++;
 			if ($c==count($cartas)){
 				$tabla .="</tr>\n";	
