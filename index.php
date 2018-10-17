@@ -39,7 +39,7 @@
 	}
 	function cartaElegida($cartas){
 		$cartaElegida = $cartas[0];
-		echo "<img height='200' src='cartas/$cartaElegida[nombre]' class='cartaElegida cartas' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$carta[nombre]'>";
+		echo "<img height='200' src='cartas/$cartaElegida[nombre]' class='cartaElegida cartas' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 	}
 
 	function tableroCartas($cartas){
