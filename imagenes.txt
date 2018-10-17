@@ -10,4 +10,3 @@ ivan.png_gafas_si_cabello_rubio_sexo_hombre
 manuel.png_gafas_no_cabello_rubio_sexo_hombre
 antonio.png_gafas_si_cabello_pelirrojo_sexo_hombre
 mateo.png_gafas_no_cabello_pelirrojo_sexo_hombre
-
