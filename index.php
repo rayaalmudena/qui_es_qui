@@ -14,7 +14,7 @@
 		$contador=1;
 		$file = fopen("imagenes.txt", "r");
 		while (!feof($file)) {
-			$carta=urlencode(trim(fgets($file)));
+			$carta=trim(fgets($file));
 			if (empty($carta)) {
 				# salto
 			} else {
