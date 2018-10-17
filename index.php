@@ -55,7 +55,7 @@
 				$tabla .="</tr>\n";	
 				$tabla .="</table>\n</div>";
 			}
-			if ($c%6==0 && $c!=count($cartas)){
+			if ($c%3==0 && $c!=count($cartas)){
 				$tabla .="\n</tr><tr>";
 			}
 		}
