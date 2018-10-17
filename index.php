@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<meta charset="utf-8" />
+	<title>¿Quién es quién?</title>
 	<link rel="stylesheet" type="text/css" href="style.css">	
 	<script type="text/javascript" src="script.js"></script>
 </head>
@@ -39,7 +40,7 @@
 	}
 	function cartaElegida($cartas){
 		$cartaElegida = $cartas[0];
-		echo "<img height='200' src='cartas/$cartaElegida[nombre]' class='cartaElegida' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
+		echo "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 	}
 
 	function tableroCartas($cartas){
@@ -63,11 +64,6 @@
 	}
 	
 
-	/*<div class="flip">
-		<img src="magooscuro.jpg" class="card" name="mago" onclick="flip(0)"/>
-		<img src="blueeyes.jpg" class="card" name="back" onclick="flip(1)"/>
-		<img src="exodia.jpg" class="card" name="exodia" onclick="flip(2)"/>
-	</div>*/
 	$arrayCartaAdivinar=arrayCartas();
 	cartaElegida($arrayCartaAdivinar);
 	$arrayTablero=arrayCartas();
