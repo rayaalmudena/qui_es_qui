@@ -8,7 +8,7 @@
 <body>
 
 	<?php 
-
+	
 	function arrayCartas(){
 		$cartas=[];
 		$contador=1;
@@ -43,22 +43,22 @@
 	}
 
 	function tableroCartas($cartas){
-		$tabla='<table cellpadding="5" cellspacing="10" bgcolor="green"><tr>';
+		$tabla='<div class="flip">';
+		$tabla .='<table cellpadding="5" cellspacing="10" bgcolor="green"><tr>';
 		$c = 0;
 
 		while ($c< count($cartas)){
 			$carta=$cartas[$c];
-			$tabla .="\n\t<td style='border:3px solid grey'><img height='160' src='cartas/$carta[nombre]' class='cartas carta' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'><td>";
+			$tabla .="\n\t<td style='border:3px solid grey'><img height='160' src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' ><td>";
 			$c++;
 			if ($c==count($cartas)){
 				$tabla .="</tr>\n";	
-				$tabla .="</table>";
+				$tabla .="</table>\n</div>";
 			}
 			if ($c%6==0 && $c!=count($cartas)){
 				$tabla .="\n</tr><tr>";
 			}
 		}
-		
 		return $tabla;
 	}
 	
@@ -67,7 +67,7 @@
 		<img src="magooscuro.jpg" class="card" name="mago" onclick="flip(0)"/>
 		<img src="blueeyes.jpg" class="card" name="back" onclick="flip(1)"/>
 		<img src="exodia.jpg" class="card" name="exodia" onclick="flip(2)"/>
-	</div>**/
+	</div>*/
 	cartaElegida(arrayCartas());
 	echo tableroCartas(arrayCartas());
 
