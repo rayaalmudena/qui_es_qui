@@ -21,11 +21,11 @@
 				array_push($cartas,$carta);
 			} 	
   		}
-    	fclose($file);
-    	shuffle($cartas);
+    		fclose($file);
+    		shuffle($cartas);
 
-    	foreach ($cartas as $carta) {
-    		$cartaNueva;
+    		foreach ($cartas as $carta) {
+			$cartaNueva;
 			$carta=explode('_',$carta);
 			$nombre="$carta[0]";
 			$gafas="$carta[2]";
