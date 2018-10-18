@@ -6,7 +6,39 @@
 	<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
+	<p>Tiene gafas? </p>
+	<select>
+		<option name="gafas" value=" "> </option>
+		<option name="gafas" value="si">si</option>
+		<option name="gafas" value="no">no</option>
+	</select>
+
+	<br><br>
+
+	<p>De que color es su cabello? </p>
+	<select>
+		<option name="cabello" value=" "> </option>
+		<option name="cabello" value="moreno">moreno</option>
+		<option name="cabello" value="rubio">rubio</option>
+		<option name="cabello" value="pelirrojo">pelirrojo</option>
+	</select>
+
+	<br><br>
+
+	<p>De que sexo es? </p>
+	<select>
+		<option name="sexo" value=" "> </option>
+		<option name="sexo" value="hombre">hombre</option>
+		<option name="sexo" value="mujer">mujer</option>
+	</select>
+
+	<br><br>
+	
+	<button onclick="combobox()">Enviar</button>
+
 	<?php 
+
+
 		function errores(){
 				//Archivo de configuracion, para el Punto 3 errores
 			$config_array=[];
@@ -143,7 +175,7 @@
 			echo "No se puede iniciar el programa";
 		}
 		else{
-			echo "Iniciar programa";
+			//echo "<br>Iniciar programa<br>";
 		}
 
 	 ?>
