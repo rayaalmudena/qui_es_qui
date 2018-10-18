@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
-
+	
 	<?php 
 
 	//Comienzo de los posibles errores
@@ -160,8 +160,49 @@
 		
 
 
+			?>
 
-	
+
+			<div id="combobox">
+
+				<p>Tiene gafas? </p>
+				<select id="gafas">
+					<option name="gafas" value="---">---</option>
+					<option name="gafas" value="si">si</option>
+					<option name="gafas" value="no">no</option>
+				</select>
+
+				<br>
+
+				<p>De que color es su cabello? </p>
+				<select id="cabello">
+					<option name="cabello" value="---">---</option>
+					<option name="cabello" value="moreno">moreno</option>
+					<option name="cabello" value="rubio">rubio</option>
+					<option name="cabello" value="pelirrojo">pelirrojo</option>
+				</select>
+
+				<br>
+
+				<p>De que sexo es? </p>
+				<select id="sexo">
+					<option name="sexo" value="---">---</option>
+					<option name="sexo" value="hombre">hombre</option>
+					<option name="sexo" value="mujer">mujer</option>
+				</select>
+
+				<br><br>
+				
+				<button onclick="combobox()">Fes la pregunta</button>
+
+				<br>
+				<p id="texto_salida"></p>
+
+			</div>
+
+
+
+			<?php 
 			function arrayCartas(){
 				$cartas=[];
 				$contador=1;

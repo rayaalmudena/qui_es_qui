@@ -18,3 +18,9 @@ img{
 	border-style: solid;
 	border-color: grey;
 	} 
+
+#combobox {
+	position: absolute;
+	top: 20em;
+	left: 40em;
+}

@@ -6,35 +6,43 @@
 	<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
-	<p>Tiene gafas? </p>
-	<select>
-		<option name="gafas" value=" "> </option>
-		<option name="gafas" value="si">si</option>
-		<option name="gafas" value="no">no</option>
-	</select>
 
-	<br><br>
+	<div id="combobox">
 
-	<p>De que color es su cabello? </p>
-	<select>
-		<option name="cabello" value=" "> </option>
-		<option name="cabello" value="moreno">moreno</option>
-		<option name="cabello" value="rubio">rubio</option>
-		<option name="cabello" value="pelirrojo">pelirrojo</option>
-	</select>
+		<p>Tiene gafas? </p>
+		<select id="gafas">
+			<option name="gafas" value="---">---</option>
+			<option name="gafas" value="si">si</option>
+			<option name="gafas" value="no">no</option>
+		</select>
 
-	<br><br>
+		<br>
 
-	<p>De que sexo es? </p>
-	<select>
-		<option name="sexo" value=" "> </option>
-		<option name="sexo" value="hombre">hombre</option>
-		<option name="sexo" value="mujer">mujer</option>
-	</select>
+		<p>De que color es su cabello? </p>
+		<select id="cabello">
+			<option name="cabello" value="---">---</option>
+			<option name="cabello" value="moreno">moreno</option>
+			<option name="cabello" value="rubio">rubio</option>
+			<option name="cabello" value="pelirrojo">pelirrojo</option>
+		</select>
 
-	<br><br>
-	
-	<button onclick="combobox()">Enviar</button>
+		<br>
+
+		<p>De que sexo es? </p>
+		<select id="sexo">
+			<option name="sexo" value="---">---</option>
+			<option name="sexo" value="hombre">hombre</option>
+			<option name="sexo" value="mujer">mujer</option>
+		</select>
+
+		<br><br>
+		
+		<button onclick="combobox()">Fes la pregunta</button>
+
+		<br>
+		<p id="texto_salida"></p>
+
+	</div>
 
 	<?php 
 
