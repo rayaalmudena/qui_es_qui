@@ -1,3 +1,3 @@
-gafas_si_no
-cabello_rubio_moreno_pelirrojo
-sexo_mujer_hombre
+gafas: si no
+cabello: rubio moreno pelirrojo
+sexo: mujer hombre
