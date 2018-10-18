@@ -35,7 +35,7 @@
 					list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode("_", $config_array[0]);
 					$config_array_gafas[0]=$config_gafas_1;
 					$config_array_gafas[1]=$config_gafas_2;
-					$config_array_gafas[2]=substr($config_gafas_3, 0, -2);//siempre tiene saltos de linea
+					$config_array_gafas[2]=substr($config_gafas_3, 0, -1);//siempre tiene saltos de linea
 				}
 
 				//guarda en un array el archivo de configuracion, es el array del cabello
@@ -44,7 +44,7 @@
 					$config_array_cabello[0]=$config_cabello_1;
 					$config_array_cabello[1]=$config_cabello_2;
 					$config_array_cabello[2]=$config_cabello_3;
-					$config_array_cabello[3]=substr($config_cabello_4, 0, -2);//siempre tiene saltos de linea
+					$config_array_cabello[3]=substr($config_cabello_4, 0, -1);//siempre tiene saltos de linea
 				}
 
 				//guarda en un array el archivo de configuracion, es el array del sexo
@@ -75,7 +75,7 @@
 					$nombre_foto[$i]=$nombre;
 					$respuesta_gafas[$i]=$gafas2;
 					$respuesta_cabello[$i]=$cabello2;
-					$respuesta_sexo[$i]=substr($sexo2, 0, -2);//coge dos valores de mas, asi que se los quitamos
+					$respuesta_sexo[$i]=substr($sexo2, 0, -1);//coge dos valores de mas, asi que se los quitamos
 				}
 				$i=$i+1;
 			}
