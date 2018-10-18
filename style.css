@@ -2,6 +2,10 @@
 	height: 140px;
 }
 
+.cartaElegida {
+	height: 200px;
+}
+
 .carta:hover{
 	background-color: grey;
 }
@@ -14,3 +18,9 @@ img{
 	border-style: solid;
 	border-color: grey;
 	} 
+
+#combobox {
+	position: absolute;
+	top: 20em;
+	left: 40em;
+}
