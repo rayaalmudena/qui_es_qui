@@ -30,13 +30,13 @@ function combobox() {
     	document.getElementById('texto_salida').innerHTML = "No se puede seleccionar mas de uno";
     }
     else if (value1 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value1;
+    	document.getElementById('texto_salida').innerHTML = " ";
     }
     else if (value2 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value2;
+    	document.getElementById('texto_salida').innerHTML = " ";
     }
     else if (value3 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value3;
+    	document.getElementById('texto_salida').innerHTML = " ";
     }
     else{
     	document.getElementById('texto_salida').innerHTML = "No hay nada seleccionado";
