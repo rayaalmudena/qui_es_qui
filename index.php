@@ -121,10 +121,10 @@
 			return true;
 		}
 //fin de los errores
-		if (errores()!=true) {//En caso de que salga un error, no se iniciara el programa, y saldra el error
+		/*if (errores()!=true) {//En caso de que salga un error, no se iniciara el programa, y saldra el error
 			echo "No se puede iniciar el programa <br>";
 		}
-		else{//en caso de que no hayan errores, se iniciara el programa:
+		else{//en caso de que no hayan errores, se iniciara el programa:*/
 		
 			?>
 
@@ -159,7 +159,7 @@
 
 				<br><br>
 				
-				<button onclick="combobox()">Fes la pregunta</button>
+				<button id="hacerPregunta">Fes la pregunta</button>
 
 				<br>
 				<p id="texto_salida"></p>
@@ -228,7 +228,7 @@
 			cartaElegida($arrayCartaAdivinar);
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-		}
+		/*}*/
 	?>
 
 
