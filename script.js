@@ -1,5 +1,6 @@
 var cards;
 
+
 function flip() {
 	var elemento = this;
 	elemento.setAttribute("card", elemento.getAttribute("src"));
