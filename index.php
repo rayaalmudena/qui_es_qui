@@ -121,10 +121,10 @@
 			return true;
 		}
 //fin de los errores
-		if (errores()!=true) {//En caso de que salga un error, no se iniciara el programa, y saldra el error
+		/*if (errores()!=true) {//En caso de que salga un error, no se iniciara el programa, y saldra el error
 			echo "No se puede iniciar el programa <br>";
 		}
-		else{//en caso de que no hayan errores, se iniciara el programa:
+		else{//en caso de que no hayan errores, se iniciara el programa:*/
 		
 			?>
 
@@ -228,7 +228,7 @@
 			cartaElegida($arrayCartaAdivinar);
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-		}
+		/*}*/
 	?>
 
 
