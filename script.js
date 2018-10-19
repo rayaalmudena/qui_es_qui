@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
-function combobox() {
+function preguntarAlServer() {
 	var selector1 = document.getElementById('gafas');
     var value1 = selector1[selector1.selectedIndex].value;
 
