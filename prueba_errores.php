@@ -6,6 +6,13 @@
 <body>
 	<?php
 function errores(){
+
+	$flog = fopen("log.txt","a"); //Se abre el fichero donde se guardaran los errores
+		fwrite($flog, errores() . PHP_EOL);
+		fclose($flog);
+
+
+
 				//Archivo de configuracion, para el Punto 3 errores
 			$config_array=[];
 			$config_array_gafas=[];
@@ -123,7 +130,6 @@ function errores(){
 //fin de los errores
 
 		errores();
-
 
 		?>
 </body>
