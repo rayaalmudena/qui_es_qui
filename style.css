@@ -1,26 +1,29 @@
-.card {
-	height: 140px;
-}
 
 .cartaElegida {
 	height: 200px;
 }
 
+.carta{
+	border-style: solid;
+	border-color: grey;
+	height: 160px;
+	} 
+
 .carta:hover{
 	background-color: grey;
 }
+
 table{
 	background-color: green;
 	padding: 15px;
 	border-spacing: 5px;
 }
-img{
-	border-style: solid;
-	border-color: grey;
-	} 
 
 #combobox {
 	position: absolute;
 	top: 20em;
 	left: 40em;
 }
+
+
+
