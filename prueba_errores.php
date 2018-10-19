@@ -8,11 +8,7 @@
 function errores(){
 
 	$flog = fopen("log.txt","a"); //Se abre el fichero donde se guardaran los errores
-		fwrite($flog, errores() . PHP_EOL);
-		fclose($flog);
-
-
-
+		
 				//Archivo de configuracion, para el Punto 3 errores
 			$config_array=[];
 			$config_array_gafas=[];
@@ -58,7 +54,7 @@ function errores(){
 			$respuesta_sexo=[];
 			$file = fopen("imagenes.txt", "r");
 			while(!feof($file)) {
-				$array[$i]=trim(str_replace(" ,", "",(fgets($file))));
+				$array[$i]=trim(str_replace(":", "",(str_replace(" ,", "",(fgets($file))))));//Quita los dos puntos, la coma y los espacios en blanco.
 
 				if (strpos($array[$i], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
 					list($nombre, $gafas, $gafas2, $cabello, $cabello2, $sexo, $sexo2) = explode(" ", $array[$i]);
@@ -68,8 +64,7 @@ function errores(){
 					$respuesta_sexo[$i]=$sexo2;
 				}
 				$i=$i+1;
-			}
-		
+			}		
 
 
 			fclose($file);
@@ -78,25 +73,20 @@ function errores(){
 			    return $count > 1;
 			});
 			foreach ($repeated as $key => $value) {
-			    echo "La imagen '$key' se repite $value veces <br />";
+			    echo "ERROR, consulte el log.txt";
+				fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+				fwrite($flog, "La imagen '$key' se repite $value veces" . PHP_EOL);
+				fwrite($flog, PHP_EOL);
 			    return false;
 			}
 			for ($i=0; $i < count($nombre_foto); $i++) { 
 				for ($x=$i+1; $x < count($nombre_foto); $x++) { 
 					if ($respuesta_gafas[$i]==$respuesta_gafas[$x] && $respuesta_cabello[$i]==$respuesta_cabello[$x] && $respuesta_sexo[$i]==$respuesta_sexo[$x]){
-							
-						echo "$i, $x <br>";
-						echo " ";
-						echo "La foto con nombre: ";
-						echo $nombre_foto[$x];
-						echo ", ";
-						echo $respuesta_gafas[$x];
-						echo " tiene gafas, su pelo es de color: ";
-						echo $respuesta_cabello[$x];
-						echo ", y su sexo es: ";
-						echo $respuesta_sexo[$x];
-						echo "<br>";
-						echo(" esta REPETIDO <br> <br>");
+						
+						echo "ERROR, consulte el log.txt";
+					    fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+					    fwrite($flog, "La foto con nombre '$nombre_foto[$x]' tiene los atributos repetidos" . PHP_EOL);
+					    fwrite($flog, PHP_EOL);
 						return false;
 					}
 				}
@@ -107,25 +97,36 @@ function errores(){
 			    	/*echo "existe gafas: $key, de $value <br>";*/
 				}
 				else{
-					echo "No existe gafas: $respuesta_gafas[$key], de $value <br>";
+					echo "ERROR, consulte el log.txt";
+					fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+					fwrite($flog, "De la foto '$value' no existe el atributo '$respuesta_gafas[$key]'" . PHP_EOL);
+					fwrite($flog, PHP_EOL);
 					return false;
 				}
 				if (in_array($respuesta_cabello[$key], $config_array_cabello)) {
 				    /*echo "existe el cabello: $key, de: $value <br>";*/
 				}
 				else{
-					echo "No existe el cabello: $respuesta_cabello[$key], de: $value <br>";
+					echo "ERROR, consulte el log.txt";
+					fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+					fwrite($flog, "De la foto '$value' no existe el atributo '$respuesta_cabello[$key]'" . PHP_EOL);
+					fwrite($flog, PHP_EOL);
 					return false;
 				}
 				if (in_array($respuesta_sexo[$key], $config_array_sexo)) {
 				    /*echo "existe el sexo: $key, de: $value <br>";*/
 				}
 				else{
-					echo "No existe el sexo: $respuesta_sexo[$key], de: $value <br>";
+					echo "ERROR, consulte el log.txt";
+					fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+					fwrite($flog, "De la foto '$value' no existe el atributo '$respuesta_sexo[$key]'" . PHP_EOL);
+					fwrite($flog, PHP_EOL);
 					return false;
 				}
 			}
-			return true;
+		fclose($flog);//se cierra el fichero log
+		return true;
+
 		}
 //fin de los errores
 
