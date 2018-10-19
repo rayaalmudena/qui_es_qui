@@ -1,4 +1,5 @@
 var cards;
+var botonHacerPregunta;
 
 function flip() {
 	var elemento = this;
@@ -14,6 +15,10 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 });
 
+document.addEventListener('DOMContentLoaded', function(){
+    botonHacerPregunta = document.getElementById("hacerPregunta");
+    botonHacerPregunta.addEventListener("click", preguntarAlServer);
+});
 
 
 function preguntarAlServer() {
