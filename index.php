@@ -131,17 +131,17 @@
 
 			<div id="combobox">
 
-				<p>Tiene gafas? </p>
-				<select id="gafas">
-					<option name="gafas" value="---">---</option>
-					<option name="gafas" value="si">si</option>
-					<option name="gafas" value="no">no</option>
+				<p>¿Tiene gafas? </p>
+				<select id="gafas" class="cbox gafas">
+					<option  name="gafas" value="---">---</option>
+					<option  name="gafas" value="si">si</option>
+					<option  name="gafas" value="no">no</option>
 				</select>
 
 				<br>
 
-				<p>De que color es su cabello? </p>
-				<select id="cabello">
+				<p>¿De qué color es su cabello? </p>
+				<select id="cabello" class="cbox cabello">
 					<option name="cabello" value="---">---</option>
 					<option name="cabello" value="moreno">moreno</option>
 					<option name="cabello" value="rubio">rubio</option>
@@ -150,8 +150,8 @@
 
 				<br>
 
-				<p>De que sexo es? </p>
-				<select id="sexo">
+				<p>¿Qué género es?</p>
+				<select id="sexo" class="cbox sexo">
 					<option name="sexo" value="---">---</option>
 					<option name="sexo" value="hombre">hombre</option>
 					<option name="sexo" value="mujer">mujer</option>
