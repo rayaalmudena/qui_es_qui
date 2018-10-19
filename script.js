@@ -1,12 +1,31 @@
 var cards;
 var botonHacerPregunta;
 
+/* pruebas girar carta
+
+function flip(event){
+    var element = event.currentTarget;
+    if (element.className === "card") {
+    if(element.style.transform == "rotateY(180deg)") {
+      element.style.transform = "rotateY(0deg)";
+      
+    }
+    else {
+      element.style.transform = "rotateY(180deg)";
+    }
+  }
+};*/
+
 
 function flip() {
 	var elemento = this;
 	elemento.setAttribute("card", elemento.getAttribute("src"));
 	elemento.setAttribute("src", "cartas/back.png");
 }
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function(){ 
 	cards = document.getElementsByClassName("card");
