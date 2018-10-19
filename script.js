@@ -2,12 +2,32 @@ var cards;
 var botonHacerPregunta;
 var contadorVolteo = 0;
 
+/* pruebas girar carta
+
+function flip(event){
+    var element = event.currentTarget;
+    if (element.className === "card") {
+    if(element.style.transform == "rotateY(180deg)") {
+      element.style.transform = "rotateY(0deg)";
+      
+    }
+    else {
+      element.style.transform = "rotateY(180deg)";
+    }
+  }
+};*/
+
+
 function flip() {
 	var elemento = this;
 	elemento.setAttribute("card", elemento.getAttribute("src"));
     elemento.setAttribute("src", "cartas/back.png");
     contadorVolteo++;
 }
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function(){ 
 	cards = document.getElementsByClassName("card");
