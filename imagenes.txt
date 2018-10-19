@@ -1,12 +1,12 @@
-sofia.png: gafas si cabello moreno sexo mujer
-paula.png: gafas no cabello moreno sexo mujer
-irene.png: gafas si cabello rubio sexo mujer
-sandra.png: gafas no cabello rubio sexo mujer
-andrea.png: gafas si cabello pelirrojo sexo mujer
-ariadna.png: gafas no cabello pelirrojo sexo mujer
-sergio.png: gafas si cabello moreno sexo hombre
-pablo.png: gafas no cabello moreno sexo hombre
-ivan.png: gafas si cabello rubio sexo hombre
-manuel.png: gafas no cabello rubio sexo hombre
-antonio.png: gafas si cabello pelirrojo sexo hombre
-mateo.png: gafas no cabello pelirrojo sexo hombre
+sofia.png: gafas si , cabello moreno , sexo mujer
+paula.png: gafas no , cabello moreno , sexo mujer
+irene.png: gafas si , cabello rubio , sexo mujer
+sandra.png: gafas no , cabello rubio , sexo mujer
+andrea.png: gafas si , cabello pelirrojo , sexo mujer
+ariadna.png: gafas no , cabello pelirrojo , sexo mujer
+sergio.png: gafas si , cabello moreno , sexo hombre
+pablo.png: gafas no , cabello moreno , sexo hombre
+ivan.png: gafas si , cabello rubio , sexo hombre
+manuel.png: gafas no , cabello rubio , sexo hombre
+antonio.png: gafas si , cabello pelirrojo , sexo hombre
+mateo.png: gafas no , cabello pelirrojo , sexo hombre
