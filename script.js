@@ -1,10 +1,12 @@
 var cards;
 var botonHacerPregunta;
+var contadorVolteo = 0;
 
 function flip() {
 	var elemento = this;
 	elemento.setAttribute("card", elemento.getAttribute("src"));
-	elemento.setAttribute("src", "cartas/back.png");
+    elemento.setAttribute("src", "cartas/back.png");
+    contadorVolteo++;
 }
 
 document.addEventListener('DOMContentLoaded', function(){ 
@@ -20,30 +22,51 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta.addEventListener("click", preguntarAlServer);
 });
 
+function resetearComboBox(id) {
+    var clear = document.getElementById(id);
+    clear.selectedIndex = 0;
+    
+    // Hay que editar este bucle para que haga el clear de arriba
+    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
+        if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
+            atributo = respuestasPosiblesCBox[i].value;
+            id = respuestasPosiblesCBox[i].getAttribute("class")
+            id = id.replace("cbox ","");
+        }
+    }
+}
 
 function preguntarAlServer() {
-	var selector1 = document.getElementById('gafas');
-    var value1 = selector1[selector1.selectedIndex].value;
 
-    var selector2 = document.getElementById('cabello');
-    var value2 = selector2[selector2.selectedIndex].value;
+    var respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
 
-    var selector3 = document.getElementById('sexo');
-    var value3 = selector3[selector3.selectedIndex].value;
+    // Si no han respondido = 3, si han respondido una = 2, si han respondido mas de una = 0 o 1
+    var semaforo = 0;
+    var atributo;
+    var id;
+    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
+        if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
+            atributo = respuestasPosiblesCBox[i].value;
+            id = respuestasPosiblesCBox[i].getAttribute("class")
+            id = id.replace("cbox ","");
+        } else {
+            semaforo++;            
+        }
+    }
 
-    if ((value1 != "---" && value2 != "---") || (value1 != "---" && value3 != "---") || (value2 != "---" && value3 != "---") ){
-    	document.getElementById('texto_salida').innerHTML = "No se puede seleccionar mas de uno";
+    if (semaforo == 3) {
+        document.getElementById('texto_salida').innerHTML = "No hay nada seleccionado";
+    
+    } else if (semaforo == 2) {
+        // Esto es correcto
+        alert(id);
+
+    } else if (semaforo == 1 || semaforo == 0) {
+        document.getElementById('texto_salida').innerHTML = "No se pueden seleccionar más de dos elementos";
+
+    } else {
+        document.getElementById('texto_salida').innerHTML = "ERROR";
     }
-    else if (value1 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value1;
-    }
-    else if (value2 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value2;
-    }
-    else if (value3 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value3;
-    }
-    else{
-    	document.getElementById('texto_salida').innerHTML = "No hay nada seleccionado";
-    }
+
+    // resetearComboBox();
 }
