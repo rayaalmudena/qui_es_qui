@@ -159,7 +159,7 @@
 
 				<br><br>
 				
-				<button onclick="combobox()">Fes la pregunta</button>
+				<button id="hacerPregunta">Fes la pregunta</button>
 
 				<br>
 				<p id="texto_salida"></p>
