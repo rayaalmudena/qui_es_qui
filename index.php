@@ -180,8 +180,6 @@
 
 			</div>
 
-
-
 			<?php 
 			function arrayCartas(){
 				$cartas=[];
