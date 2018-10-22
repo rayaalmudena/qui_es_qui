@@ -96,33 +96,15 @@ function resetearComboBox(id) {
 
 /*
 
-<?php
 
-// definimos un array de valores en php
-
-$arrayPHP=array("casa","coche","moto");
-
+<?php $mivarPhp = "Asignado en PHP"; 
+     echo $mivarPhp."\n<br>";
 ?>
 
 <script type="text/javascript">
-
-    // obtenemos el array de valores mediante la conversion a json del
-
-    // array de php
-
-    var arrayJS=<?php echo json_encode($arrayPHP);?>;
-
- 
-
-    // Mostramos los valores del array
-
-    for(var i=0;i<arrayJS.length;i++)
-
-    {
-
-        document.write("<br>"+arrayJS[i]);
-
-    }
-
+var mivarJS ="Asignado en JS";
+     alert (mivarJS);
+     mivarJS="<?php echo $mivarPhp ?>";
+     alert (mivarJS);
 </script>
 */
