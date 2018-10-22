@@ -105,6 +105,10 @@ var mivarJS ="Asignado en JS";
 </script>
 */
 
+
+
+
+
 /////Fireworks
     let canvas, width, height, ctx;
     let fireworks = [];
@@ -120,6 +124,7 @@ var mivarJS ="Asignado en JS";
         window.addEventListener("resize",windowResized);
         document.addEventListener("click",onClick);
     }
+
 
     setTimeout(setup,1);
 
