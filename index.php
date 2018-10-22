@@ -12,119 +12,133 @@
 	//Comienzo de los posibles errores
 	//Los errores apareceran por orden que indica en la guia del leandro, primero apareceran los nombres repetidos, luego los atributos repetidos y luego los atributos que no existan en el config
 	function errores(){
-				//Archivo de configuracion, para el Punto 3 errores
-			$config_array=[];
-			$config_array_gafas=[];
-			$config_array_cabello=[];
-			$config_array_sexo=[];
-			$file2 = fopen("config.txt", "r");
-			$z=0;
-			while(!feof($file2)) {
-				$config_array[$z]=fgets($file2). "_<br />";
-				$z=$z+1;
-			}
-				//guarda en un array el archivo de configuracion, es el array de las gafas
-				if (strpos($config_array[0], '_')){//si no pongo esto, la ultima linea no me la compara
-					list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode("_", $config_array[0]);
-					$config_array_gafas[0]=$config_gafas_1;
-					$config_array_gafas[1]=$config_gafas_2;
-					$config_array_gafas[2]=substr($config_gafas_3, 0, -1);//siempre tiene saltos de linea
+
+		$flog = fopen("log.txt","a"); //Se abre el fichero donde se guardaran los errores
+			
+					//Archivo de configuracion, para el Punto 3 errores
+				$config_array=[];
+				$config_array_gafas=[];
+				$config_array_cabello=[];
+				$config_array_sexo=[];
+				$file2 = fopen("config.txt", "r");
+				$z=0;
+				while(!feof($file2)) {
+					$config_array[$z]=trim(fgets($file2));
+					$z=$z+1;
 				}
-				//guarda en un array el archivo de configuracion, es el array del cabello
-				if (strpos($config_array[1], '_')){//si no pongo esto, la ultima linea no me la compara
-					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4) = explode("_", $config_array[1]);
-					$config_array_cabello[0]=$config_cabello_1;
-					$config_array_cabello[1]=$config_cabello_2;
-					$config_array_cabello[2]=$config_cabello_3;
-					$config_array_cabello[3]=substr($config_cabello_4, 0, -1);//siempre tiene saltos de linea
+
+					//guarda en un array el archivo de configuracion, es el array de las gafas
+					if (strpos($config_array[0], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+						list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode(" ", $config_array[0]);
+						//$config_array_gafas[0]=$config_gafas_1;
+						$config_array_gafas[1]=$config_gafas_2;
+						$config_array_gafas[2]=$config_gafas_3;
+					}
+					//guarda en un array el archivo de configuracion, es el array del cabello
+					if (strpos($config_array[1], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+						list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4) = explode(" ", $config_array[1]);
+						//$config_array_cabello[0]=$config_cabello_1;
+						$config_array_cabello[1]=$config_cabello_2;
+						$config_array_cabello[2]=$config_cabello_3;
+						$config_array_cabello[3]=$config_cabello_4;
+					}
+					//guarda en un array el archivo de configuracion, es el array del sexo
+					if (strpos($config_array[2], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+						list($config_sexo_1, $config_sexo_2, $config_sexo_3) = explode(" ", $config_array[2]);
+						//$config_array_sexo[0]=$config_sexo_1;
+						$config_array_sexo[1]=$config_sexo_2;
+						$config_array_sexo[2]=$config_sexo_3;
+					}
+
+				fclose($file2);
+				//Punto 2 errores
+				$array=[];
+				$i=0;
+				$nombre_foto=[];
+				$respuesta_gafas=[];
+				$respuesta_cabello=[];
+				$respuesta_sexo=[];
+				$file = fopen("imagenes.txt", "r");
+				while(!feof($file)) {
+					$array[$i]=trim(str_replace(":", "",(str_replace(" ,", "",(fgets($file))))));//Quita los dos puntos, la coma y los espacios en blanco.
+
+					if (strpos($array[$i], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+						list($nombre, $gafas, $gafas2, $cabello, $cabello2, $sexo, $sexo2) = explode(" ", $array[$i]);
+						$nombre_foto[$i]=$nombre;
+						$respuesta_gafas[$i]=$gafas2;
+						$respuesta_cabello[$i]=$cabello2;
+						$respuesta_sexo[$i]=$sexo2;
+					}
+					$i=$i+1;
+				}		
+
+
+				fclose($file);
+				//con esto de aqui, detecta si hay un nombre repetido, y lo indica (punto 1 de errores)
+				$repeated = array_filter(array_count_values($nombre_foto), function($count) {
+				    return $count > 1;
+				});
+				foreach ($repeated as $key => $value) {//informa del error, y escribe el error en el log.txt
+				    echo "ERROR, consulte el log.txt";
+					fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+					fwrite($flog, "La imagen '$key' se repite $value veces" . PHP_EOL);
+					fwrite($flog, PHP_EOL);
+				    return false;
 				}
-				//guarda en un array el archivo de configuracion, es el array del sexo
-				if (strpos($config_array[2], '_')){//si no pongo esto, la ultima linea no me la compara
-					list($config_sexo_1, $config_sexo_2, $config_sexo_3) = explode("_", $config_array[2]);
-					$config_array_sexo[0]=$config_sexo_1;
-					$config_array_sexo[1]=$config_sexo_2;
-					$config_array_sexo[2]=$config_sexo_3;
-				}
-			fclose($file2);
-			//Punto 2 errores
-			$array=[];
-			$i=0;
-			$nombre_foto=[];
-			$respuesta_gafas=[];
-			$respuesta_cabello=[];
-			$respuesta_sexo=[];
-			$file = fopen("imagenes.txt", "r");
-			while(!feof($file)) {
-				$array[$i]=fgets($file);
-				if (strpos($array[$i], '_')){//si no pongo esto, la ultima linea no me la compara
-					list($nombre, $gafas, $gafas2, $cabello, $cabello2, $sexo, $sexo2) = explode("_", $array[$i]);
-					$nombre_foto[$i]=$nombre;
-					$respuesta_gafas[$i]=$gafas2;
-					$respuesta_cabello[$i]=$cabello2;
-					$respuesta_sexo[$i]=substr($sexo2, 0, -1);//coge dos valores de mas, asi que se los quitamos
-				}
-				$i=$i+1;
-			}
-			fclose($file);
-			//con esto de aqui, detecta si hay un nombre repetido, y lo indica (punto 1 de errores)
-			$repeated = array_filter(array_count_values($nombre_foto), function($count) {
-			    return $count > 1;
-			});
-			foreach ($repeated as $key => $value) {
-			    echo "La imagen '$key' se repite $value veces <br />";
-			    return false;
-			}
-			for ($i=0; $i < count($nombre_foto); $i++) { 
-				for ($x=$i+1; $x < count($nombre_foto); $x++) { 
-					if ($respuesta_gafas[$i]==$respuesta_gafas[$x] && $respuesta_cabello[$i]==$respuesta_cabello[$x] && $respuesta_sexo[$i]==$respuesta_sexo[$x]){
+				for ($i=0; $i < count($nombre_foto); $i++) { //informa del error, y escribe el error en el log.txt
+					for ($x=$i+1; $x < count($nombre_foto); $x++) { 
+						if ($respuesta_gafas[$i]==$respuesta_gafas[$x] && $respuesta_cabello[$i]==$respuesta_cabello[$x] && $respuesta_sexo[$i]==$respuesta_sexo[$x]){
 							
-						echo "$i, $x <br>";
-						echo " ";
-						echo "La foto con nombre: ";
-						echo $nombre_foto[$x];
-						echo ", ";
-						echo $respuesta_gafas[$x];
-						echo " tiene gafas, su pelo es de color: ";
-						echo $respuesta_cabello[$x];
-						echo ", y su sexo es: ";
-						echo $respuesta_sexo[$x];
-						echo "<br>";
-						echo(" esta REPETIDO <br> <br>");
+							echo "ERROR, consulte el log.txt";
+						    fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+						    fwrite($flog, "La foto con nombre '$nombre_foto[$x]' tiene los atributos repetidos" . PHP_EOL);
+						    fwrite($flog, PHP_EOL);
+							return false;
+						}
+					}
+				}
+				//punto 3 de errores otra vez
+				foreach ($nombre_foto as $key => $value) {//informa del error, y escribe el error en el log.txt
+					if (in_array($respuesta_gafas[$key], $config_array_gafas)) {
+				    	/*echo "existe gafas: $key, de $value <br>";*/
+					}
+					else{
+						echo "ERROR, consulte el log.txt";
+						fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+						fwrite($flog, "De la foto '$value' no existe el atributo '$respuesta_gafas[$key]'" . PHP_EOL);
+						fwrite($flog, PHP_EOL);
+						return false;
+					}
+					if (in_array($respuesta_cabello[$key], $config_array_cabello)) {
+					    /*echo "existe el cabello: $key, de: $value <br>";*/
+					}
+					else{
+						echo "ERROR, consulte el log.txt";
+						fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+						fwrite($flog, "De la foto '$value' no existe el atributo '$respuesta_cabello[$key]'" . PHP_EOL);
+						fwrite($flog, PHP_EOL);
+						return false;
+					}
+					if (in_array($respuesta_sexo[$key], $config_array_sexo)) {
+					    /*echo "existe el sexo: $key, de: $value <br>";*/
+					}
+					else{
+						echo "ERROR, consulte el log.txt";
+						fwrite($flog, "Dia y Hora del error:\t" . date("d/m/Y\tH:i" . PHP_EOL));
+						fwrite($flog, "De la foto '$value' no existe el atributo '$respuesta_sexo[$key]'" . PHP_EOL);
+						fwrite($flog, PHP_EOL);
 						return false;
 					}
 				}
-			}
-			//punto 3 de errores otra vez
-			foreach ($nombre_foto as $key => $value) {
-				if (in_array($respuesta_gafas[$key], $config_array_gafas)) {
-			    	/*echo "existe gafas: $key, de $value <br>";*/
-				}
-				else{
-					echo "No existe gafas: $respuesta_gafas[$key], de $value <br>";
-					return false;
-				}
-				if (in_array($respuesta_cabello[$key], $config_array_cabello)) {
-				    /*echo "existe el cabello: $key, de: $value <br>";*/
-				}
-				else{
-					echo "No existe el cabello: $respuesta_cabello[$key], de: $value <br>";
-					return false;
-				}
-				if (in_array($respuesta_sexo[$key], $config_array_sexo)) {
-				    /*echo "existe el sexo: $key, de: $value <br>";*/
-				}
-				else{
-					echo "No existe el sexo: $respuesta_sexo[$key], de: $value <br>";
-					return false;
-				}
-			}
+			fclose($flog);//se cierra el fichero log
 			return true;
-		}
+
+			}
 //fin de los errores
-		/*if (errores()!=true) {//En caso de que salga un error, no se iniciara el programa, y saldra el error
-			echo "No se puede iniciar el programa <br>";
+		if (errores()!=true) {//En caso de que salga un error, no se iniciara el programa, y saldra el error
+			//echo "<br>No se puede iniciar el programa <br>";
 		}
-		else{//en caso de que no hayan errores, se iniciara el programa:*/
+		else{//en caso de que no hayan errores, se iniciara el programa:
 		
 			?>
 
@@ -228,7 +242,7 @@
 			cartaElegida($arrayCartaAdivinar);
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-		/*}*/
+		}
 	?>
 
 
