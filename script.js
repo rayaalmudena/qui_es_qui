@@ -24,7 +24,7 @@ function flip() {
     elemento.setAttribute("src", "cartas/back.png");
     contadorVolteo++;
 }
-
+//
 
 
 
