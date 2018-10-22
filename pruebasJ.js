@@ -25,6 +25,10 @@ function flip() {
     contadorVolteo++;
 }
 
+
+
+
+
 document.addEventListener('DOMContentLoaded', function(){ 
 	cards = document.getElementsByClassName("card");
 	for (var i = 0; i < cards.length; i++) {
@@ -35,50 +39,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta = document.getElementById("hacerPregunta");
-    botonHacerPregunta.addEventListener("click", botonActivado);
+    botonHacerPregunta.addEventListener("click", preguntarAlServer);
 });
-
-function botonActivado() {
-    preguntarAlServer();
-
-    if (contadorVolteo >= 11) {
-
-    }
-}
-
-function preguntarAlServer() {
-
-    var respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
-
-    // Si no han respondido = 3, si han respondido una = 2, si han respondido mas de una = 0 o 1
-    var semaforo = 0;
-    var atributo;
-    var id;
-    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
-            //atributo = respuestasPosiblesCBox[i].value; <--- no lo uso pero está bien saber que existe
-            id = respuestasPosiblesCBox[i].getAttribute("class")
-            id = id.replace("cbox ","");
-        } else {
-            semaforo++;            
-        }
-    }
-
-    if (semaforo == 3) {
-        document.getElementById('texto_salida').innerHTML = "No hay nada seleccionado";
-    
-    } else if (semaforo == 2) {
-        // Esto es correcto
-        alert(id); // dice el ID de la pregunta (ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER)
-    } else if (semaforo == 1 || semaforo == 0) {
-        document.getElementById('texto_salida').innerHTML = "No se pueden seleccionar más de dos elementos";
-
-    } else {
-        document.getElementById('texto_salida').innerHTML = "ERROR";
-    }
-
-    resetearComboBox(id);
-}
 
 function resetearComboBox(id) {
     var clear = document.getElementById(id);
@@ -94,35 +56,37 @@ function resetearComboBox(id) {
     }
 }
 
-/*
+function preguntarAlServer() {
 
-<?php
+    var respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
 
-// definimos un array de valores en php
-
-$arrayPHP=array("casa","coche","moto");
-
-?>
-
-<script type="text/javascript">
-
-    // obtenemos el array de valores mediante la conversion a json del
-
-    // array de php
-
-    var arrayJS=<?php echo json_encode($arrayPHP);?>;
-
- 
-
-    // Mostramos los valores del array
-
-    for(var i=0;i<arrayJS.length;i++)
-
-    {
-
-        document.write("<br>"+arrayJS[i]);
-
+    // Si no han respondido = 3, si han respondido una = 2, si han respondido mas de una = 0 o 1
+    var semaforo = 0;
+    var atributo;
+    var id;
+    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
+        if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
+            atributo = respuestasPosiblesCBox[i].value;
+            id = respuestasPosiblesCBox[i].getAttribute("class")
+            id = id.replace("cbox ","");
+        } else {
+            semaforo++;            
+        }
     }
 
-</script>
-*/
+    if (semaforo == 3) {
+        document.getElementById('texto_salida').innerHTML = "No hay nada seleccionado";
+    
+    } else if (semaforo == 2) {
+        // Esto es correcto
+        alert(id);
+
+    } else if (semaforo == 1 || semaforo == 0) {
+        document.getElementById('texto_salida').innerHTML = "No se pueden seleccionar más de dos elementos";
+
+    } else {
+        document.getElementById('texto_salida').innerHTML = "ERROR";
+    }
+
+    // resetearComboBox();
+}
