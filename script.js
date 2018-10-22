@@ -67,3 +67,6 @@ function preguntarAlServer() {
     	document.getElementById('texto_salida').innerHTML = "No hay nada seleccionado";
     }
 }
+
+
+
