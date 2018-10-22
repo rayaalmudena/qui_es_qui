@@ -243,7 +243,10 @@
 			cartaElegida($arrayCartaAdivinar);
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-			var_dump($arrayCartaAdivinar[0]["nombre"]);
+			$nombre_carta=$arrayCartaAdivinar[0]["nombre"];
+			$gafas_carta=$arrayCartaAdivinar[0]["gafas"];
+			$cabello_carta=$arrayCartaAdivinar[0]["cabello"];
+			$sexo_carta=$arrayCartaAdivinar[0]["sexo"];
 
 		}
 	?>
