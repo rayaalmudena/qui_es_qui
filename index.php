@@ -204,7 +204,7 @@
 			}
 
 			function tableroCartas($cartas){
-				$tabla='<table><tr>';
+				$tabla='<table id="tabla"><tr>';
 				$c = 0;
 
 				while ($c< count($cartas)){
@@ -214,7 +214,7 @@
 					$c++;
 					if ($c==count($cartas)){
 						$tabla .="</tr>\n";	
-						$tabla .="</table>\n</div>";
+						$tabla .="</table>\n";
 					}
 					if ($c%3==0 && $c!=count($cartas)){
 						$tabla .="\n</tr><tr>";
@@ -223,12 +223,13 @@
 				return $tabla;
 			}
 			
-
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-		/*}*/
+
+		//Fuegos artificiales
+		//echo '<canvas id="canvas"></canvas>';
 	?>
 
 

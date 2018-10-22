@@ -14,26 +14,15 @@
 
 table{
 	height: 100%;
-	position: fixed;
-    top: 0;
-    right: 0;
 	background-color: green;
 	padding: 10px;
 	border-spacing: 5px;
 }
 
 #combobox {
-	position: relative;
-	top: 15em;
-	left: 30em;
-}
-
-
-
-
-
-
-div {
+	position: absolute;
+	top: 20em;
+  left: 40em;
 }
 
 .container {
@@ -83,6 +72,12 @@ div {
   background-color: grey;
 }
 
-
+canvas{
+  position: fixed;
+  top: 0px;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
 
 
