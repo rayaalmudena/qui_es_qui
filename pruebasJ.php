@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<title>¿Quién es quién?</title>
 	<link rel="stylesheet" type="text/css" href="style.css">	
-	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="pruebasJ.js"></script>
 </head>
 <body>
 	
@@ -12,9 +12,10 @@
 	//Comienzo de los posibles errores
 	//Los errores apareceran por orden que indica en la guia del leandro, primero apareceran los nombres repetidos, luego los atributos repetidos y luego los atributos que no existan en el config
 	function errores(){
+
 		$flog = fopen("log.txt","a"); //Se abre el fichero donde se guardaran los errores
 			
-				//Archivo de configuracion, para el Punto 3 errores
+					//Archivo de configuracion, para el Punto 3 errores
 				$config_array=[];
 				$config_array_gafas=[];
 				$config_array_cabello=[];
@@ -25,28 +26,30 @@
 					$config_array[$z]=trim(fgets($file2));
 					$z=$z+1;
 				}
-				//guarda en un array el archivo de configuracion, es el array de las gafas
-				if (strpos($config_array[0], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
-					list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode(" ", $config_array[0]);
-					//$config_array_gafas[0]=$config_gafas_1;
-					$config_array_gafas[1]=$config_gafas_2;
-					$config_array_gafas[2]=$config_gafas_3;
-				}
-				//guarda en un array el archivo de configuracion, es el array del cabello
-				if (strpos($config_array[1], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
-					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4) = explode(" ", $config_array[1]);
-					//$config_array_cabello[0]=$config_cabello_1;
-					$config_array_cabello[1]=$config_cabello_2;
-					$config_array_cabello[2]=$config_cabello_3;
-					$config_array_cabello[3]=$config_cabello_4;
-				}
-				//guarda en un array el archivo de configuracion, es el array del sexo
-				if (strpos($config_array[2], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
-					list($config_sexo_1, $config_sexo_2, $config_sexo_3) = explode(" ", $config_array[2]);
-					//$config_array_sexo[0]=$config_sexo_1;
-					$config_array_sexo[1]=$config_sexo_2;
-					$config_array_sexo[2]=$config_sexo_3;
-				}
+
+					//guarda en un array el archivo de configuracion, es el array de las gafas
+					if (strpos($config_array[0], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+						list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode(" ", $config_array[0]);
+						//$config_array_gafas[0]=$config_gafas_1;
+						$config_array_gafas[1]=$config_gafas_2;
+						$config_array_gafas[2]=$config_gafas_3;
+					}
+					//guarda en un array el archivo de configuracion, es el array del cabello
+					if (strpos($config_array[1], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+						list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4) = explode(" ", $config_array[1]);
+						//$config_array_cabello[0]=$config_cabello_1;
+						$config_array_cabello[1]=$config_cabello_2;
+						$config_array_cabello[2]=$config_cabello_3;
+						$config_array_cabello[3]=$config_cabello_4;
+					}
+					//guarda en un array el archivo de configuracion, es el array del sexo
+					if (strpos($config_array[2], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+						list($config_sexo_1, $config_sexo_2, $config_sexo_3) = explode(" ", $config_array[2]);
+						//$config_array_sexo[0]=$config_sexo_1;
+						$config_array_sexo[1]=$config_sexo_2;
+						$config_array_sexo[2]=$config_sexo_3;
+					}
+
 				fclose($file2);
 				//Punto 2 errores
 				$array=[];
@@ -58,6 +61,7 @@
 				$file = fopen("imagenes.txt", "r");
 				while(!feof($file)) {
 					$array[$i]=trim(str_replace(":", "",(str_replace(" ,", "",(fgets($file))))));//Quita los dos puntos, la coma y los espacios en blanco.
+
 					if (strpos($array[$i], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
 						list($nombre, $gafas, $gafas2, $cabello, $cabello2, $sexo, $sexo2) = explode(" ", $array[$i]);
 						$nombre_foto[$i]=$nombre;
@@ -67,6 +71,8 @@
 					}
 					$i=$i+1;
 				}		
+
+
 				fclose($file);
 				//con esto de aqui, detecta si hay un nombre repetido, y lo indica (punto 1 de errores)
 				$repeated = array_filter(array_count_values($nombre_foto), function($count) {
@@ -126,6 +132,7 @@
 				}
 			fclose($flog);//se cierra el fichero log
 			return true;
+
 			}
 //fin de los errores
 		if (errores()!=true) {//En caso de que salga un error, no se iniciara el programa, y saldra el error
@@ -138,30 +145,30 @@
 
 			<div id="combobox">
 
-				<p>¿Qué lleva? </p>
+				<p>¿Tiene gafas? </p>
 				<select id="gafas" class="cbox gafas">
 					<option  name="gafas" value="---">---</option>
-					<option  name="gafas" value="si">Gafas</option>
-					<option  name="gafas" value="no">Nada</option>
+					<option  name="gafas" value="si">si</option>
+					<option  name="gafas" value="no">no</option>
 				</select>
 
 				<br>
 
-				<p>¿Su pelo es... ? </p>
+				<p>¿De qué color es su cabello? </p>
 				<select id="cabello" class="cbox cabello">
 					<option name="cabello" value="---">---</option>
-					<option name="cabello" value="moreno">Moreno</option>
-					<option name="cabello" value="rubio">Rubio</option>
-					<option name="cabello" value="pelirrojo">Pelirrojo</option>
+					<option name="cabello" value="moreno">moreno</option>
+					<option name="cabello" value="rubio">rubio</option>
+					<option name="cabello" value="pelirrojo">pelirrojo</option>
 				</select>
 
 				<br>
 
-				<p>¿La persona es... ?</p>
+				<p>¿Qué género es?</p>
 				<select id="sexo" class="cbox sexo">
 					<option name="sexo" value="---">---</option>
-					<option name="sexo" value="hombre">Hombre</option>
-					<option name="sexo" value="mujer">Mujer</option>
+					<option name="sexo" value="hombre">hombre</option>
+					<option name="sexo" value="mujer">mujer</option>
 				</select>
 
 				<br><br>
@@ -172,6 +179,8 @@
 				<p id="texto_salida"></p>
 
 			</div>
+
+
 
 			<?php 
 			function arrayCartas(){
@@ -207,9 +216,11 @@
 				$cartaElegida = $cartas[0];
 				echo "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 			}
+
 			function tableroCartas($cartas){
 				$tabla='<table><tr>';
 				$c = 0;
+
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
 					$tabla .="\n\t<td>
@@ -224,14 +235,16 @@
 					}
 				}
 				return $tabla;
+
 			}
 			
-			$arrayCartaAdivinar=arrayCartas();			
+
+			$arrayCartaAdivinar=arrayCartas();	
 			cartaElegida($arrayCartaAdivinar);
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-			//Fuegos artificiales
-			//echo '<canvas id="canvas"></canvas>';
+			var_dump($arrayCartaAdivinar[0]["nombre"]);
+
 		}
 	?>
 
