@@ -24,10 +24,6 @@ function flip() {
     elemento.setAttribute("src", "cartas/back.png");
     contadorVolteo++;
 }
-//
-
-
-
 
 document.addEventListener('DOMContentLoaded', function(){ 
 	cards = document.getElementsByClassName("card");
@@ -39,20 +35,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
 document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta = document.getElementById("hacerPregunta");
-    botonHacerPregunta.addEventListener("click", preguntarAlServer);
+    botonHacerPregunta.addEventListener("click", botonActivado);
 });
 
-function resetearComboBox(id) {
-    var clear = document.getElementById(id);
-    clear.selectedIndex = 0;
-    
-    // Hay que editar este bucle para que haga el clear de arriba
-    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
-            atributo = respuestasPosiblesCBox[i].value;
-            id = respuestasPosiblesCBox[i].getAttribute("class")
-            id = id.replace("cbox ","");
-        }
+function botonActivado() {
+    preguntarAlServer();
+
+    if (contadorVolteo >= 11) {
+
     }
 }
 
@@ -66,7 +56,7 @@ function preguntarAlServer() {
     var id;
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
         if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
-            atributo = respuestasPosiblesCBox[i].value;
+            //atributo = respuestasPosiblesCBox[i].value; <--- no lo uso pero está bien saber que existe
             id = respuestasPosiblesCBox[i].getAttribute("class")
             id = id.replace("cbox ","");
         } else {
@@ -79,8 +69,7 @@ function preguntarAlServer() {
     
     } else if (semaforo == 2) {
         // Esto es correcto
-        alert(id);
-
+        alert(id); // dice el ID de la pregunta (ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER)
     } else if (semaforo == 1 || semaforo == 0) {
         document.getElementById('texto_salida').innerHTML = "No se pueden seleccionar más de dos elementos";
 
@@ -88,5 +77,19 @@ function preguntarAlServer() {
         document.getElementById('texto_salida').innerHTML = "ERROR";
     }
 
-    // resetearComboBox();
+    resetearComboBox(id);
+}
+
+function resetearComboBox(id) {
+    var clear = document.getElementById(id);
+    clear.selectedIndex = 0;
+    
+    // Hay que editar este bucle para que haga el clear de arriba
+    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
+        if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
+            atributo = respuestasPosiblesCBox[i].value;
+            id = respuestasPosiblesCBox[i].getAttribute("class")
+            id = id.replace("cbox ","");
+        }
+    }
 }
