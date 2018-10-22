@@ -15,7 +15,7 @@
 
 		$flog = fopen("log.txt","a"); //Se abre el fichero donde se guardaran los errores
 			
-					//Archivo de configuracion, para el Punto 3 errores
+				//Archivo de configuracion, para el Punto 3 errores
 				$config_array=[];
 				$config_array_gafas=[];
 				$config_array_cabello=[];
@@ -27,28 +27,28 @@
 					$z=$z+1;
 				}
 
-					//guarda en un array el archivo de configuracion, es el array de las gafas
-					if (strpos($config_array[0], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
-						list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode(" ", $config_array[0]);
-						//$config_array_gafas[0]=$config_gafas_1;
-						$config_array_gafas[1]=$config_gafas_2;
-						$config_array_gafas[2]=$config_gafas_3;
-					}
-					//guarda en un array el archivo de configuracion, es el array del cabello
-					if (strpos($config_array[1], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
-						list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4) = explode(" ", $config_array[1]);
-						//$config_array_cabello[0]=$config_cabello_1;
-						$config_array_cabello[1]=$config_cabello_2;
-						$config_array_cabello[2]=$config_cabello_3;
-						$config_array_cabello[3]=$config_cabello_4;
-					}
-					//guarda en un array el archivo de configuracion, es el array del sexo
-					if (strpos($config_array[2], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
-						list($config_sexo_1, $config_sexo_2, $config_sexo_3) = explode(" ", $config_array[2]);
-						//$config_array_sexo[0]=$config_sexo_1;
-						$config_array_sexo[1]=$config_sexo_2;
-						$config_array_sexo[2]=$config_sexo_3;
-					}
+				//guarda en un array el archivo de configuracion, es el array de las gafas
+				if (strpos($config_array[0], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+					list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode(" ", $config_array[0]);
+					//$config_array_gafas[0]=$config_gafas_1;
+					$config_array_gafas[1]=$config_gafas_2;
+					$config_array_gafas[2]=$config_gafas_3;
+				}
+				//guarda en un array el archivo de configuracion, es el array del cabello
+				if (strpos($config_array[1], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4) = explode(" ", $config_array[1]);
+					//$config_array_cabello[0]=$config_cabello_1;
+					$config_array_cabello[1]=$config_cabello_2;
+					$config_array_cabello[2]=$config_cabello_3;
+					$config_array_cabello[3]=$config_cabello_4;
+				}
+				//guarda en un array el archivo de configuracion, es el array del sexo
+				if (strpos($config_array[2], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
+					list($config_sexo_1, $config_sexo_2, $config_sexo_3) = explode(" ", $config_array[2]);
+					//$config_array_sexo[0]=$config_sexo_1;
+					$config_array_sexo[1]=$config_sexo_2;
+					$config_array_sexo[2]=$config_sexo_3;
+				}
 
 				fclose($file2);
 				//Punto 2 errores
@@ -145,30 +145,30 @@
 
 			<div id="combobox">
 
-				<p>¿Tiene gafas? </p>
+				<p>¿Qué lleva? </p>
 				<select id="gafas" class="cbox gafas">
 					<option  name="gafas" value="---">---</option>
-					<option  name="gafas" value="si">si</option>
-					<option  name="gafas" value="no">no</option>
+					<option  name="gafas" value="si">Gafas</option>
+					<option  name="gafas" value="no">Nada</option>
 				</select>
 
 				<br>
 
-				<p>¿De qué color es su cabello? </p>
+				<p>¿Su pelo es... ? </p>
 				<select id="cabello" class="cbox cabello">
 					<option name="cabello" value="---">---</option>
-					<option name="cabello" value="moreno">moreno</option>
-					<option name="cabello" value="rubio">rubio</option>
-					<option name="cabello" value="pelirrojo">pelirrojo</option>
+					<option name="cabello" value="moreno">Moreno</option>
+					<option name="cabello" value="rubio">Rubio</option>
+					<option name="cabello" value="pelirrojo">Pelirrojo</option>
 				</select>
 
 				<br>
 
-				<p>¿Qué género es?</p>
+				<p>¿La persona es... ?</p>
 				<select id="sexo" class="cbox sexo">
 					<option name="sexo" value="---">---</option>
-					<option name="sexo" value="hombre">hombre</option>
-					<option name="sexo" value="mujer">mujer</option>
+					<option name="sexo" value="hombre">Hombre</option>
+					<option name="sexo" value="mujer">Mujer</option>
 				</select>
 
 				<br><br>
