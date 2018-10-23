@@ -1,44 +1,91 @@
 var cards;
+var botonHacerPregunta;
+var contadorVolteo = 0;
+var respuestasPosiblesCBox;
+var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 
 function flip() {
-	var elemento = this;
-	elemento.setAttribute("card", elemento.getAttribute("src"));
-	elemento.setAttribute("src", "cartas/back.png");
+    var elemento = this;
+    // Aplicamos sonido de giro y contamos el volteo
+    if (elemento.getAttribute("src") != "cartas/back.png") {
+        flipCardSound.play();
+        contadorVolteo++;
+    }
+    // Ahora volteamos la carta
+    elemento.setAttribute("card", elemento.getAttribute("src"));
+    elemento.setAttribute("src", "cartas/back.png");
+    
 }
 
 document.addEventListener('DOMContentLoaded', function(){ 
-	cards = document.getElementsByClassName("card");
-	for (var i = 0; i < cards.length; i++) {
-		var card = cards[i];
-		card.addEventListener("click", flip);
-	}
+    cards = document.getElementsByClassName("card");
+    for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        card.addEventListener("click", flip);
+    }
 });
 
+document.addEventListener('DOMContentLoaded', function(){//Hacer pregunta y deshabilitar boton "Easy"
+    botonHacerPregunta = document.getElementById("hacerPregunta");
+    botonHacerPregunta.addEventListener("click", botonActivado);
+    botonHacerPregunta.addEventListener("click", desaparecerBotonEasy2);
+});
+document.addEventListener('DOMContentLoaded', function(){//Activar modo Easy
+    botonHacerPregunta = document.getElementById("buttonEasy");
+    botonHacerPregunta.addEventListener("click", desaparecerBotonEasy);
+});
 
+function botonActivado() {
+    preguntarAlServer();
+}
+function desaparecerBotonEasy() {//Si activamos el boton easy, aparecera un texto diciendolo.
+    document.getElementById("buttonEasy").style.display="none";
+    document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
+}
+function desaparecerBotonEasy2() {//Si hacemos la pregunta, simplemente desactivara el boton
+    document.getElementById("buttonEasy").style.display="none";
+}
 
-function combobox() {
-	var selector1 = document.getElementById('gafas');
-    var value1 = selector1[selector1.selectedIndex].value;
+function preguntarAlServer() {
 
-    var selector2 = document.getElementById('cabello');
-    var value2 = selector2[selector2.selectedIndex].value;
+    respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
 
-    var selector3 = document.getElementById('sexo');
-    var value3 = selector3[selector3.selectedIndex].value;
-
-    if ((value1 != "---" && value2 != "---") || (value1 != "---" && value3 != "---") || (value2 != "---" && value3 != "---") ){
-    	document.getElementById('texto_salida').innerHTML = "No se puede seleccionar mas de uno";
+    // Si no han respondido = 3, si han respondido una = 2
+    // Si han respondido mas de una = 0 o 1
+    var semaforo = 0;
+    var atributo;
+    var id;
+    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
+        if (respuestasPosiblesCBox[i].value != "---") {
+            id = respuestasPosiblesCBox[i].getAttribute("class")
+            id = id.replace("cbox ","");
+        } else {
+            semaforo++;            
+        }
     }
-    else if (value1 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value1;
+
+    if (semaforo == 3) {
+        document.getElementById('texto_salida').innerHTML =
+        "No hay nada seleccionado";
+    
+    } else if (semaforo == 2) {
+        // Esto es correcto
+        alert(id); // dice el ID de la pregunta
+        // ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER
+    } else if (semaforo == 1 || semaforo == 0) {
+        document.getElementById('texto_salida').innerHTML =
+        "No se pueden seleccionar más de dos elementos";
+
+    } else {
+        document.getElementById('texto_salida').innerHTML = "ERROR";
     }
-    else if (value2 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value2;
-    }
-    else if (value3 != "---"){
-    	document.getElementById('texto_salida').innerHTML = value3;
-    }
-    else{
-    	document.getElementById('texto_salida').innerHTML = "No hay nada seleccionado";
+
+    resetearComboBox(id);
+}
+
+function resetearComboBox(id) {
+    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
+        id = respuestasPosiblesCBox[i]
+        id.selectedIndex = 0;
     }
 }

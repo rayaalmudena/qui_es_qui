@@ -9,4 +9,8 @@ pablo.png: gafas no , cabello moreno , sexo hombre
 ivan.png: gafas si , cabello rubio , sexo hombre
 manuel.png: gafas no , cabello rubio , sexo hombre
 antonio.png: gafas si , cabello pelirrojo , sexo hombre
+<<<<<<< HEAD
 mateo.png: gafas no , cabello pelirrojo , sexo hombre
+=======
+mateo.png: gafas no , cabello pelirrojo , sexo hombre
+>>>>>>> 7c10bdea6d503a8c751372f8cb518d7c60cb3dbf

@@ -1,26 +1,91 @@
-.card {
-	height: 140px;
-}
-
 .cartaElegida {
 	height: 200px;
 }
 
+.carta{
+	border-style: solid;
+	border-color: grey;
+	height: 134px;
+	} 
+
 .carta:hover{
 	background-color: grey;
 }
+
 table{
+	height: 100%;
 	background-color: green;
-	padding: 15px;
+	padding: 10px;
 	border-spacing: 5px;
 }
-img{
-	border-style: solid;
-	border-color: grey;
-	} 
 
 #combobox {
 	position: absolute;
 	top: 20em;
-	left: 40em;
+  left: 40em;
+}
+#buttonEasy{
+  position: absolute;
+  top: 17em;
+  left: 45em;
+}
+#textoEasy{
+  position: absolute;
+  top: 15em;
+  left: 40em;
+}
+
+.container {
+  margin: 20px;
+  width: 160px;
+  height: 160px;
+  perspective: 1000px;
+}
+
+.card {
+  transition: transform 2s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.front, .back {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  backface-visibility: hidden;
+}
+
+.front {
+  border: 3px solid grey;
+}
+
+.front:hover {
+  bottom: 2px;
+  left: 2px;
+  box-shadow: 0px 0px 20px 1px #000;
+  background-color: grey;
+}
+
+.back {
+  border: 3px solid grey;
+  background: url("cartas/back.png");
+  background-size: 160px;
+  transform: rotateY(180deg);
+}
+
+.back:hover {
+  bottom: 2px;
+  left: 2px;
+  box-shadow: 0px 0px 20px 1px #000;
+  background-color: grey;
+}
+
+canvas{
+  position: fixed;
+  top: 0px;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
 }
