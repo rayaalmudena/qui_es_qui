@@ -173,7 +173,7 @@
 
 				<br><br>
 				
-				<button id="hacerPregunta">Fes la pregunta</button>
+				<button id="hacerPregunta" onclick="prueba()">Fes la pregunta</button>
 
 				<br>
 				<p id="texto_salida"></p>
@@ -243,12 +243,18 @@
 			cartaElegida($arrayCartaAdivinar);
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-			$nombre_carta=$arrayCartaAdivinar[0]["nombre"];
-			$gafas_carta=$arrayCartaAdivinar[0]["gafas"];
-			$cabello_carta=$arrayCartaAdivinar[0]["cabello"];
-			$sexo_carta=$arrayCartaAdivinar[0]["sexo"];
+			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
+			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
+			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
+			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
 
+			echo "<p id='nombre1' hidden>$nombre_carta</p>
+			<p id='gafas1' hidden>$gafas_carta</p>
+			<p id='cabello1' hidden>$cabello_carta</p>
+			<p id='sexo1' hidden>$sexo_carta</p>";
+			var_dump($sexo_carta);
 		}
+
 	?>
 
 
