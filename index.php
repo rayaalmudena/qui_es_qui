@@ -251,6 +251,8 @@
 			//Fuegos artificiales
 			//echo '<canvas id="canvas"></canvas>';
 
+
+			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
 			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
 			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
 			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
