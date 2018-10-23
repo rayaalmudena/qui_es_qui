@@ -1,7 +1,7 @@
 var cards;
 var botonHacerPregunta;
 var contadorVolteo = 0;
-var arreglo = <?php echo json_encode($nombre_carta); ?>;
+
 
 /* pruebas girar carta
 
@@ -39,6 +39,37 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta.addEventListener("click", botonActivado);
 });
 
+function prueba(){
+
+    nombre_carta=document.getElementById("nombre1").innerHTML;
+    gafas_carta=document.getElementById("gafas1").innerHTML;
+    cabello_carta=document.getElementById("cabello1").innerHTML;
+    sexo_carta=document.getElementById("sexo1").innerHTML;
+    if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value==gafas_carta) {
+        alert("Acertaste");
+        //document.getElementById('texto_salida').innerHTML = "Acertaste";
+    }
+    /*else{
+        document.getElementById('texto_salida').innerHTML = "No Acertaste"
+    }*/
+    if(document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value==cabello_carta){
+        //alert(document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value);
+        alert("Acertaste");
+        //document.getElementById('texto_salida').innerHTML = "Acertaste";
+    }
+    /*else{
+        document.getElementById('texto_salida').innerHTML = "No Acertaste"
+    }*/
+    if(document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value==sexo_carta){
+        alert("Acertaste");
+        //document.getElementById('texto_salida').innerHTML = "Acertaste";
+    }
+    /*else{
+        document.getElementById('texto_salida').innerHTML = "No Acertaste"
+    }*/
+
+}
+
 function botonActivado() {
     preguntarAlServer();
 
@@ -71,7 +102,13 @@ function preguntarAlServer() {
     } else if (semaforo == 2) {
         // Esto es correcto
         //alert(id); // dice el ID de la pregunta (ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER)
-        document.getElementById('texto_salida').innerHTML = arreglo;
+        nombre_carta=document.getElementById("nombre1").innerHTML;
+        gafas_carta=document.getElementById("gafas1").innerHTML;
+        cabello_carta=document.getElementById("cabello1").innerHTML;
+        sexo_carta=document.getElementById("sexo1").innerHTML;
+        if (document.getElementById('gafas').selectedIndex.value=="si") {
+            alert("holi");
+        }
     } else if (semaforo == 1 || semaforo == 0) {
         document.getElementById('texto_salida').innerHTML = "No se pueden seleccionar más de dos elementos";
 
