@@ -5,7 +5,7 @@
 .carta{
 	border-style: solid;
 	border-color: grey;
-	height: 160px;
+	height: 134px;
 	} 
 
 .carta:hover{
@@ -39,6 +39,16 @@ table{
 #combobox {
 	position: absolute;
 	top: 20em;
+  left: 40em;
+}
+#buttonEasy{
+  position: absolute;
+  top: 17em;
+  left: 45em;
+}
+#textoEasy{
+  position: absolute;
+  top: 15em;
   left: 40em;
 }
 
