@@ -10,3 +10,6 @@ La imagen 'mateo.png' se repite 2 veces
 Dia y Hora del error:	23/10/2018	17:43
 La imagen 'mateo.png' se repite 2 veces
 
+Dia y Hora del error:	23/10/2018	17:50
+La imagen 'mateo.png' se repite 2 veces
+
