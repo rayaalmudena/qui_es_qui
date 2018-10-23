@@ -24,6 +24,16 @@ table{
 	top: 20em;
   left: 40em;
 }
+#buttonEasy{
+  position: absolute;
+  top: 17em;
+  left: 45em;
+}
+#textoEasy{
+  position: absolute;
+  top: 15em;
+  left: 40em;
+}
 
 .container {
   margin: 20px;

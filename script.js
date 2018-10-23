@@ -34,9 +34,14 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 });
 
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function(){//Hacer pregunta y deshabilitar boton "Easy"
     botonHacerPregunta = document.getElementById("hacerPregunta");
     botonHacerPregunta.addEventListener("click", botonActivado);
+    botonHacerPregunta.addEventListener("click", desaparecerBotonEasy2);
+});
+document.addEventListener('DOMContentLoaded', function(){//Activar modo Easy
+    botonHacerPregunta = document.getElementById("buttonEasy");
+    botonHacerPregunta.addEventListener("click", desaparecerBotonEasy);
 });
 
 function botonActivado() {
@@ -45,6 +50,13 @@ function botonActivado() {
     if (contadorVolteo >= 11) {
 
     }
+}
+function desaparecerBotonEasy() {//Si activamos el boton easy, aparecera un texto diciendolo.
+    document.getElementById("buttonEasy").style.display="none";
+    document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
+}
+function desaparecerBotonEasy2() {//Si hacemos la pregunta, simplemente desactivara el boton
+    document.getElementById("buttonEasy").style.display="none";
 }
 
 function preguntarAlServer() {

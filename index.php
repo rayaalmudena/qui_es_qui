@@ -135,6 +135,8 @@
 		
 			?>
 
+			<p id="textoEasy"></p>	
+			<button id="buttonEasy">EASY</button>
 
 			<div id="combobox">
 
