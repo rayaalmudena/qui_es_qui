@@ -2,8 +2,6 @@ var cards;
 var botonHacerPregunta;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
-var flipCardSound = new Audio('sounds/flipCardSound.mp3');
-
 // [[[[[[ELIMINAR ATRIBUTO SI NO SE VA A UTILIZAR (FUNCION PARA EL BOTON)]]]]]
 
 /* pruebas girar carta
@@ -23,15 +21,9 @@ function flip(event){
 
 function flip() {
     var elemento = this;
-    // Aplicamos sonido de giro y contamos el volteo
-    if (elemento.getAttribute("src") != "cartas/back.png") {
-        flipCardSound.play();
-        contadorVolteo++;
-    }
-    // Ahora volteamos la carta
     elemento.setAttribute("card", elemento.getAttribute("src"));
     elemento.setAttribute("src", "cartas/back.png");
-    
+    contadorVolteo++;
 }
 
 document.addEventListener('DOMContentLoaded', function(){ 
@@ -51,6 +43,43 @@ document.addEventListener('DOMContentLoaded', function(){//Activar modo Easy
     botonHacerPregunta = document.getElementById("buttonEasy");
     botonHacerPregunta.addEventListener("click", desaparecerBotonEasy);
 });
+
+function prueba(){
+
+    nombre_carta=document.getElementById("nombre1").innerHTML;
+    gafas_carta=document.getElementById("gafas1").innerHTML;
+    cabello_carta=document.getElementById("cabello1").innerHTML;
+    sexo_carta=document.getElementById("sexo1").innerHTML;
+    if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="si" && gafas_carta=="si") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    else if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="no") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    /*else{
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }*/
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="si" && cabello_carta=="si") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    else if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="no" && cabello_carta=="no") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    /*else{
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+    if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="si" && sexo_carta=="si") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    else if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="no" && sexo_carta=="no") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    else{
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }*/
+
+}
+
 
 function botonActivado() {
     preguntarAlServer();
@@ -88,19 +117,19 @@ function preguntarAlServer() {
     }
 
     if (semaforo == 3) {
-        document.getElementById('texto_salida').innerHTML =
+        //document.getElementById('texto_salida').innerHTML =
         "No hay nada seleccionado";
     
     } else if (semaforo == 2) {
         // Esto es correcto
-        alert(id); // dice el ID de la pregunta
+        //alert(id); // dice el ID de la pregunta
         // ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER
     } else if (semaforo == 1 || semaforo == 0) {
-        document.getElementById('texto_salida').innerHTML =
+        //document.getElementById('texto_salida').innerHTML =
         "No se pueden seleccionar más de dos elementos";
 
     } else {
-        document.getElementById('texto_salida').innerHTML = "ERROR";
+        //document.getElementById('texto_salida').innerHTML = "ERROR";
     }
 
     resetearComboBox(id);
