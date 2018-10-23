@@ -88,23 +88,8 @@ function preguntarAlServer() {
 }
 
 function resetearComboBox(id) {
-    var clear = document.getElementById(id);
-    clear.selectedIndex = 0;
-
-    //for (i)
+    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
+        id = respuestasPosiblesCBox[i]
+        id.selectedIndex = 0;
+    }
 }
-
-/*
-
-
-<?php $mivarPhp = "Asignado en PHP"; 
-     echo $mivarPhp."\n<br>";
-?>
-
-<script type="text/javascript">
-var mivarJS ="Asignado en JS";
-     alert (mivarJS);
-     mivarJS="<?php echo $mivarPhp ?>";
-     alert (mivarJS);
-</script>
-*/
