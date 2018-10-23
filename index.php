@@ -235,6 +235,7 @@
 		}
 	?>
 
+	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
 
 </body>
 </html>
