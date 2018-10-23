@@ -1,10 +1,12 @@
 var cards;
 var botonHacerPregunta;
 var contadorVolteo = 0;
+var respuestasPosiblesCBox;
+var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 
+// [[[[[[ELIMINAR ATRIBUTO SI NO SE VA A UTILIZAR (FUNCION PARA EL BOTON)]]]]]
 
 /* pruebas girar carta
-
 function flip(event){
     var element = event.currentTarget;
     if (element.className === "card") {
@@ -21,9 +23,15 @@ function flip(event){
 
 function flip() {
     var elemento = this;
+    // Aplicamos sonido de giro y contamos el volteo
+    if (elemento.getAttribute("src") != "cartas/back.png") {
+        flipCardSound.play();
+        contadorVolteo++;
+    }
+    // Ahora volteamos la carta
     elemento.setAttribute("card", elemento.getAttribute("src"));
     elemento.setAttribute("src", "cartas/back.png");
-    contadorVolteo++;
+    
 }
 
 document.addEventListener('DOMContentLoaded', function(){ 
@@ -39,42 +47,10 @@ document.addEventListener('DOMContentLoaded', function(){//Hacer pregunta y desh
     botonHacerPregunta.addEventListener("click", botonActivado);
     botonHacerPregunta.addEventListener("click", desaparecerBotonEasy2);
 });
-
 document.addEventListener('DOMContentLoaded', function(){//Activar modo Easy
     botonHacerPregunta = document.getElementById("buttonEasy");
     botonHacerPregunta.addEventListener("click", desaparecerBotonEasy);
 });
-
-function prueba(){
-
-    nombre_carta=document.getElementById("nombre1").innerHTML;
-    gafas_carta=document.getElementById("gafas1").innerHTML;
-    cabello_carta=document.getElementById("cabello1").innerHTML;
-    sexo_carta=document.getElementById("sexo1").innerHTML;
-    if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value==gafas_carta) {
-        alert("Acertaste");
-        //document.getElementById('texto_salida').innerHTML = "Acertaste";
-    }
-    /*else{
-        document.getElementById('texto_salida').innerHTML = "No Acertaste"
-    }*/
-    if(document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value==cabello_carta){
-        //alert(document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value);
-        alert("Acertaste");
-        //document.getElementById('texto_salida').innerHTML = "Acertaste";
-    }
-    /*else{
-        document.getElementById('texto_salida').innerHTML = "No Acertaste"
-    }*/
-    if(document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value==sexo_carta){
-        alert("Acertaste");
-        //document.getElementById('texto_salida').innerHTML = "Acertaste";
-    }
-    /*else{
-        document.getElementById('texto_salida').innerHTML = "No Acertaste"
-    }*/
-
-}
 
 function botonActivado() {
     preguntarAlServer();
@@ -83,7 +59,6 @@ function botonActivado() {
 
     }
 }
-
 function desaparecerBotonEasy() {//Si activamos el boton easy, aparecera un texto diciendolo.
     document.getElementById("buttonEasy").style.display="none";
     document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
@@ -94,15 +69,17 @@ function desaparecerBotonEasy2() {//Si hacemos la pregunta, simplemente desactiv
 
 function preguntarAlServer() {
 
-    var respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
+    respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
 
-    // Si no han respondido = 3, si han respondido una = 2, si han respondido mas de una = 0 o 1
+    // Si no han respondido = 3, si han respondido una = 2
+    // Si han respondido mas de una = 0 o 1
     var semaforo = 0;
     var atributo;
     var id;
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
-            //atributo = respuestasPosiblesCBox[i].value; <--- no lo uso pero está bien saber que existe
+        if (respuestasPosiblesCBox[i].value != "---") {
+            // atributo = respuestasPosiblesCBox[i].value;
+            // no lo uso pero está bien saber que existe
             id = respuestasPosiblesCBox[i].getAttribute("class")
             id = id.replace("cbox ","");
         } else {
@@ -111,20 +88,76 @@ function preguntarAlServer() {
     }
 
     if (semaforo == 3) {
-        document.getElementById('texto_salida').innerHTML = "No hay nada seleccionado";
+        document.getElementById('texto_salida').innerHTML =
+        "No hay nada seleccionado";
     
     } else if (semaforo == 2) {
         // Esto es correcto
-        //alert(id); // dice el ID de la pregunta (ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER)
-        nombre_carta=document.getElementById("nombre1").innerHTML;
-        gafas_carta=document.getElementById("gafas1").innerHTML;
-        cabello_carta=document.getElementById("cabello1").innerHTML;
-        sexo_carta=document.getElementById("sexo1").innerHTML;
-        if (document.getElementById('gafas').selectedIndex.value=="si") {
-            alert("holi");
+        nombre_carta=document.getElementById("nombre_php-js").innerHTML;
+        gafas_carta=document.getElementById("gafas_php-js").innerHTML;
+        cabello_carta=document.getElementById("cabello_php-js").innerHTML;
+        sexo_carta=document.getElementById("sexo_php-js").innerHTML;
+
+        //////////////////////////////// ESTO SE PODRIA REFACTORIZAR SI SE PUDIESE IGUALAR EL .VALUE A LA VARIABLE, PERO DANDO EL MISMO RESULTADO, AL COMPARAR EL PROGRAMA DICE QUE ES DIFERENTE
+        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="si" && gafas_carta=="si") {
+            document.getElementById('texto_salida').innerHTML = "SI";
         }
+        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="no") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="si") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="si" && gafas_carta=="no") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="moreno") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="rubio") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="pelirrojo") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="rubio") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="pelirrojo") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="moreno") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="pelirrojo") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="moreno") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="rubio") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="hombre" && sexo_carta=="hombre") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="mujer" && sexo_carta=="mujer") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="hombre" && sexo_carta=="mujer") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="mujer" && sexo_carta=="hombre") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+
+
+
+
+        // ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER
     } else if (semaforo == 1 || semaforo == 0) {
-        document.getElementById('texto_salida').innerHTML = "No se pueden seleccionar más de dos elementos";
+        document.getElementById('texto_salida').innerHTML =
+        "No se pueden seleccionar más de dos elementos";
 
     } else {
         document.getElementById('texto_salida').innerHTML = "ERROR";
@@ -134,48 +167,8 @@ function preguntarAlServer() {
 }
 
 function resetearComboBox(id) {
-    var clear = document.getElementById(id);
-    clear.selectedIndex = 0;
-    
-    // Hay que editar este bucle para que haga el clear de arriba
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        if (respuestasPosiblesCBox[i].value != "---" && semaforo <= 1) {
-            atributo = respuestasPosiblesCBox[i].value;
-            id = respuestasPosiblesCBox[i].getAttribute("class")
-            id = id.replace("cbox ","");
-        }
+        id = respuestasPosiblesCBox[i]
+        id.selectedIndex = 0;
     }
 }
-
-/*
-
-<?php
-
-// definimos un array de valores en php
-
-$arrayPHP=array("casa","coche","moto");
-
-?>
-
-<script type="text/javascript">
-
-    // obtenemos el array de valores mediante la conversion a json del
-
-    // array de php
-
-    var arrayJS=<?php echo json_encode($arrayPHP);?>;
-
- 
-
-    // Mostramos los valores del array
-
-    for(var i=0;i<arrayJS.length;i++)
-
-    {
-
-        document.write("<br>"+arrayJS[i]);
-
-    }
-
-</script>
-*/
