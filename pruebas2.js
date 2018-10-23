@@ -44,41 +44,65 @@ document.addEventListener('DOMContentLoaded', function(){//Activar modo Easy
     botonHacerPregunta.addEventListener("click", desaparecerBotonEasy);
 });
 
-function prueba(){
+/*function prueba(){
 
     nombre_carta=document.getElementById("nombre1").innerHTML;
     gafas_carta=document.getElementById("gafas1").innerHTML;
     cabello_carta=document.getElementById("cabello1").innerHTML;
     sexo_carta=document.getElementById("sexo1").innerHTML;
+    //////////////////////////////// ESTO SE PODRIA REFACTORIZAR SI SE PUDIESE IGUALAR EL .VALUE A LA VARIABLE, PERO DANDO EL MISMO RESULTADO, AL COMPARAR EL PROGRAMA DICE QUE ES DIFERENTE
     if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="si" && gafas_carta=="si") {
         document.getElementById('texto_salida').innerHTML = "SI";
     }
-    else if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="no") {
+    if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="no") {
         document.getElementById('texto_salida').innerHTML = "SI";
     }
-    /*else{
-        document.getElementById('texto_salida').innerHTML = "NO";
-    }*/
-    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="si" && cabello_carta=="si") {
-        document.getElementById('texto_salida').innerHTML = "SI";
-    }
-    else if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="no" && cabello_carta=="no") {
-        document.getElementById('texto_salida').innerHTML = "SI";
-    }
-    /*else{
+    if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="si") {
         document.getElementById('texto_salida').innerHTML = "NO";
     }
-    if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="si" && sexo_carta=="si") {
-        document.getElementById('texto_salida').innerHTML = "SI";
-    }
-    else if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="no" && sexo_carta=="no") {
-        document.getElementById('texto_salida').innerHTML = "SI";
-    }
-    else{
+    if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="si" && gafas_carta=="no") {
         document.getElementById('texto_salida').innerHTML = "NO";
-    }*/
-
-}
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="moreno") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="rubio") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="pelirrojo") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="rubio") {
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="pelirrojo") {
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="moreno") {
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="pelirrojo") {
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="moreno") {
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+    if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="rubio") {
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+    if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="hombre" && sexo_carta=="hombre") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="mujer" && sexo_carta=="mujer") {
+        document.getElementById('texto_salida').innerHTML = "SI";
+    }
+    if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="hombre" && sexo_carta=="mujer") {
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+    if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="mujer" && sexo_carta=="hombre") {
+        document.getElementById('texto_salida').innerHTML = "NO";
+    }
+}*/
 
 
 function botonActivado() {
@@ -117,19 +141,82 @@ function preguntarAlServer() {
     }
 
     if (semaforo == 3) {
-        //document.getElementById('texto_salida').innerHTML =
+        document.getElementById('texto_salida').innerHTML =
         "No hay nada seleccionado";
     
     } else if (semaforo == 2) {
         // Esto es correcto
-        //alert(id); // dice el ID de la pregunta
+        
+
+
+
+
+        nombre_carta=document.getElementById("nombre1").innerHTML;
+        gafas_carta=document.getElementById("gafas1").innerHTML;
+        cabello_carta=document.getElementById("cabello1").innerHTML;
+        sexo_carta=document.getElementById("sexo1").innerHTML;
+        //////////////////////////////// ESTO SE PODRIA REFACTORIZAR SI SE PUDIESE IGUALAR EL .VALUE A LA VARIABLE, PERO DANDO EL MISMO RESULTADO, AL COMPARAR EL PROGRAMA DICE QUE ES DIFERENTE
+        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="si" && gafas_carta=="si") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="no") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="si") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="si" && gafas_carta=="no") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="moreno") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="rubio") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="pelirrojo") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="rubio") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="moreno" && cabello_carta=="pelirrojo") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="moreno") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="rubio" && cabello_carta=="pelirrojo") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="moreno") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('cabello')[document.getElementById('cabello').selectedIndex].value=="pelirrojo" && cabello_carta=="rubio") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="hombre" && sexo_carta=="hombre") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="mujer" && sexo_carta=="mujer") {
+            document.getElementById('texto_salida').innerHTML = "SI";
+        }
+        if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="hombre" && sexo_carta=="mujer") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+        if (document.getElementById('sexo')[document.getElementById('sexo').selectedIndex].value=="mujer" && sexo_carta=="hombre") {
+            document.getElementById('texto_salida').innerHTML = "NO";
+        }
+
+
+
         // ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER
     } else if (semaforo == 1 || semaforo == 0) {
-        //document.getElementById('texto_salida').innerHTML =
+        document.getElementById('texto_salida').innerHTML =
         "No se pueden seleccionar más de dos elementos";
 
     } else {
-        //document.getElementById('texto_salida').innerHTML = "ERROR";
+        document.getElementById('texto_salida').innerHTML = "ERROR";
     }
 
     resetearComboBox(id);
