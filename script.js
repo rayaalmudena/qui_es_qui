@@ -2,6 +2,8 @@ var cards;
 var botonHacerPregunta;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
+var flipCardSound = new Audio('sounds/flipCardSound.mp3');
+
 // [[[[[[ELIMINAR ATRIBUTO SI NO SE VA A UTILIZAR (FUNCION PARA EL BOTON)]]]]]
 
 /* pruebas girar carta
@@ -21,9 +23,15 @@ function flip(event){
 
 function flip() {
     var elemento = this;
+    // Aplicamos sonido de giro y contamos el volteo
+    if (elemento.getAttribute("src") != "cartas/back.png") {
+        flipCardSound.play();
+        contadorVolteo++;
+    }
+    // Ahora volteamos la carta
     elemento.setAttribute("card", elemento.getAttribute("src"));
     elemento.setAttribute("src", "cartas/back.png");
-    contadorVolteo++;
+    
 }
 
 document.addEventListener('DOMContentLoaded', function(){ 
