@@ -71,3 +71,11 @@ table{
   box-shadow: 0px 0px 20px 1px #000;
   background-color: grey;
 }
+
+canvas{
+  position: fixed;
+  top: 0px;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}

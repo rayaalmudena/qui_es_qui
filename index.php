@@ -12,7 +12,6 @@
 	//Comienzo de los posibles errores
 	//Los errores apareceran por orden que indica en la guia del leandro, primero apareceran los nombres repetidos, luego los atributos repetidos y luego los atributos que no existan en el config
 	function errores(){
-
 		$flog = fopen("log.txt","a"); //Se abre el fichero donde se guardaran los errores
 			
 				//Archivo de configuracion, para el Punto 3 errores
@@ -26,7 +25,6 @@
 					$config_array[$z]=trim(fgets($file2));
 					$z=$z+1;
 				}
-
 				//guarda en un array el archivo de configuracion, es el array de las gafas
 				if (strpos($config_array[0], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
 					list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode(" ", $config_array[0]);
@@ -49,7 +47,6 @@
 					$config_array_sexo[1]=$config_sexo_2;
 					$config_array_sexo[2]=$config_sexo_3;
 				}
-
 				fclose($file2);
 				//Punto 2 errores
 				$array=[];
@@ -61,7 +58,6 @@
 				$file = fopen("imagenes.txt", "r");
 				while(!feof($file)) {
 					$array[$i]=trim(str_replace(":", "",(str_replace(" ,", "",(fgets($file))))));//Quita los dos puntos, la coma y los espacios en blanco.
-
 					if (strpos($array[$i], " ")){//sirve para encontrar si existe el espacio para poder meterlo en un array
 						list($nombre, $gafas, $gafas2, $cabello, $cabello2, $sexo, $sexo2) = explode(" ", $array[$i]);
 						$nombre_foto[$i]=$nombre;
@@ -71,8 +67,6 @@
 					}
 					$i=$i+1;
 				}		
-
-
 				fclose($file);
 				//con esto de aqui, detecta si hay un nombre repetido, y lo indica (punto 1 de errores)
 				$repeated = array_filter(array_count_values($nombre_foto), function($count) {
@@ -132,7 +126,6 @@
 				}
 			fclose($flog);//se cierra el fichero log
 			return true;
-
 			}
 //fin de los errores
 		if (errores()!=true) {//En caso de que salga un error, no se iniciara el programa, y saldra el error
@@ -214,11 +207,9 @@
 				$cartaElegida = $cartas[0];
 				echo "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 			}
-
 			function tableroCartas($cartas){
 				$tabla='<table><tr>';
 				$c = 0;
-
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
 					$tabla .="\n\t<td>
@@ -235,11 +226,12 @@
 				return $tabla;
 			}
 			
-
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
+			//Fuegos artificiales
+			//echo '<canvas id="canvas"></canvas>';
 		}
 	?>
 
