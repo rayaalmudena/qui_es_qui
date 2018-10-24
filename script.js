@@ -5,7 +5,8 @@ var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
 
-//estas dos variables son para preguntar "Segur que vols realitzar un altre pregunta sense girar cap carta?"
+// estas dos variables son para preguntar
+// "Segur que vols realitzar un altre pregunta sense girar cap carta?"
 var pregunta_clicada=0;
 var pregunta_sinGirarCarta=0;
 
@@ -13,22 +14,22 @@ var pregunta_sinGirarCarta=0;
 function flip(event){
     var element = event.currentTarget;
     if (element.className === "card") {
-    if(element.style.transform == "rotateY(180deg)") {
+        if(element.style.transform == "rotateY(180deg)") {
+
+        } else {
+            element.style.transform = "rotateY(180deg)";
+            contadorVolteo++;
+            flipCardSound.play();
+        }
     }
-    else {
-      element.style.transform = "rotateY(180deg)";
-      contadorVolteo++;
-      flipCardSound.play();
-    }
-  }
 };
 
 document.addEventListener('DOMContentLoaded', function(){
-    //Hacer pregunta, deshabilitar boton "Easy" y sumar al contador de preguntas
+    // Activa el botón y todas las funciones que hay dentro de él
     botonHacerPregunta = document.getElementById("hacerPregunta");
     botonHacerPregunta.addEventListener("click", botonActivado);
-    botonHacerPregunta.addEventListener("click", desaparecerBotonEasy);
 });
+
 document.addEventListener('DOMContentLoaded', function(){
     //Activar modo Easy
     botonHacerPregunta = document.getElementById("buttonEasy");
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function botonActivado() {
+    desaparecerBotonEasy();
     sacarMensajeAlertaSinVolteo();
     funcionContadorPreguntas();
     preguntarAlServer();
@@ -44,7 +46,7 @@ function botonActivado() {
 
 function sacarMensajeAlertaSinVolteo() {
     if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
-        alert("Segur que vols realitzar un altre pregunta sense girar cap carta?")
+        alert("Segur que vols realitzar un altre pregunta sense girar cap carta?");
     }
     else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
         //nada
@@ -80,7 +82,7 @@ function preguntarAlServer() {
     var id;
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
         if (respuestasPosiblesCBox[i].value != "---") {
-            id = respuestasPosiblesCBox[i].getAttribute("class")
+            id = respuestasPosiblesCBox[i].getAttribute("class");
             id = id.replace("cbox ","");
         } else {
             semaforo++;            
@@ -108,7 +110,7 @@ function preguntarAlServer() {
 
 function resetearComboBox(id) {
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        id = respuestasPosiblesCBox[i]
+        id = respuestasPosiblesCBox[i];
         id.selectedIndex = 0;
     }
 }
