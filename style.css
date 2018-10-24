@@ -1,5 +1,6 @@
 .cartaElegida {
-  height: 200px;
+  padding: 30px;
+  height: 300px;
   background:url("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0516/3875/rQmark_shop_preview.png");
   border: solid 3px black;
   text-align: center;
@@ -17,7 +18,7 @@ table{
 }
 #records {
   border-collapse: collapse;
-  width: 100%;
+  width: 50%;
   background-color: #93df8a ;
   border-style: solid;  
 
@@ -59,9 +60,9 @@ table{
 canvas{
   position: fixed;
   top: 0px;
-  margin: 0px;
-  height: 100%;
-  width: 100%;
+  height: 50%;
+  width: 20%;
+  z-index: -1;
 }
 #enlaceRecords{
   position: fixed;
@@ -86,6 +87,12 @@ div {
   perspective: 1000px;
 }
 
+.containerElegida{
+  padding:10px;
+  width: 200px;
+  height: 200px;
+  perspective: 1000px;
+}
 .card {
   transition: transform 2s;
   transform-style: preserve-3d;
