@@ -148,6 +148,7 @@
 
 			<p id="textoEasy"></p>	
 			<button id="buttonEasy">EASY</button>
+			<p id="contador_preguntas"></p>
 
 			<div id="combobox">
 
