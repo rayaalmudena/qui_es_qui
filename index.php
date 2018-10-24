@@ -221,7 +221,7 @@
 				$cartaElegida = $cartas[0];
 				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' 				gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 				$backCarta="<img src='cartas/back.png'>";
-				$Elegida='<div class="containerElegida"><div class="card"><div class="front">';
+				$Elegida='<div class="container containerElegida"><div class="card cardE" onclick="flip(event)"><div class="front">';
 				$Elegida .=$backCarta;
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
@@ -264,7 +264,7 @@
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
-			//echo '<canvas id="canvas"></canvas>';
+			echo '<canvas id="canvas"></canvas>';
 
 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server

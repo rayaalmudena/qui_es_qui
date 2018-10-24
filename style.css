@@ -2,13 +2,9 @@
   padding: 30px;
   height: 300px;
   background:url("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0516/3875/rQmark_shop_preview.png");
-  border: solid 3px black;
+  border: solid 3px grey;
   text-align: center;
 }
-
-.carta{
-  height: 134px;
-  } 
 
 table{
   height: 100%;
@@ -62,7 +58,7 @@ canvas{
   top: 0px;
   height: 50%;
   width: 20%;
-  z-index: -1;
+  
 }
 #enlaceRecords{
   position: fixed;
