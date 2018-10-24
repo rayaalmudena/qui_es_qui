@@ -14,8 +14,7 @@ var pregunta_sinGirarCarta=0;
 function flip(event){
     var element = event.currentTarget;
     if (element.className === "card") {
-    if(element.style.transform == "rotateY(180deg)") {        
-        
+    if(element.style.transform == "rotateY(180deg)") {
     }
     else {
       element.style.transform = "rotateY(180deg)";
