@@ -32,7 +32,7 @@ function flip(event){
 function flip() {
 
     if (contadorVolteo >= 11) {
-        hasAcabado();
+        return false;
     }
     else{
         var elemento = this;
