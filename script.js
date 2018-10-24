@@ -86,11 +86,13 @@ function funcionContadorPreguntas() {
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
 }
 
-function desaparecerBotonEasy() {//Si activamos el boton easy, aparecera un texto diciendolo.
+function desaparecerBotonEasy() {
+    //Si activamos el boton easy, aparecera un texto diciendolo.
     document.getElementById("buttonEasy").style.display="none";
     document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
 }
-function desaparecerBotonEasy2() {//Si hacemos la pregunta, simplemente desactivara el boton
+function desaparecerBotonEasy2() {
+    //Si hacemos la pregunta, simplemente desactivara el boton
     document.getElementById("buttonEasy").style.display="none";
 }
 
@@ -105,8 +107,7 @@ function preguntarAlServer() {
     var id;
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
         if (respuestasPosiblesCBox[i].value != "---") {
-            // atributo = respuestasPosiblesCBox[i].value;
-            // no lo uso pero está bien saber que existe
+            atributo = respuestasPosiblesCBox[i].value;
             id = respuestasPosiblesCBox[i].getAttribute("class")
             id = id.replace("cbox ","");
         } else {
@@ -114,7 +115,9 @@ function preguntarAlServer() {
         }
     }
 
+  
     if (semaforo == 3) {
+        //alert(gafas_carta);
         document.getElementById('texto_salida').innerHTML =
         "No hay nada seleccionado";
     
@@ -125,11 +128,18 @@ function preguntarAlServer() {
         cabello_carta=document.getElementById("cabello_php-js").innerHTML;
         sexo_carta=document.getElementById("sexo_php-js").innerHTML;
 
+        gafas = document.getElementById('gafas')[document.getElementById('gafas').selectedIndex]
+
+        // if (atributo == gafas?)
+        // if (atributo == cabello?)
+        // if (atributo == sexo?)
+
         //////////////////////////////// ESTO SE PODRIA REFACTORIZAR SI SE PUDIESE IGUALAR EL .VALUE A LA VARIABLE, PERO DANDO EL MISMO RESULTADO, AL COMPARAR EL PROGRAMA DICE QUE ES DIFERENTE
-        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="si" && gafas_carta=="si") {
+        if (gafas.value == gafas_carta) {
+            // Esta funciona, creo, pero no sé por qué
             document.getElementById('texto_salida').innerHTML = "SI";
         }
-        if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="no") {
+        if (gafas.value=="no" && gafas_carta=="no") {
             document.getElementById('texto_salida').innerHTML = "SI";
         }
         if (document.getElementById('gafas')[document.getElementById('gafas').selectedIndex].value=="no" && gafas_carta=="si") {
