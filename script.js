@@ -333,4 +333,5 @@ function windowResized(){
     setSize(canvas);
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, width, height);
-}/////Fin FIREWORKS
+}
+/////Fin FIREWORKS
