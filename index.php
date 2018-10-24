@@ -281,6 +281,19 @@
 	?>
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
-
+<button id="myBtn">Registra tu nombre</button>
+    
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+    
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <img src="/webERP/companies/bnh2012/part_pics/PG219M.jpg" alt="Test Belt" style="width:304px;height:228px;">
+        <p>This is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long descriptionThis is a long description</p>
+      </div>
+    
+    </div>
+</div>
 </body>
 </html>
