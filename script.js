@@ -12,20 +12,33 @@ var pregunta_sinGirarCarta=0;
 // [[[[[[ELIMINAR ATRIBUTO SI NO SE VA A UTILIZAR (FUNCION PARA EL BOTON)]]]]]
 
 function flip(event){
-    var element = event.currentTarget;
-    if (element.className === "card") {
-    if(element.style.transform == "rotateY(180deg)") {        
-        contadorVolteo++;
+
+    if (contadorVolteo >= 11) {
+        return false;
     }
-    else {
-      element.style.transform = "rotateY(180deg)";
-      flipCardSound.play();
+    else{
+        var element = event.currentTarget;
+        if (element.className === "card") {
+            if(element.style.transform == "rotateY(180deg)") {
+        
+            }
+            else {
+                element.style.transform = "rotateY(180deg)";
+                contadorVolteo++;
+                flipCardSound.play();
+            }
+        }
     }
     if (contadorVolteo==11){
         document.getElementByClassName("cartaElegida").style.transform = "rotateY(180deg)";
     }
   }
-};
+
+    if (contadorVolteo >= 11) {
+        hasAcabado();
+    }
+    
+;
 
 document.addEventListener('DOMContentLoaded', function(){//Hacer pregunta, deshabilitar boton "Easy" y sumar al contador de preguntas
     botonHacerPregunta = document.getElementById("hacerPregunta");
@@ -181,6 +194,10 @@ function preguntarAlServer() {
     }
 
     resetearComboBox(id);
+}
+
+function hasAcabado(){
+    alert("Ya has acabado el juego");
 }
 
 function resetearComboBox(id) {
