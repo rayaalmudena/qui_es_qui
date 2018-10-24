@@ -264,7 +264,7 @@
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
-			//echo '<canvas id="canvas"></canvas>';
+			echo '<canvas id="canvas"></canvas>';
 
 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
