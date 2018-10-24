@@ -285,6 +285,8 @@
 	?>
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
+
+<!-- Comienza el modal -->
 <!-- Trigger/Open The Modal -->
 <button id="myBtn">Nombre</button>
 
@@ -299,6 +301,22 @@
   </div>
 
 </div>
+<!-- acaba el modal -->
+
+
+<!-- Comienza el modal del aviso -->
+
+<div id="AvisoPregunta" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <p style="text-align: center;" id="letra_modal_aviso">Has preguntado sin girar carta!</p>
+	<button class="cerrar_Aviso">Ok</button>
+
+  </div>
+
+</div>
+<!-- acaba el modal -->
 
 </body>
 </html>

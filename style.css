@@ -174,10 +174,22 @@ div {
     font-size: 28px;
     font-weight: bold;
 }
+.cerrar_Aviso {
+  /*modal del aviso*/
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    margin: auto; display: block;
+}
+#letra_modal_aviso{
+  /*modal del aviso*/
+  font-size: 25px;
+  font-weight: bold;
+}
 
 /* Hover de la cruz para cerrar el modal*/
-.close:hover,
-.close:focus {
+.close:hover, .cerrar_Aviso:hover, 
+.close:focus, .cerrar_Aviso:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
