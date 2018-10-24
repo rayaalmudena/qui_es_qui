@@ -14,11 +14,16 @@ var pregunta_sinGirarCarta=0;
 function flip(event){
 
     if (contadorVolteo >= 11) {
+
+       // var element=document.getElementByClassName("card cartaE");
+        //element.style.transform = "rotateY(180deg)";
         return false;
+
     }
     else{
         var element = event.currentTarget;
-        if (element.className === "card") {
+
+        if (element.className != "card cardE") {
             if(element.style.transform == "rotateY(180deg)") {
         
             }
@@ -29,12 +34,11 @@ function flip(event){
             }
         }
     }
-    if (contadorVolteo==11){
-        document.getElementByClassName("cartaElegida").style.transform = "rotateY(180deg)";
-    }
+   
   }
 
     if (contadorVolteo >= 11) {
+        
         hasAcabado();
     }
     
@@ -250,7 +254,6 @@ function loop(){
     if(Math.random()<1/60) fireworks.push(new Firework(Math.random()*(width-200)+100));
 }
 setInterval(loop, 1/50);
-//setInterval(loop, 100/60);
 class Particle{
     constructor(x, y, col){
         this.x = x;
