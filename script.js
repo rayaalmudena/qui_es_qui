@@ -159,7 +159,8 @@ function responderAlJugador(id) {
 }
 
 function hasAcabado(){
-    alert("Ya has acabado el juego");
+    document.getElementById("canvas").style.visibility = "visible";
+    // Aqui va el modal
 }
 
 ////Fireworks 
