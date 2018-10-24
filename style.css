@@ -54,6 +54,7 @@ table{
 }
 
 canvas{
+  visibility: hidden;
   position: fixed;
   top: 0px;
   height: 50%;

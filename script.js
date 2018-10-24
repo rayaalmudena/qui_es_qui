@@ -12,32 +12,26 @@ var pregunta_sinGirarCarta=0;
 
 
 function flip(event){
-    var element = event.currentTarget;
     if (contadorVolteo >= 11) {
-
-       // var element=document.getElementByClassName("card cartaE");
-        //element.style.transform = "rotateY(180deg)";
         return false;
-
     }
-    else{     
+    else{
+        var element = event.currentTarget;
+        if (element.className != "card cardE") {
+            if(element.style.transform == "rotateY(180deg)") {
 
-        if (element.className != "card cardE") {            
-            element.style.transform = "rotateY(180deg)";
-            contadorVolteo++;
-            flipCardSound.play();            
+            } else {
+                element.style.transform = "rotateY(180deg)";
+                contadorVolteo++;
+                flipCardSound.play();
+            }
         }
     }
-   
-  }
 
     if (contadorVolteo >= 11) {
-        document.getElementByClassName("card cardE").dispatchEvent(new MouseEvent("click"))
         hasAcabado();
     }
-    
-;
-
+  }
 
 document.addEventListener('DOMContentLoaded', function(){
     // Activa el botón y todas las funciones que hay dentro de él
@@ -165,7 +159,8 @@ function responderAlJugador(id) {
 }
 
 function hasAcabado(){
-    alert("Ya has acabado el juego");
+    document.getElementById("canvas").style.visibility = "visible";
+    // Aqui va el modal
 }
 
 ////Fireworks 
@@ -313,33 +308,3 @@ function windowResized(){
     ctx.fillRect(0, 0, width, height);
 }
 /////Fin FIREWORKS
-
-
-
-
-/////Modal
- // Get the modal
-var modal = document.getElementById('myModal');
-    
-    // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-    
-    // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-    
-    // When the user clicks the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = "block";
-    }
-    
-    // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-        }
-    ////Modal
