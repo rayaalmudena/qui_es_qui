@@ -64,9 +64,6 @@ function botonActivado() {
     
     preguntarAlServer();
 
-    if (contadorVolteo >= 11) {
-
-    }
 }
 
 function funcionContadorPreguntas() {
