@@ -15,23 +15,23 @@ function flip(event){
     if (contadorVolteo >= 11) {
         return false;
     }
-    
-    else {
-    var element = event.currentTarget;
-    if (element.className === "card") {
-        if(element.style.transform == "rotateY(180deg)") {
+    else{
+        var element = event.currentTarget;
+        if (element.className != "card cardE") {
+            if(element.style.transform == "rotateY(180deg)") {
 
-        } else {
-            element.style.transform = "rotateY(180deg)";
-            contadorVolteo++;
-            flipCardSound.play();
+            } else {
+                element.style.transform = "rotateY(180deg)";
+                contadorVolteo++;
+                flipCardSound.play();
+            }
         }
     }
 
     if (contadorVolteo >= 11) {
         hasAcabado();
     }
-};
+  }
 
 document.addEventListener('DOMContentLoaded', function(){
     // Activa el botón y todas las funciones que hay dentro de él
@@ -184,7 +184,7 @@ setTimeout(setup,1);
 
 function loop(){
     ctx.globalAlpha = 0.1;
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#22264b";
     ctx.fillRect(0, 0, width, height);
     ctx.globalAlpha = 1;
 
@@ -197,13 +197,12 @@ function loop(){
     for(let i=0; i<particles.length; i++){
         particles[i].update();
         particles[i].draw();
-        if(particles[i].lifetime>80) particles.splice(i,1);
+        if(particles[i].lifetime>90) particles.splice(i,1);
     }
 
     if(Math.random()<1/60) fireworks.push(new Firework(Math.random()*(width-200)+100));
 }
-setInterval(loop, 1/60);
-//setInterval(loop, 100/60);
+setInterval(loop, 1/50);
 class Particle{
     constructor(x, y, col){
         this.x = x;
@@ -304,7 +303,7 @@ function onClick(e){
 
 function windowResized(){
     setSize(canvas);
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#22264b";
     ctx.fillRect(0, 0, width, height);
 }
 /////Fin FIREWORKS
