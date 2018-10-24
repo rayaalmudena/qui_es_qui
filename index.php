@@ -219,7 +219,7 @@
 			}
 			function cartaElegida($cartas){
 				$cartaElegida = $cartas[0];
-				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' 				gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
+				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]'sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 				$backCarta="<img src='cartas/back.png'>";
 				$Elegida='<div class="container containerElegida"><div class="card cardE" onclick="flip(event)"><div class="front">';
 				$Elegida .=$backCarta;
@@ -264,7 +264,7 @@
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
-			echo '<canvas id="canvas"></canvas>';
+			//echo '<canvas id="canvas"></canvas>';
 
 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
@@ -281,8 +281,20 @@
 	?>
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Nombre</button>
 
-    
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Escribe tu nombre o nick:</p>
+    <input type="text" name="nombreJugador">
+  </div>
+
 </div>
+
 </body>
 </html>
