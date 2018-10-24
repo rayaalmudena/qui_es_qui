@@ -51,7 +51,11 @@ table{
   top: 15em;
   left: 40em;
 }
-
+#contador_preguntas{
+  position: absolute;
+  top: 14em;
+  left: 45em;
+}
 .container {
   margin: 20px;
   width: 160px;

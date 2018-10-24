@@ -148,6 +148,7 @@
 
 			<p id="textoEasy"></p>	
 			<button id="buttonEasy">EASY</button>
+			<p id="contador_preguntas"></p>
 
 			<div id="combobox">
 
@@ -250,6 +251,18 @@
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
 			//echo '<canvas id="canvas"></canvas>';
+
+
+			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
+			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
+			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
+			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
+			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
+
+			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
+			<p id='gafas_php-js' hidden>$gafas_carta</p>
+			<p id='cabello_php-js' hidden>$cabello_carta</p>
+			<p id='sexo_php-js' hidden>$sexo_carta</p>";
 		}
 	?>
 
