@@ -339,10 +339,6 @@ document.addEventListener('DOMContentLoaded', function(){
             modal.style.display = "none";
         }
     }
-
-
-    //botonHacerPregunta = document.getElementById("buttonEasy");
-    //botonHacerPregunta.addEventListener("click", activarModoEasy);
 });
 
 

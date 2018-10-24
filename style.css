@@ -1,6 +1,8 @@
 .cartaElegida {
   height: 200px;
+  /* almudena pon la imagen normal
   background:url("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0516/3875/rQmark_shop_preview.png");
+  */
   border: solid 3px black;
   text-align: center;
 }
@@ -57,6 +59,7 @@ table{
 }
 
 canvas{
+  visibility: hidden;
   position: fixed;
   top: 0px;
   margin: 0px;
