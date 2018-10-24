@@ -88,7 +88,12 @@ div {
   height: 136px;
   perspective: 1000px;
 }
-
+.containerElegida{
+  padding:5px;
+  width: 200px;
+  height: 200px;
+  perspective: 1000px;
+}
 .card {
   transition: transform 2s;
   transform-style: preserve-3d;
