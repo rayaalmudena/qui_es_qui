@@ -9,7 +9,6 @@ var contadorPreguntas = 0;
 var pregunta_clicada=0;
 var pregunta_sinGirarCarta=0;
 
-// [[[[[[ELIMINAR ATRIBUTO SI NO SE VA A UTILIZAR (FUNCION PARA EL BOTON)]]]]]
 
 function flip(event){
     var element = event.currentTarget;
@@ -28,45 +27,46 @@ document.addEventListener('DOMContentLoaded', function(){
     //Hacer pregunta, deshabilitar boton "Easy" y sumar al contador de preguntas
     botonHacerPregunta = document.getElementById("hacerPregunta");
     botonHacerPregunta.addEventListener("click", botonActivado);
-    botonHacerPregunta.addEventListener("click", desaparecerBotonEasy2);
-});
-document.addEventListener('DOMContentLoaded', function(){//Activar modo Easy
-    botonHacerPregunta = document.getElementById("buttonEasy");
     botonHacerPregunta.addEventListener("click", desaparecerBotonEasy);
+});
+document.addEventListener('DOMContentLoaded', function(){
+    //Activar modo Easy
+    botonHacerPregunta = document.getElementById("buttonEasy");
+    botonHacerPregunta.addEventListener("click", activarModoEasy);
 });
 
 function botonActivado() {
-    //Todo esto es para el mensaje "Segur que vols realitzar un altre pregunta sense girar cap carta?"
-    if (pregunta_clicada==1 && pregunta_sinGirarCarta==contadorVolteo) {
+    sacarMensajeAlertaSinVolteo();
+    funcionContadorPreguntas();
+    preguntarAlServer();
+
+}
+
+function sacarMensajeAlertaSinVolteo() {
+    if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
         alert("Segur que vols realitzar un altre pregunta sense girar cap carta?")
     }
-    else if (pregunta_clicada>=1 && pregunta_sinGirarCarta==contadorVolteo) {
+    else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
         //nada
     }
     else{
         pregunta_clicada=0;
     }
-    pregunta_sinGirarCarta=contadorVolteo;
-    pregunta_clicada+=1;
-    //hasta aqui
-
-    funcionContadorPreguntas();
-    
-    preguntarAlServer();
-
+    pregunta_sinGirarCarta = contadorVolteo;
+    pregunta_clicada++;
 }
 
 function funcionContadorPreguntas() {
-    contadorPreguntas+=1;
+    contadorPreguntas++;
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
 }
 
-function desaparecerBotonEasy() {
+function activarModoEasy() {
     //Si activamos el boton easy, aparecera un texto diciendolo.
     document.getElementById("buttonEasy").style.display="none";
     document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
 }
-function desaparecerBotonEasy2() {
+function desaparecerBotonEasy() {
     //Si hacemos la pregunta, simplemente desactivara el boton
     document.getElementById("buttonEasy").style.display="none";
 }
