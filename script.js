@@ -11,41 +11,18 @@ var pregunta_sinGirarCarta=0;
 
 // [[[[[[ELIMINAR ATRIBUTO SI NO SE VA A UTILIZAR (FUNCION PARA EL BOTON)]]]]]
 
-/* pruebas girar carta
 function flip(event){
     var element = event.currentTarget;
     if (element.className === "card") {
     if(element.style.transform == "rotateY(180deg)") {
-      element.style.transform = "rotateY(0deg)";
-      
+        flipCardSound.play();
+        contadorVolteo++;
     }
     else {
       element.style.transform = "rotateY(180deg)";
     }
   }
-};*/
-
-
-function flip() {
-    var elemento = this;
-    // Aplicamos sonido de giro y contamos el volteo
-    if (elemento.getAttribute("src") != "cartas/back.png") {
-        flipCardSound.play();
-        contadorVolteo++;
-    }
-    // Ahora volteamos la carta
-    elemento.setAttribute("card", elemento.getAttribute("src"));
-    elemento.setAttribute("src", "cartas/back.png");
-    
-}
-
-document.addEventListener('DOMContentLoaded', function(){ 
-    cards = document.getElementsByClassName("card");
-    for (var i = 0; i < cards.length; i++) {
-        var card = cards[i];
-        card.addEventListener("click", flip);
-    }
-});
+};
 
 document.addEventListener('DOMContentLoaded', function(){//Hacer pregunta, deshabilitar boton "Easy" y sumar al contador de preguntas
     botonHacerPregunta = document.getElementById("hacerPregunta");
