@@ -261,6 +261,7 @@
 			
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
+			echo "<br>";
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
