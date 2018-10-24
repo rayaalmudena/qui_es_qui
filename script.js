@@ -12,21 +12,23 @@ var pregunta_sinGirarCarta=0;
 
 
 function flip(event){
-
     if (contadorVolteo >= 11) {
         return false;
-    }else{
-        var element = event.currentTarget;
-        if (element.className === "card") {
-            if(element.style.transform == "rotateY(180deg)") {
+    }
+    
+    else {
+    var element = event.currentTarget;
+    if (element.className === "card") {
+        if(element.style.transform == "rotateY(180deg)") {
 
-            } else {
-                element.style.transform = "rotateY(180deg)";
-                contadorVolteo++;
-                flipCardSound.play();
-            }
+        } else {
+            element.style.transform = "rotateY(180deg)";
+            contadorVolteo++;
+            flipCardSound.play();
         }
-    }if (contadorVolteo >= 11) {
+    }
+
+    if (contadorVolteo >= 11) {
         hasAcabado();
     }
 };
