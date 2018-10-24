@@ -14,12 +14,12 @@ var pregunta_sinGirarCarta=0;
 function flip(event){
     var element = event.currentTarget;
     if (element.className === "card") {
-    if(element.style.transform == "rotateY(180deg)") {
-        flipCardSound.play();
+    if(element.style.transform == "rotateY(180deg)") {        
         contadorVolteo++;
     }
     else {
       element.style.transform = "rotateY(180deg)";
+      flipCardSound.play();
     }
   }
 };
@@ -323,4 +323,4 @@ function windowResized(){
     setSize(canvas);
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, width, height);
-}
+}/////Fin FIREWORKS
