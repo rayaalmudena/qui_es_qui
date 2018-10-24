@@ -54,7 +54,22 @@ function botonActivado() {
 
 function sacarMensajeAlertaSinVolteo() {
     if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
-        alert("Segur que vols realitzar un altre pregunta sense girar cap carta?");
+
+        var modal_aviso = document.getElementById('AvisoPregunta');
+        var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+
+        modal_aviso.style.display = "block";
+        
+        boton_cerrar.onclick = function() {
+            modal_aviso.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal_aviso) {
+                modal_aviso.style.display = "none";
+            }
+        }
     }
     else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
         //nada
@@ -378,6 +393,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 });
+
 
 
 ////////////fin modal
