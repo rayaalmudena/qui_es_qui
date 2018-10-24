@@ -219,27 +219,35 @@
 			}
 			function cartaElegida($cartas){
 				$cartaElegida = $cartas[0];
-				echo "<img  src='cartas/$cartaElegida[nombre]'
+				echo "<img  src='cartas/back.png'
 				class='cartaElegida' carta='front'
 				gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]'
 				sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 			}
 			function tableroCartas($cartas){
-				$tabla='<table><tr>';
+				$tabla ="\n";
+				$tabla .='<table><tr>';
 				$c = 0;
+				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
-					$tabla .="\n\t<td>
-						<img src='cartas/$carta[nombre]' class='carta card'
-						gafas='$carta[gafas]' cabello='$carta[cabello]'
-						sexo='$carta[sexo]' name='$carta[nombre]'><td>";
+					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
+					$tabla .="\n";
+					$tabla .='<td><div class="container"><div class="card" onclick="flip(event)"><div class="front">
+';					$tabla .=$cartaImg;
+					$tabla .='</div><div class="back">';
+					$tabla .=$backCarta;	
+					$tabla .='</div></div></div><td>';
 					$c++;
 					if ($c==count($cartas)){
-						$tabla .="</tr>\n";	
-						$tabla .="</table>\n</div>";
+						$tabla .='</tr>';
+						$tabla .="\n";	
+						$tabla .='</table>';
+						$tabla .="\n";
 					}
 					if ($c%3==0 && $c!=count($cartas)){
-						$tabla .="\n</tr><tr>";
+						$tabla .="\n";
+						$tabla .='</tr><tr>';
 					}
 				}
 				return $tabla;
