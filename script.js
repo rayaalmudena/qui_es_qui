@@ -106,7 +106,6 @@ function preguntarAlServer() {
         // Esto es correcto
         responderAlJugador(id);
         
-        // ESTO SIRVE PARA SABER CON QUÉ COMPARAR CON EL SERVER
     } else if (semaforo == 1 || semaforo == 0) {
         document.getElementById('texto_salida').innerHTML =
         "No se pueden seleccionar más de dos elementos";
@@ -340,10 +339,6 @@ document.addEventListener('DOMContentLoaded', function(){
             modal.style.display = "none";
         }
     }
-
-
-    //botonHacerPregunta = document.getElementById("buttonEasy");
-    //botonHacerPregunta.addEventListener("click", activarModoEasy);
 });
 
 
