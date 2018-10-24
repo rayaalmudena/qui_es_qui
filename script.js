@@ -4,6 +4,10 @@ var contadorVolteo = 0;
 var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 
+//estas dos variables son para preguntar "Segur que vols realitzar un altre pregunta sense girar cap carta?"
+var pregunta_clicada=0;
+var preguntas_hechas=0;
+
 // [[[[[[ELIMINAR ATRIBUTO SI NO SE VA A UTILIZAR (FUNCION PARA EL BOTON)]]]]]
 
 /* pruebas girar carta
@@ -53,6 +57,17 @@ document.addEventListener('DOMContentLoaded', function(){//Activar modo Easy
 });
 
 function botonActivado() {
+    if (pregunta_clicada==1 && preguntas_hechas==contadorVolteo) {
+        alert("Segur que vols realitzar un altre pregunta sense girar cap carta?")
+    }
+    else if (pregunta_clicada>=1 && preguntas_hechas==contadorVolteo) {
+        //nada
+    }
+    else{
+        pregunta_clicada=0;
+    }
+    preguntas_hechas=contadorVolteo;
+    pregunta_clicada+=1;
     preguntarAlServer();
 
     if (contadorVolteo >= 11) {
