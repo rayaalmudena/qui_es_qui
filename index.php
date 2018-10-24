@@ -219,10 +219,16 @@
 			}
 			function cartaElegida($cartas){
 				$cartaElegida = $cartas[0];
-				echo "<img  src='cartas/back.png'
-				class='cartaElegida' carta='front'
-				gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]'
-				sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
+				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' 				gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]' sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
+				$backCarta="<img src='cartas/back.png'>";
+				$Elegida='<div class="container containerElegida"><div class="card cardE" onclick="flip(event)"><div class="front">';
+				$Elegida .=$backCarta;
+				$Elegida .='</div><div class="back">';
+				$Elegida .=$cartaElegida;
+				$Elegida .='</div></div></div><td>';
+				echo $Elegida;
+
+
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
