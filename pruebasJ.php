@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<title>¿Quién es quién?</title>
 	<link rel="stylesheet" type="text/css" href="style.css">	
-	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="pruenasJ.js"></script>
 </head>
 <body>
 	
@@ -258,7 +258,7 @@
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
-			echo '<canvas id="canvas" hidden></canvas>';
+			//echo '<canvas id="canvas" hidden></canvas>';
 
 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server

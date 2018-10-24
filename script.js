@@ -12,15 +12,22 @@ var pregunta_sinGirarCarta=0;
 
 
 function flip(event){
-    var element = event.currentTarget;
-    if (element.className === "card") {
-        if(element.style.transform == "rotateY(180deg)") {
 
-        } else {
-            element.style.transform = "rotateY(180deg)";
-            contadorVolteo++;
-            flipCardSound.play();
+    if (contadorVolteo >= 11) {
+        return false;
+    }else{
+        var element = event.currentTarget;
+        if (element.className === "card") {
+            if(element.style.transform == "rotateY(180deg)") {
+
+            } else {
+                element.style.transform = "rotateY(180deg)";
+                contadorVolteo++;
+                flipCardSound.play();
+            }
         }
+    }if (contadorVolteo >= 11) {
+        hasAcabado();
     }
 };
 
@@ -149,7 +156,9 @@ function responderAlJugador(id) {
     }
 }
 
-
+function hasAcabado(){
+    alert("Ya has acabado el juego");
+}
 
 ////Fireworks 
 "use strict";
