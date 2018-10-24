@@ -36,26 +36,29 @@ table{
 }
 
 #combobox {
-  position: absolute;
-  top: 20em;
-  left: 40em;
-  height: 100px;
-  width: 250px;
+  position: relative;
+  top: -500px;
+  left: 637px;
 }
 #buttonEasy{
-  position: absolute;
-  top: 17em;
-  left: 45em;
+  position: relative;
+  top: -750px;
+  left: 637px;
 }
 #textoEasy{
-  position: absolute;
-  top: 15em;
-  left: 40em;
+  position: relative;
+  top: -750px;
+  left: 637px;
 }
 #contador_preguntas{
-  position: absolute;
-  top: 14em;
-  left: 45em;
+  position: relative;
+  top: -640px;
+  left: 700px;
+}
+#p_contador_preguntas{
+  position: relative;
+  top: -650px;
+  left: 637px;
 }
 
 canvas{
