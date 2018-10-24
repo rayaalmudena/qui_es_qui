@@ -3,6 +3,14 @@ var botonHacerPregunta;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
+var nombre_carta;
+var gafas_carta;
+var cabello_carta;
+var sexo_carta;
+
+var pregunta_clicada=0;
+var preguntas_hechas=0;
+
 
 // [[[[[[ELIMINAR ATRIBUTO SI NO SE VA A UTILIZAR (FUNCION PARA EL BOTON)]]]]]
 
@@ -22,15 +30,24 @@ function flip(event){
 
 
 function flip() {
-    var elemento = this;
-    // Aplicamos sonido de giro y contamos el volteo
-    if (elemento.getAttribute("src") != "cartas/back.png") {
-        flipCardSound.play();
-        contadorVolteo++;
+
+    if (contadorVolteo >= 11) {
+        hasAcabado();
     }
-    // Ahora volteamos la carta
-    elemento.setAttribute("card", elemento.getAttribute("src"));
-    elemento.setAttribute("src", "cartas/back.png");
+    else{
+        var elemento = this;
+        // Aplicamos sonido de giro y contamos el volteo
+        if (elemento.getAttribute("src") != "cartas/back.png") {
+            flipCardSound.play();
+            contadorVolteo++;
+        }
+        // Ahora volteamos la carta
+        elemento.setAttribute("card", elemento.getAttribute("src"));
+        elemento.setAttribute("src", "cartas/back.png");
+    }
+    if (contadorVolteo >= 11) {
+        hasAcabado();
+    }
     
 }
 
@@ -48,17 +65,25 @@ document.addEventListener('DOMContentLoaded', function(){//Hacer pregunta y desh
     botonHacerPregunta.addEventListener("click", desaparecerBotonEasy2);
 });
 document.addEventListener('DOMContentLoaded', function(){//Activar modo Easy
-    botonHacerPregunta = document.getElementById("buttonEasy");
-    botonHacerPregunta.addEventListener("click", desaparecerBotonEasy);
+    botonEasy = document.getElementById("buttonEasy");
+    botonEasy.addEventListener("click", desaparecerBotonEasy);
 });
 
 function botonActivado() {
-    preguntarAlServer();
-
-    if (contadorVolteo >= 11) {
-
+    if (pregunta_clicada==1 && preguntas_hechas==contadorVolteo) {
+        alert("Segur que vols realitzar un altre pregunta sense girar cap carta?")
     }
+    else if (pregunta_clicada>=1 && preguntas_hechas==contadorVolteo) {
+        //nada
+    }
+    else{
+        pregunta_clicada=0;
+    }
+    preguntas_hechas=contadorVolteo;
+    pregunta_clicada+=1;
+    preguntarAlServer();
 }
+
 function desaparecerBotonEasy() {//Si activamos el boton easy, aparecera un texto diciendolo.
     document.getElementById("buttonEasy").style.display="none";
     document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
@@ -165,6 +190,11 @@ function preguntarAlServer() {
 
     resetearComboBox(id);
 }
+
+function hasAcabado(){
+    alert("Ya has acabado el juego");
+}
+
 
 function resetearComboBox(id) {
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
