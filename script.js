@@ -15,7 +15,13 @@ function flip(event) {
 
     var element = event.currentTarget;
     if (contadorVolteo >= 11) {
-        return false;
+        if(element.className == "card cardE"){
+            element.style.transform = "rotateY(180deg)";
+        }else{
+            return false;
+        }
+                   
+        
     }
     else{
         if (element.className != "card cardE") {
@@ -29,7 +35,7 @@ function flip(event) {
     if (contadorVolteo >= 11) {
         hasAcabado();
         var cartaS = document.getElementByClassName('cardE');
-        cartaS. element.style.transform = "rotateY(180deg)";
+        cartaS.element.style.transform = "rotateY(180deg)";
     }
   }
 
@@ -434,3 +440,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 ////////////fin modal
+
+
+///set intentos en input secreto en modulo nombre
+function setIntentos(){
+
+    document.modulonombre.intentos.value = contadorPreguntas;
+    document.forms["modulonombre"].submit();
+}
