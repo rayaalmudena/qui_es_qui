@@ -36,26 +36,29 @@ table{
 }
 
 #combobox {
-  position: absolute;
-  top: 20em;
-  left: 40em;
-  height: 100px;
-  width: 250px;
+  position: relative;
+  top: -500px;
+  left: 637px;
 }
 #buttonEasy{
-  position: absolute;
-  top: 17em;
-  left: 45em;
+  position: relative;
+  top: -750px;
+  left: 637px;
 }
 #textoEasy{
-  position: absolute;
-  top: 15em;
-  left: 40em;
+  position: relative;
+  top: -750px;
+  left: 637px;
 }
 #contador_preguntas{
-  position: absolute;
-  top: 14em;
-  left: 45em;
+  position: relative;
+  top: -500px;
+  left: 700px;
+}
+#p_contador_preguntas{
+  position: relative;
+  top: -500px;
+  left: 637px;
 }
 
 canvas{
@@ -65,7 +68,9 @@ canvas{
   margin: 0px;
   height: 100%;
   width: 100%;
+  z-index: -1;
 }
+
 #enlaceRecords{
   position: fixed;
   top: 0;
@@ -128,7 +133,19 @@ div {
   background-color: black;
   border: 3px solid red;
 }
+/*
+.back img{
+  width: 5px;
+} */
 
+#botonDeColorRojo{
+  height: 50px;
+  display: none;
+}
+#botonDeColorVerde{
+  height: 50px;
+  display: none;
+}
 
 /* ************************************************************ */
 /*A partir de aqui es el modal*/
@@ -155,6 +172,7 @@ div {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    height: 20%;
 }
 
 /* Para cerrar el boton */
@@ -164,10 +182,22 @@ div {
     font-size: 28px;
     font-weight: bold;
 }
+.cerrar_Aviso {
+  /*modal del aviso*/
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    margin: auto; display: block;
+}
+#letra_modal_aviso{
+  /*modal del aviso*/
+  font-size: 25px;
+  font-weight: bold;
+}
 
 /* Hover de la cruz para cerrar el modal*/
-.close:hover,
-.close:focus {
+.close:hover, .cerrar_Aviso:hover, 
+.close:focus, .cerrar_Aviso:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
