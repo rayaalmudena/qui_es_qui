@@ -13,6 +13,7 @@ var pregunta_sinGirarCarta=0;
 
 function flip(event) {
 
+    var element = event.currentTarget;
     if (contadorVolteo >= 11) {
         return false;
     }
@@ -34,7 +35,7 @@ function flip(event) {
         var cartaS = document.getElementByClassName('cardE');
         cartaS.element.style.transform = "rotateY(180deg)";
     }
-}
+  }
 
 document.addEventListener('DOMContentLoaded', function(){
     // Activa el botón y todas las funciones que hay dentro de él
