@@ -42,12 +42,12 @@ table{
 }
 #buttonEasy{
   position: relative;
-  top: -750px;
+  top: -500px;
   left: 637px;
 }
 #textoEasy{
   position: relative;
-  top: -750px;
+  top: -500px;
   left: 637px;
 }
 #contador_preguntas{
@@ -72,10 +72,10 @@ canvas{
 }
 
 #enlaceRecords{
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 245px;
   right: 0;  
-  padding:5px;
+  padding:13px;
   border:1px solid black;
   background-color: #dfc416;
 }
@@ -94,10 +94,14 @@ div {
   perspective: 1000px;
 }
 .containerElegida{
+  position: absolute;
+  top: 0;
+  right: 0;
   padding:5px;
   width: 200px;
   height: 200px;
   perspective: 1000px;
+  background-color: white;
 }
 .card {
   transition: transform 2s;
@@ -206,3 +210,11 @@ div {
 
 /* ************************************************************ */
 /*Aqui acaba el modal*/
+#myBtn{ 
+  position: absolute;
+  top: 290px;
+  right: 0;  
+  padding:10px;
+  border:1px solid black;
+  background-color: #8d95e4;
+}

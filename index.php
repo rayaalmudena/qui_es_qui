@@ -290,7 +290,7 @@
 
 <!-- Comienza el modal -->
 <!-- Trigger/Open The Modal -->
-<button id="myBtn">Nombre</button>
+<button id="myBtn">Escribe tu nombre AQUÍ</button>
 
 <!-- The Modal -->
 <div id="myModal" class="modal">

@@ -12,23 +12,23 @@ var pregunta_sinGirarCarta=0;
 
 
 function flip(event) {
+
+    var element = event.currentTarget;
     if (contadorVolteo >= 11) {
         return false;
     }
     else{
-        var element = event.currentTarget;
         if (element.className != "card cardE") {
-            if(element.style.transform == "rotateY(180deg)") {
-
-            } else {
                 element.style.transform = "rotateY(180deg)";
                 contadorVolteo++;
                 flipCardSound.play();
-            }
+            
         }
     }
 
     if (contadorVolteo >= 11) {
+        var cartaS = document.getElementByClassName('cardE');
+        cartaS. element.style.transform = "rotateY(180deg)";
         hasAcabado();
     }
   }
