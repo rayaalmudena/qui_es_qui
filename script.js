@@ -185,6 +185,7 @@ function responderAlJugador(id) {
 
 function hasAcabado(){
     var endGame = compararServerConUsuario();
+
     if (endGame == true) {
         document.getElementById("canvas").style.visibility = "visible";
         // Aqui va el modal de haber ganado
