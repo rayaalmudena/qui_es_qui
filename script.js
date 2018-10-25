@@ -15,7 +15,13 @@ function flip(event) {
 
     var element = event.currentTarget;
     if (contadorVolteo >= 11) {
-        return false;
+        if(element.className == "card cardE"){
+            element.style.transform = "rotateY(180deg)";
+        }else{
+            return false;
+        }
+                   
+        
     }
     else{
         if (element.className != "card cardE") {
@@ -27,8 +33,6 @@ function flip(event) {
     }
 
     if (contadorVolteo >= 11) {
-        var cartaS = document.getElementByClassName('cardE');
-        cartaS. element.style.transform = "rotateY(180deg)";
         hasAcabado();
     }
   }

@@ -5,6 +5,8 @@ body{
 .cartaElegida {
   height: 200px;
   background-image: url("cartas/backgroundCS.png");
+  background-repeat: repeat;
+  background-size: 150px;
   border: solid 3px black;
   text-align: center;
 }
@@ -103,7 +105,11 @@ div {
   width: 200px;
   height: 200px;
   perspective: 1000px;
-  background-color: white;
+}
+.containerElegida .front{
+  background-image: url("cartas/backgroundCS.png");
+  background-repeat: repeat;
+  background-size: 150px;
 }
 .card {
   transition: transform 2s;
