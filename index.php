@@ -196,8 +196,8 @@
 					$carta=$cartas[$c];
 					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" onclick="flip(event)"><div class="front">
-';					$tabla .=$cartaImg;
+					$tabla .='<td><div class="container"><div class="card" onclick="flip(event)"><div class="front">';
+					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
 					$tabla .='</div></div></div><td>';
@@ -284,6 +284,17 @@
 			<p id='cabello_php-js' hidden>$cabello_carta</p>
 			<p id='sexo_php-js' hidden>$sexo_carta</p>";
 		}
+
+
+		function submitRecord()	{
+			$nombreUsusario=$_GET['nombreJugador'];	
+			echo "$nombreUsusario";
+			$intentos=$_GET['contador_preguntas'];	
+			$file = fopen("taularecords.txt", "a");
+			$txt = "$intentos"+" "+"$nombreUsusario"+"\n";
+			fwrite($file, $txt);
+			fclose($file);
+		}
 	?>
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
@@ -297,9 +308,14 @@
 
   <!-- Modal content -->
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Escribe tu nombre o nick:</p>
-    <input type="text" name="nombreJugador">
+    <span class="close">&times;</span>    
+    <form id="modulonombre" name="modulonombre" action="" method="get">
+    <p>Escribe tu nombre o nick para guardar récord:</p>
+    <input type="text" name="nombreJugador"><br>
+    <input type="hidden" name="intentos" id="intentos" value="">
+    <button onclick="setIntentos();submitRecord()">Aceptar</button>
+    <button type="reset" value="Reset">Reset</button></form>
+
   </div>
 
 </div>
