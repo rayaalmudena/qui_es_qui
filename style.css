@@ -52,12 +52,12 @@ table{
 }
 #contador_preguntas{
   position: relative;
-  top: -640px;
+  top: -500px;
   left: 700px;
 }
 #p_contador_preguntas{
   position: relative;
-  top: -650px;
+  top: -500px;
   left: 637px;
 }
 
