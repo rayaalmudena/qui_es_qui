@@ -409,3 +409,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 ////////////fin modal
+
+
+///set intentos en input secreto en modulo nombre
+function setIntentos(){
+
+    document.modulonombre.intentos.value = contadorPreguntas;
+    document.forms["modulonombre"].submit();
+}
