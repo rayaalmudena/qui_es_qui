@@ -189,7 +189,7 @@ div {
     font-size: 28px;
     font-weight: bold;
 }
-.cerrar_Aviso {
+.cerrar_Aviso, .fin_Opcion_Si, .fin_Opcion_No {
   /*modal del aviso*/
     color: #aaaaaa;
     font-size: 28px;
@@ -203,8 +203,8 @@ div {
 }
 
 /* Hover de la cruz para cerrar el modal*/
-.close:hover, .cerrar_Aviso:hover, 
-.close:focus, .cerrar_Aviso:focus {
+.close:hover, .cerrar_Aviso:hover, .fin_Opcion_Si:hover,
+.close:focus, .cerrar_Aviso:focus, .fin_Opcion_No:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;

@@ -320,5 +320,20 @@
 </div>
 <!-- acaba el modal -->
 
+<!-- Comienza el modal del fin del juego-->
+
+<div id="Fin_del_juego" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <p style="text-align: center;" id="letra_modal_aviso">Has acabado el juego!, Quieres guardar tu puntuacion?</p>
+	<button class="fin_Opcion_Si">Si</button>
+	<button class="fin_Opcion_No">No</button>
+
+  </div>
+
+</div>
+<!-- acaba el modal -->
+
 </body>
 </html>
