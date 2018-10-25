@@ -144,50 +144,7 @@
 		else{
 			//en caso de que no hayan errores, se iniciara el programa:
 		
-			?>
-
-			<p id="textoEasy"></p>	
-			<button id="buttonEasy">EASY</button>
-			<p id="contador_preguntas"></p>
-
-			<div id="combobox">
-
-				<p>¿Qué lleva? </p>
-				<select id="gafas" class="cbox gafas">
-					<option  name="gafas" value="---">---</option>
-					<option  name="gafas" value="si">Gafas</option>
-					<option  name="gafas" value="no">Nada</option>
-				</select>
-
-				<br>
-
-				<p>¿Su pelo es... ? </p>
-				<select id="cabello" class="cbox cabello">
-					<option name="cabello" value="---">---</option>
-					<option name="cabello" value="moreno">Moreno</option>
-					<option name="cabello" value="rubio">Rubio</option>
-					<option name="cabello" value="pelirrojo">Pelirrojo</option>
-				</select>
-
-				<br>
-
-				<p>¿La persona es... ?</p>
-				<select id="sexo" class="cbox sexo">
-					<option name="sexo" value="---">---</option>
-					<option name="sexo" value="hombre">Hombre</option>
-					<option name="sexo" value="mujer">Mujer</option>
-				</select>
-
-				<br><br>
-				
-				<button id="hacerPregunta">Fes la pregunta</button>
-
-				<br>
-				<p id="texto_salida"></p>
-
-			</div>
-
-			<?php 
+			
 			function arrayCartas(){
 				$cartas=[];
 				$contador=1;
@@ -261,10 +218,59 @@
 			
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
+			echo "<br>";
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
-			//echo '<canvas id="canvas"></canvas>';
+			echo '<canvas id="canvas"></canvas>';
+
+
+			?>
+
+			<p id="textoEasy"></p>	
+			<button id="buttonEasy">EASY</button>
+			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
+
+			<div id="combobox">
+
+				<p>¿Qué lleva? </p>
+				<select id="gafas" class="cbox gafas">
+					<option  name="gafas" value="---">---</option>
+					<option  name="gafas" value="si">Gafas</option>
+					<option  name="gafas" value="no">Nada</option>
+				</select>
+
+				<br>
+
+				<p>¿Su pelo es... ? </p>
+				<select id="cabello" class="cbox cabello">
+					<option name="cabello" value="---">---</option>
+					<option name="cabello" value="moreno">Moreno</option>
+					<option name="cabello" value="rubio">Rubio</option>
+					<option name="cabello" value="pelirrojo">Pelirrojo</option>
+				</select>
+
+				<br>
+
+				<p>¿La persona es... ?</p>
+				<select id="sexo" class="cbox sexo">
+					<option name="sexo" value="---">---</option>
+					<option name="sexo" value="hombre">Hombre</option>
+					<option name="sexo" value="mujer">Mujer</option>
+				</select>
+
+				<br><br>
+				
+				<button id="hacerPregunta">Fes la pregunta</button>
+
+				<br>
+				<p id="texto_salida"></p>
+				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
+				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
+
+			</div>
+
+			<?php 
 
 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
@@ -281,6 +287,8 @@
 	?>
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
+
+<!-- Comienza el modal -->
 <!-- Trigger/Open The Modal -->
 <button id="myBtn">Nombre</button>
 
@@ -295,6 +303,22 @@
   </div>
 
 </div>
+<!-- acaba el modal -->
+
+
+<!-- Comienza el modal del aviso -->
+
+<div id="AvisoPregunta" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <p style="text-align: center;" id="letra_modal_aviso">Has preguntado sin girar carta!</p>
+	<button class="cerrar_Aviso">Ok</button>
+
+  </div>
+
+</div>
+<!-- acaba el modal -->
 
 </body>
 </html>

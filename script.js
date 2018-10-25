@@ -11,7 +11,7 @@ var pregunta_clicada=0;
 var pregunta_sinGirarCarta=0;
 
 
-function flip(event){
+function flip(event) {
     if (contadorVolteo >= 11) {
         return false;
     }
@@ -50,12 +50,26 @@ function botonActivado() {
     sacarMensajeAlertaSinVolteo();
     funcionContadorPreguntas();
     preguntarAlServer();
-
 }
 
 function sacarMensajeAlertaSinVolteo() {
     if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
-        alert("Segur que vols realitzar un altre pregunta sense girar cap carta?");
+
+        var modal_aviso = document.getElementById('AvisoPregunta');
+        var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+
+        modal_aviso.style.display = "block";
+        
+        boton_cerrar.onclick = function() {
+            modal_aviso.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal_aviso) {
+                modal_aviso.style.display = "none";
+            }
+        }
     }
     else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
         //nada
@@ -77,6 +91,7 @@ function activarModoEasy() {
     document.getElementById("buttonEasy").style.display="none";
     document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
 }
+
 function desaparecerBotonEasy() {
     //Si hacemos la pregunta, simplemente desactivara el boton
     document.getElementById("buttonEasy").style.display="none";
@@ -97,6 +112,9 @@ function preguntarAlServer() {
             semaforo++;            
         }
     }
+    //Si no se deshabilita el gif, aparecera doble cuando se vuelva a hacer otra pregunta
+    document.getElementById("botonDeColorVerde").style.display = "none";
+    document.getElementById("botonDeColorRojo").style.display = "none";
 
     if (semaforo == 3) {
         document.getElementById('texto_salida').innerHTML =
@@ -136,31 +154,77 @@ function responderAlJugador(id) {
     if (id == "gafas") {
         if (llevaGafas.value == gafas_carta && llevaGafas.value != "---") {
             document.getElementById('texto_salida').innerHTML = "SI";
+            document.getElementById("botonDeColorVerde").style.display = "block";
         } else {
             document.getElementById('texto_salida').innerHTML = "NO";
+            document.getElementById("botonDeColorRojo").style.display = "block";
         }
     
     } else if (id == "cabello") {
         if (llevaCabello.value == cabello_carta && llevaCabello.value != "---") {
             document.getElementById('texto_salida').innerHTML = "SI";
+            document.getElementById("botonDeColorVerde").style.display = "block";
         } else {
             document.getElementById('texto_salida').innerHTML = "NO";
+            document.getElementById("botonDeColorRojo").style.display = "block";
         }
     } else if (id == "sexo") {
         if (llevaSexo.value == sexo_carta && llevaSexo.value != "---") {
             document.getElementById('texto_salida').innerHTML = "SI";
+            document.getElementById("botonDeColorVerde").style.display = "block";
         } else {
             document.getElementById('texto_salida').innerHTML = "NO";
+            document.getElementById("botonDeColorRojo").style.display = "block";
         }
     } else {
         document.getElementById('texto_salida').innerHTML = "ERROR";
+        document.getElementById("botonDeColorVerde").style.display = "none";
+        document.getElementById("botonDeColorRojo").style.display = "none";
     }
 }
 
 function hasAcabado(){
-    document.getElementById("canvas").style.visibility = "visible";
-    // Aqui va el modal
+    var endGame = compararServerConUsuario();
+    if (endGame == true) {
+        document.getElementById("canvas").style.visibility = "visible";
+        // Aqui va el modal de haber ganado
+    } else {
+        // Modal diciendole al jugador que perdió, hacer refresh de la página
+    }
+    
 }
+
+function compararServerConUsuario() {
+    //var cartaFinal = recogerCartaUsuario();
+    var cartaServidor = recogerCartaServidor();
+    /*
+    if (cartaFinal == cartaServidor) {
+        return true;
+    }
+    */
+    return false;
+}
+function recogerCartaServidor() {
+    var cartaServidor = document.getElementsByClassName("cartaElegida")[0];
+    return cartaServidor.name;
+}
+
+// No me sale :(
+function recogerCartaUsuario() {
+    // Aqui compararemos la imagen que tiene el server con la que tiene el usuario
+    arrayCartasPosibles = document.getElementsByClassName("card");
+    var cartaUsuario;
+    for (var i = 0; i < arrayCartasPosibles.length; i++) {
+        var elemento = arrayCartasPosibles[i].classList.value
+        
+        if (elemento == "carta card") {
+            cartaUsuario = arrayCartasPosibles[i];
+            alert(cartaUsuario);
+            return cartaUsuario.name;
+        }
+    }
+}
+
 
 ////Fireworks 
 "use strict";
@@ -173,7 +237,7 @@ function setup() {
     canvas = document.getElementById("canvas");
     setSize(canvas);
     ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, width, height);
     fireworks.push(new Firework(Math.random()*(width-200)+100));
     window.addEventListener("resize",windowResized);
@@ -184,7 +248,7 @@ setTimeout(setup,1);
 
 function loop(){
     ctx.globalAlpha = 0.1;
-    ctx.fillStyle = "#22264b";
+    ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, width, height);
     ctx.globalAlpha = 1;
 
@@ -200,7 +264,7 @@ function loop(){
         if(particles[i].lifetime>90) particles.splice(i,1);
     }
 
-    if(Math.random()<1/60) fireworks.push(new Firework(Math.random()*(width-200)+100));
+    if(Math.random()<1/60) fireworks.push(new Firework(Math.random()*(width-200)+50));
 }
 setInterval(loop, 1/50);
 class Particle{
@@ -340,6 +404,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 });
+
 
 
 ////////////fin modal
