@@ -265,6 +265,8 @@
 
 				<br>
 				<p id="texto_salida"></p>
+				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
+				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
 
 			</div>
 

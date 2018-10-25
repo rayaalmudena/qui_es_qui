@@ -138,6 +138,14 @@ div {
   width: 5px;
 } */
 
+#botonDeColorRojo{
+  height: 50px;
+  display: none;
+}
+#botonDeColorVerde{
+  height: 50px;
+  display: none;
+}
 
 /* ************************************************************ */
 /*A partir de aqui es el modal*/
