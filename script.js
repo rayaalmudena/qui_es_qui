@@ -112,6 +112,9 @@ function preguntarAlServer() {
             semaforo++;            
         }
     }
+    //Si no se deshabilita el gif, aparecera doble cuando se vuelva a hacer otra pregunta
+    document.getElementById("botonDeColorVerde").style.display = "none";
+    document.getElementById("botonDeColorRojo").style.display = "none";
 
     if (semaforo == 3) {
         document.getElementById('texto_salida').innerHTML =
@@ -151,24 +154,32 @@ function responderAlJugador(id) {
     if (id == "gafas") {
         if (llevaGafas.value == gafas_carta && llevaGafas.value != "---") {
             document.getElementById('texto_salida').innerHTML = "SI";
+            document.getElementById("botonDeColorVerde").style.display = "block";
         } else {
             document.getElementById('texto_salida').innerHTML = "NO";
+            document.getElementById("botonDeColorRojo").style.display = "block";
         }
     
     } else if (id == "cabello") {
         if (llevaCabello.value == cabello_carta && llevaCabello.value != "---") {
             document.getElementById('texto_salida').innerHTML = "SI";
+            document.getElementById("botonDeColorVerde").style.display = "block";
         } else {
             document.getElementById('texto_salida').innerHTML = "NO";
+            document.getElementById("botonDeColorRojo").style.display = "block";
         }
     } else if (id == "sexo") {
         if (llevaSexo.value == sexo_carta && llevaSexo.value != "---") {
             document.getElementById('texto_salida').innerHTML = "SI";
+            document.getElementById("botonDeColorVerde").style.display = "block";
         } else {
             document.getElementById('texto_salida').innerHTML = "NO";
+            document.getElementById("botonDeColorRojo").style.display = "block";
         }
     } else {
         document.getElementById('texto_salida').innerHTML = "ERROR";
+        document.getElementById("botonDeColorVerde").style.display = "none";
+        document.getElementById("botonDeColorRojo").style.display = "none";
     }
 }
 
