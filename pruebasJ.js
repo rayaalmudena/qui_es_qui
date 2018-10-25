@@ -10,6 +10,36 @@ var contadorPreguntas = 0;
 var pregunta_clicada=0;
 var pregunta_sinGirarCarta=0;
 
+/*
+function flip(event) {
+
+    var element = event.currentTarget;
+    if (contadorVolteo >= 11) {
+        if(element.className == "card cardE"){
+            element.style.transform = "rotateY(180deg)";
+        }else{
+            return false;
+        }
+                   
+        
+    }
+    else{
+        if (element.className != "card cardE") {
+                element.style.transform = "rotateY(180deg)";
+                contadorVolteo++;
+                flipCardSound.play();
+            
+        }
+    }
+
+    if (contadorVolteo >= 11) {
+        hasAcabado();
+        var cartaS = document.getElementByClassName('cardE');
+        cartaS.element.style.transform = "rotateY(180deg)";
+    }
+  }
+  */
+
 
 function flip(event){
 
