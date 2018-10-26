@@ -421,10 +421,10 @@ function windowResized(){
 
 document.addEventListener('DOMContentLoaded', function(){
 
-    var modal = document.getElementById('myModal');
+    var modal = document.getElementById('modal_guardar_nombre');
 
     // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
+    var btn = document.getElementById("abrir_introducir_nombre");
 
     // Get the <span> element that closes the modal
     var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];

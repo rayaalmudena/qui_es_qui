@@ -236,3 +236,11 @@ div {
   border:1px solid black;
   background-color: #8d95e4;
 }
+#abrir_introducir_nombre{ 
+  position: absolute;
+  top: 290px;
+  right: 5px;  
+  padding:10px;
+  border:1px solid black;
+  background-color: #8d95e4;
+}

@@ -300,37 +300,27 @@
 			<p id='sexo_php-js' hidden>$sexo_carta</p>";
 		}
 
-
-		function submitRecord()	{
-			$nombreUsusario=$_GET['nombreJugador'];	
-			echo "$nombreUsusario";
-			$intentos=$_GET['contador_preguntas'];	
-			$file = fopen("taularecords.txt", "a");
-			$txt = "$intentos"+" "+"$nombreUsusario"+"\n";
-			fwrite($file, $txt);
-			fclose($file);
-		}
 	?>
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
 
 <!-- Comienza el modal -->
 <!-- Trigger/Open The Modal -->
-<button id="myBtn">Escribe tu nombre AQUÍ</button>
+<button id="abrir_introducir_nombre">Escribe tu nombre AQUÍ</button>
 
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="modal_guardar_nombre" class="modal">
 
   <!-- Modal content -->
   <div class="modal-content">
   	<!-------------------------------------------------------------------------------------------------------------------------------- -->
     <span class="Cerrar_Ventana_Usuario">&times;</span>    
-    <form id="modulonombre" name="modulonombre" action="" method="get">
-    <p>Escribe tu nombre o nick para guardar récord:</p>
-    <input type="text" name="nombreJugador"><br>
-    <input type="hidden" name="intentos" id="intentos" value="">
-    <button onclick="setIntentos();submitRecord()">Aceptar</button>
-    <button type="reset" value="Reset">Reset</button></form>
+    <form>
+	    <p>Escribe tu nombre o nick para guardar récord:</p>
+	    <input type="text" name="nombreJugador"><br>
+	    <button>Aceptar</button>
+	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>
+	</form>
 
   </div>
 
