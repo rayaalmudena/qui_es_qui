@@ -218,6 +218,9 @@
 			//echo '<canvas id="canvas"></canvas>';
 			?>
 
+			
+
+
 			<p id="textoEasy"></p>	
 			<button id="buttonEasy">EASY</button>
 			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
@@ -292,6 +295,13 @@
   </div>
 
 </div>
-
+<div id="comboDif">
+				<p>Elige dificultad </p>
+				<select id="dificultad" class="cboxdificultad">
+					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
+					<option  name="dificultad" value="easy">EASY</option>
+					<option  name="dificultad" value="veryEasy">VERY EASY</option>
+				</select>
+			</div>
 </body>
 </html>

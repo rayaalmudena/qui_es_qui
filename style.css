@@ -42,9 +42,10 @@ table{
   padding: 10px;  
 }
 
-#combobox {
+
+#comboDif{  
   position: relative;
-  top: -500px;
+  top:-500px;
   left: 637px;
 }
 #buttonEasy{
@@ -67,7 +68,11 @@ table{
   top: -500px;
   left: 637px;
 }
-
+#combobox {
+  position: relative;
+  top: -500px;
+  left: 637px;
+}
 canvas{
   visibility: hidden;
   position: fixed;
