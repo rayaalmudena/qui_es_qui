@@ -10,6 +10,9 @@ body{
   border: solid 3px black;
   text-align: center;
 }
+.container.card.back{
+  height: 200px;
+}
 
 .carta{
   height: 134px;
@@ -39,9 +42,10 @@ table{
   padding: 10px;  
 }
 
-#combobox {
+
+#comboDif{  
   position: relative;
-  top: -500px;
+  top:-500px;
   left: 637px;
 }
 #buttonEasy{
@@ -64,7 +68,11 @@ table{
   top: -500px;
   left: 637px;
 }
-
+#combobox {
+  position: relative;
+  top: -500px;
+  left: 637px;
+}
 canvas{
   visibility: hidden;
   position: fixed;
@@ -151,7 +159,7 @@ div {
 } */
 
 #botonDeColorRojo{
-  height: 50px;
+  height: 25px;
   display: none;
 }
 #botonDeColorVerde{
