@@ -10,6 +10,9 @@ body{
   border: solid 3px black;
   text-align: center;
 }
+.container.card.back{
+  height: 200px;
+}
 
 .carta{
   height: 134px;
@@ -151,7 +154,7 @@ div {
 } */
 
 #botonDeColorRojo{
-  height: 50px;
+  height: 25px;
   display: none;
 }
 #botonDeColorVerde{
