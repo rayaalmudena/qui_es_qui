@@ -1,8 +1,12 @@
+body{
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 .cartaElegida {
   height: 200px;
-  /* almudena pon la imagen normal
-  background:url("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0516/3875/rQmark_shop_preview.png");
-  */
+  background-image: url("cartas/backgroundCS.png");
+  background-repeat: repeat;
+  background-size: 150px;
   border: solid 3px black;
   text-align: center;
 }
@@ -19,7 +23,7 @@ table{
 }
 #records {
   border-collapse: collapse;
-  width: 100%;
+  width: 50%;
   background-color: #93df8a ;
   border-style: solid;  
 
@@ -42,12 +46,12 @@ table{
 }
 #buttonEasy{
   position: relative;
-  top: -750px;
+  top: -500px;
   left: 637px;
 }
 #textoEasy{
   position: relative;
-  top: -750px;
+  top: -500px;
   left: 637px;
 }
 #contador_preguntas{
@@ -72,10 +76,10 @@ canvas{
 }
 
 #enlaceRecords{
-  position: fixed;
-  top: 0;
-  right: 0;  
-  padding:5px;
+  position: absolute;
+  top: 245px;
+  right: 5px;  
+  padding:13px;
   border:1px solid black;
   background-color: #dfc416;
 }
@@ -94,10 +98,18 @@ div {
   perspective: 1000px;
 }
 .containerElegida{
+  position: absolute;
+  top: 0;
+  right: 0;
   padding:5px;
   width: 200px;
   height: 200px;
   perspective: 1000px;
+}
+.containerElegida .front{
+  background-image: url("cartas/backgroundCS.png");
+  background-repeat: repeat;
+  background-size: 150px;
 }
 .card {
   transition: transform 2s;
@@ -182,7 +194,7 @@ div {
     font-size: 28px;
     font-weight: bold;
 }
-.cerrar_Aviso {
+.cerrar_Aviso, .fin_Opcion_Si, .fin_Opcion_No {
   /*modal del aviso*/
     color: #aaaaaa;
     font-size: 28px;
@@ -196,8 +208,8 @@ div {
 }
 
 /* Hover de la cruz para cerrar el modal*/
-.close:hover, .cerrar_Aviso:hover, 
-.close:focus, .cerrar_Aviso:focus {
+.close:hover, .cerrar_Aviso:hover, .fin_Opcion_Si:hover,
+.close:focus, .cerrar_Aviso:focus, .fin_Opcion_No:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -206,3 +218,11 @@ div {
 
 /* ************************************************************ */
 /*Aqui acaba el modal*/
+#myBtn{ 
+  position: absolute;
+  top: 290px;
+  right: 5px;  
+  padding:10px;
+  border:1px solid black;
+  background-color: #8d95e4;
+}

@@ -1,0 +1,21 @@
+Looking for git in: git
+Using git 2.17.1 from git
+> git rev-parse --show-toplevel
+> git config --get commit.template
+Open repository: /var/www/html/qui_es_qui
+> git status -z -u
+> git show :script.js
+> git symbolic-ref --short HEAD
+> git rev-parse desarrollo
+> git rev-parse --symbolic-full-name desarrollo@{u}
+> git rev-list --left-right desarrollo...refs/remotes/origin/desarrollo
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :script.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse desarrollo
+> git rev-parse --symbolic-full-name desarrollo@{u}
+> git rev-list --left-right desarrollo...refs/remotes/origin/desarrollo
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose

@@ -13,6 +13,8 @@ var pregunta_sinGirarCarta=0;
 
 
 function flip(event) {
+
+    var element = event.currentTarget;
     if (contadorVolteo >= 11) {
         return false;
     }
@@ -31,6 +33,8 @@ function flip(event) {
 
     if (contadorVolteo >= 11) {
         hasAcabado();
+        var cartaS = document.getElementByClassName('cardE');
+        cartaS.element.style.transform = "rotateY(180deg)";
     }
   }
 
@@ -185,8 +189,33 @@ function responderAlJugador(id) {
 }
 
 function hasAcabado(){
-    mostrarCartaServer();
+
+    ////Modal
+    var modal_fin_juego = document.getElementById('Fin_del_juego');
+    var boton_NoGuardar = document.getElementsByClassName("fin_Opcion_No")[0];
+    var boton_Guardar = document.getElementsByClassName("fin_Opcion_Si")[0];
+
+    modal_fin_juego.style.display = "block";
+        
+    boton_NoGuardar.onclick = function() {
+       modal_fin_juego.style.display = "none";
+    }
+    boton_Guardar.onclick = function() {
+    document.getElementById("canvas").style.visibility = "visible";
+       modal_fin_juego.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal_fin_juego) {
+            modal_fin_juego.style.display = "none";
+        }
+    }
+    ///Fin modal
+
+
     var endGame = compararServerConUsuario();
+
     if (endGame == true) {
         document.getElementById("canvas").style.visibility = "visible";
         // Aqui va el modal de haber ganado
@@ -421,3 +450,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 ////////////fin modal
+
+
+///set intentos en input secreto en modulo nombre
+function setIntentos(){
+
+    document.modulonombre.intentos.value = contadorPreguntas;
+    document.forms["modulonombre"].submit();
+}

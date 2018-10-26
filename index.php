@@ -196,8 +196,8 @@
 					$carta=$cartas[$c];
 					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" onclick="flip(event)"><div class="front">
-';					$tabla .=$cartaImg;
+					$tabla .='<td><div class="container"><div class="card" onclick="flip(event)"><div class="front">';
+					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
 					$tabla .='</div></div></div><td>';
@@ -284,22 +284,38 @@
 			<p id='cabello_php-js' hidden>$cabello_carta</p>
 			<p id='sexo_php-js' hidden>$sexo_carta</p>";
 		}
+
+
+		function submitRecord()	{
+			$nombreUsusario=$_GET['nombreJugador'];	
+			echo "$nombreUsusario";
+			$intentos=$_GET['contador_preguntas'];	
+			$file = fopen("taularecords.txt", "a");
+			$txt = "$intentos"+" "+"$nombreUsusario"+"\n";
+			fwrite($file, $txt);
+			fclose($file);
+		}
 	?>
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
 
 <!-- Comienza el modal -->
 <!-- Trigger/Open The Modal -->
-<button id="myBtn">Nombre</button>
+<button id="myBtn">Escribe tu nombre AQUÍ</button>
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Escribe tu nombre o nick:</p>
-    <input type="text" name="nombreJugador">
+    <span class="close">&times;</span>    
+    <form id="modulonombre" name="modulonombre" action="" method="get">
+    <p>Escribe tu nombre o nick para guardar récord:</p>
+    <input type="text" name="nombreJugador"><br>
+    <input type="hidden" name="intentos" id="intentos" value="">
+    <button onclick="setIntentos();submitRecord()">Aceptar</button>
+    <button type="reset" value="Reset">Reset</button></form>
+
   </div>
 
 </div>
@@ -314,6 +330,21 @@
   <div class="modal-content">
     <p style="text-align: center;" id="letra_modal_aviso">Has preguntado sin girar carta!</p>
 	<button class="cerrar_Aviso">Ok</button>
+
+  </div>
+
+</div>
+<!-- acaba el modal -->
+
+<!-- Comienza el modal del fin del juego-->
+
+<div id="Fin_del_juego" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <p style="text-align: center;" id="letra_modal_aviso">Has acabado el juego!, Quieres guardar tu puntuacion?</p>
+	<button class="fin_Opcion_Si">Si</button>
+	<button class="fin_Opcion_No">No</button>
 
   </div>
 
