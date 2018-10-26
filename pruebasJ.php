@@ -29,6 +29,7 @@
 				//guarda en un array el archivo de configuracion, es el array de las gafas
 				if (strpos($config_array[0], " ")){
 					//sirve para encontrar si existe el espacio para poder meterlo en un array
+					/////////////////////////////////////////////////////////////////////
 					list($config_gafas_1, $config_gafas_2, $config_gafas_3, $config_gafas_4, $config_gafas_5) = explode(" ", $config_array[0]);
 					$config_array_gafas[0]=$config_gafas_2;
 					$config_array_gafas[1]=$config_gafas_3;
@@ -38,6 +39,8 @@
 				//guarda en un array el archivo de configuracion, es el array del cabello
 				if (strpos($config_array[1], " ")){
 					//sirve para encontrar si existe el espacio para poder meterlo en un array
+										/////////////////////////////////////////////////////////////////////
+
 					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4, $config_cabello_5, $config_cabello_6) =
 						explode(" ", $config_array[1]);
 					$config_array_cabello[0]=$config_cabello_2;
@@ -49,6 +52,8 @@
 				//guarda en un array el archivo de configuracion, es el array del sexo
 				if (strpos($config_array[2], " ")){
 					//sirve para encontrar si existe el espacio para poder meterlo en un array
+										/////////////////////////////////////////////////////////////////////
+
 					list($config_sexo_1, $config_sexo_2, $config_sexo_3, $config_sexo_4, $config_sexo_5) = explode(" ", $config_array[2]);
 					$config_array_sexo[0]=$config_sexo_2;
 					$config_array_sexo[1]=$config_sexo_3;
@@ -318,7 +323,8 @@
 
   <!-- Modal content -->
   <div class="modal-content">
-    <span class="close">&times;</span>    
+  	<!-------------------------------------------------------------------------------------------------------------------------------- -->
+    <span class="Cerrar_Ventana_Usuario">&times;</span>    
     <form id="modulonombre" name="modulonombre" action="" method="get">
     <p>Escribe tu nombre o nick para guardar récord:</p>
     <input type="text" name="nombreJugador"><br>

@@ -427,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var btn = document.getElementById("myBtn");
 
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
 
     // When the user clicks the button, open the modal 
     btn.onclick = function() {
@@ -435,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
+    Cerrar_Ventana_Usuario.onclick = function() {
         modal.style.display = "none";
     }
 
