@@ -4,6 +4,7 @@ var contadorVolteo = 0;
 var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
+var cartaServidor;
 
 // estas dos variables son para preguntar
 // "Segur que vols realitzar un altre pregunta sense girar cap carta?"
@@ -184,6 +185,7 @@ function responderAlJugador(id) {
 }
 
 function hasAcabado(){
+    mostrarCartaServer();
     var endGame = compararServerConUsuario();
     if (endGame == true) {
         document.getElementById("canvas").style.visibility = "visible";
@@ -194,19 +196,30 @@ function hasAcabado(){
     
 }
 
+function recogerCartaServidor() {
+    cartaServidor = document.getElementsByClassName("cartaElegida")[0];
+    return cartaServidor.name;
+}
+
+function mostrarCartaServer() {
+    var chosenOneCard = recogerCartaServidor();
+    var elementos = document.getElementsByClassName(cartaElegida)[0];
+    elementos.setAttribute(cartaElegida, final);
+    document.cartaelegida.src="cartas/"+chosenOneCard;
+}
+
+
+
+
 function compararServerConUsuario() {
     //var cartaFinal = recogerCartaUsuario();
-    var cartaServidor = recogerCartaServidor();
+    cartaServidor = recogerCartaServidor();
     /*
     if (cartaFinal == cartaServidor) {
         return true;
     }
     */
     return false;
-}
-function recogerCartaServidor() {
-    var cartaServidor = document.getElementsByClassName("cartaElegida")[0];
-    return cartaServidor.name;
 }
 
 // No me sale :(
