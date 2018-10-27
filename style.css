@@ -135,6 +135,10 @@ div {
   height: 100%;
 }
 
+.rotated {
+  transform: rotateY(180deg);
+}
+
 .front {
   border: 3px solid grey;
 }

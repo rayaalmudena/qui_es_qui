@@ -5,6 +5,7 @@ var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
 var cartaServidor;
+var juegoTerminado = false;
 
 // estas dos variables son para preguntar
 // "Segur que vols realitzar un altre pregunta sense girar cap carta?"
@@ -12,29 +13,24 @@ var pregunta_clicada=0;
 var pregunta_sinGirarCarta=0;
 
 
-function flip(event) {
+function flipEvent(event) {
 
-    var element = event.currentTarget;
-    if (contadorVolteo >= 11) {
-        return false;
-    }
-    else{
-        var element = event.currentTarget;
+    var element = event;
+    var cartasRestantes = obtenerCartasSinRotar().length;
+    
+
+    if (cartasRestantes > 1) {
         if (element.className != "card cardE") {
-            if(element.style.transform == "rotateY(180deg)") {
-
-            } else {
-                element.style.transform = "rotateY(180deg)";
+            if(!isCardFlipped(element)) {
+                flipCard(element);
                 contadorVolteo++;
                 flipCardSound.play();
             }
         }
-    }
-
-    if (contadorVolteo >= 11) {
-        hasAcabado();
-        var cartaS = document.getElementById('cartaElegida');
-        cartaS.style.transform = "rotateY(180deg)";
+    } else if (!juegoTerminado) {
+        juegoTerminado = true;
+        finDelJuego();
+        flipCard(document.getElementById('cartaElegida')); // Rotamos la carta del servidor
     }
   }
 
@@ -42,17 +38,65 @@ document.addEventListener('DOMContentLoaded', function(){
     // Activa el botón y todas las funciones que hay dentro de él
     botonHacerPregunta = document.getElementById("hacerPregunta");
     botonHacerPregunta.addEventListener("click", botonActivado);
-});
 
-document.addEventListener('DOMContentLoaded', function(){
     //Activar modo Easy
     botonHacerPregunta = document.getElementById("buttonEasy");
     botonHacerPregunta.addEventListener("click", activarModoEasy);
+    
+    addListenerCartas()
 });
+
+
+// carta sin rotar, obtener listado cartas, obtener cartas sin rotar, añadir listener cartas
+
+function cartaSinRotar() {
+    cartas = obtenerCartasSinRotar();
+    return cartas[0];
+}
+
+function obtenerListadoCartas() {
+    return document.getElementsByClassName('rotableCard');
+}
+
+function obtenerCartasSinRotar() {
+    // codigo
+    var unRotatedCards = [];
+    var cards = obtenerListadoCartas();
+
+    for (var n = 0; n < cards.length; n++) {
+        var card = cards[n];
+        if (!isCardFlipped(card)) {
+            unRotatedCards.push(card);
+        }
+    }
+
+    return unRotatedCards;
+}
+
+function addListenerCartas() {
+    // más codigo :(
+    var cards = obtenerListadoCartas();
+
+    for (var n = 0; n < cards.length; n++) {
+        var card = cards[n];
+        card.addEventListener('click', function() {
+            flipEvent(this);
+        });
+    }
+}
+
 
 function botonActivado() {
     desaparecerBotonEasy();
     preguntarAlServer();
+}
+
+function flipCard(card) {
+    card.classList.toggle('rotated');
+}
+
+function isCardFlipped(card) {
+    return card.classList.contains('rotated');
 }
 
 function sacarMensajeAlertaSinVolteo() {
@@ -188,7 +232,7 @@ function responderAlJugador(id) {
     }
 }
 
-function hasAcabado(){
+function finDelJuego(){
 
     ////Modal
     var modal_fin_juego = document.getElementById('Fin_del_juego');
