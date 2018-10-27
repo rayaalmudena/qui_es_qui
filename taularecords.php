@@ -21,8 +21,10 @@
 						$record=explode(' ',$record);						
 						$puntuacion=array_shift($record);
 						$nombre=implode(" ", $record);
-						$recordArray[$nombre]=$puntuacion;
+						$recordArray[]=array($puntuacion,$nombre);
+
 						$records=$records+$recordArray;
+						
 
 					} 	
 		  		}
@@ -35,8 +37,8 @@
 			function tableroCartas($records){
 
 				$tablaRec='<div id="tablaRecords"><table id="records"> <tr><th>Nombre</th><th>Puntuación</th></tr>';
-				foreach ($records as $nombre=> $puntuacion) {
-					$tablaRec .="<tr><td>$nombre</td><td>$puntuacion</td></tr>\n";
+				foreach ($records as $rank) {
+					$tablaRec .="<tr><td>$rank[1]</td><td>$rank[0]</td></tr>\n";
 				}
 				$tablaRec .='</table></div>';
 				return $tablaRec;
