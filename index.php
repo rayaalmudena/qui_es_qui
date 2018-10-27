@@ -199,7 +199,7 @@
 					$carta=$cartas[$c];
 					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" onclick="flip(event)"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card rotableCard"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
