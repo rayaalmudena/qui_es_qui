@@ -33,8 +33,8 @@ function flip(event) {
 
     if (contadorVolteo >= 11) {
         hasAcabado();
-        var cartaS = document.getElementByClassName('cardE');
-        cartaS.element.style.transform = "rotateY(180deg)";
+        var cartaS = document.getElementById('cartaElegida');
+        cartaS.style.transform = "rotateY(180deg)";
     }
   }
 
