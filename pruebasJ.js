@@ -1,5 +1,6 @@
 var cards;
 var botonHacerPregunta;
+var botonHacerPregunta2;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
@@ -43,6 +44,11 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta = document.getElementById("hacerPregunta");
     botonHacerPregunta.addEventListener("click", botonActivado);
 });
+document.addEventListener('DOMContentLoaded', function(){
+    // Activa el botón y todas las funciones que hay dentro de él
+    botonHacerPregunta2 = document.getElementById("hacerPregunta2");
+    botonHacerPregunta2.addEventListener("click", botonActivado2);
+});
 
 document.addEventListener('DOMContentLoaded', function(){
     //Activar modo Easy
@@ -53,6 +59,10 @@ document.addEventListener('DOMContentLoaded', function(){
 function botonActivado() {
     desaparecerBotonEasy();
     preguntarAlServer();
+}
+function botonActivado2() {
+    desaparecerBotonEasy();
+    preguntarAlServer2();
 }
 
 function sacarMensajeAlertaSinVolteo() {
@@ -139,6 +149,49 @@ function preguntarAlServer() {
     }
     resetearComboBox(id);
 }
+
+function preguntarAlServer2() {
+
+    nombre_carta=document.getElementById("nombre_php-js").innerHTML;
+    gafas_carta=document.getElementById("gafas_php-js").innerHTML;
+    cabello_carta=document.getElementById("cabello_php-js").innerHTML;
+    sexo_carta=document.getElementById("sexo_php-js").innerHTML;
+
+    var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
+
+    if (pregunta_combo == "Es Hombre?" && sexo_carta == "hombre") {
+        alert("SI");
+    }
+    else if (pregunta_combo == "Es Mujer?" && sexo_carta == "mujer") {
+        alert("SI");
+    }
+    else if (pregunta_combo == "Tiene Gafas?" && gafas_carta == "si") {
+        alert("SI");
+    }
+    else if (pregunta_combo == "No Tiene Gafas?" && gafas_carta == "no") {
+        alert("SI")
+    }
+    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "rubio") {
+        alert("SI");
+    }
+    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "moreno") {
+        alert("SI")
+    }
+    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "pelirrojo") {
+        alert("SI")
+    }
+    else if (pregunta_combo == "----") {
+        alert("Selecciona una pregunta")
+    }
+    else if (pregunta_combo != "Es Hombre?" && pregunta_combo != "Es Mujer?" && pregunta_combo != "Tiene Gafas?" && 
+        pregunta_combo != "No Tiene Gafas?" && pregunta_combo != "Es Rubio?" && pregunta_combo != "Es Moreno?" && pregunta_combo != "Es Pelirrojo?" && pregunta_combo != "----"){
+        alert("Esa pregunta no estava prevista.")
+    }
+    else{
+        alert("NO")
+    }
+}
+
 
 function resetearComboBox(id) {
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
