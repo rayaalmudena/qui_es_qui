@@ -289,6 +289,7 @@
 			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
 			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
 
+			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
 			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
 			<p id='gafas_php-js' hidden>$gafas_carta</p>
 			<p id='cabello_php-js' hidden>$cabello_carta</p>
@@ -299,21 +300,7 @@
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
 
-<!-- Comienza el modal de introducir datos -->
 
-<div id="modal_guardar_nombre" class="modal">
-
-  <!-- Contenido del modal de introducir datos -->
-  <div class="modal-content">
-  	<!-------------------------------------------------------------------------------------------------------------------------------- -->
-	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
-	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
-	    <button class="enviarNombre">Aceptar</button>
-	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>
-  </div>
-
-</div>
-<!-- acaba el modal de introducir datos -->
 
 
 <!-- Comienza el modal del aviso -->
@@ -343,6 +330,20 @@
 </div>
 <!-- acaba el modal -->
 
+<!-- Comienza el modal de introducir datos -->
+
+<div id="modal_guardar_nombre" class="modal">
+
+  <!-- Contenido del modal de introducir datos -->
+  <div class="modal-content">
+	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
+	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
+	    <button class="enviarNombre">Aceptar</button>
+	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>
+  </div>
+
+</div>
+<!-- acaba el modal de introducir datos -->
 
 </body>
 </html>
