@@ -100,6 +100,7 @@ function desaparecerBotonEasy() {
     document.getElementById("buttonEasy").style.display="none";
 }
 
+/*
 function preguntarAlServer() {
     respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
 
@@ -138,6 +139,68 @@ function preguntarAlServer() {
     }
     resetearComboBox(id);
 }
+*/
+
+function preguntarAlServer() {
+
+    nombre_carta=document.getElementById("nombre_php-js").innerHTML;
+    gafas_carta=document.getElementById("gafas_php-js").innerHTML;
+    cabello_carta=document.getElementById("cabello_php-js").innerHTML;
+    sexo_carta=document.getElementById("sexo_php-js").innerHTML;
+
+    var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
+
+    if (pregunta_combo == "Es Hombre?" && sexo_carta == "hombre") {
+        preguntaCorrecta();
+    }
+    else if (pregunta_combo == "Es Mujer?" && sexo_carta == "mujer") {
+        preguntaCorrecta();
+    }
+    else if (pregunta_combo == "Tiene Gafas?" && gafas_carta == "si") {
+        preguntaCorrecta();
+    }
+    else if (pregunta_combo == "No Tiene Gafas?" && gafas_carta == "no") {
+        preguntaCorrecta();
+    }
+    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "rubio") {
+        preguntaCorrecta();
+    }
+    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "moreno") {
+        preguntaCorrecta();
+    }
+    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "pelirrojo") {
+        preguntaCorrecta();
+    }
+    else if (pregunta_combo == "----") {
+        document.getElementById('texto_salida').innerHTML = "Selecciona una pregunta";
+        document.getElementById("botonDeColorRojo").style.display = "none";
+        document.getElementById("botonDeColorVerde").style.display = "none";
+    }
+    else if (pregunta_combo != "Es Hombre?" && pregunta_combo != "Es Mujer?" && pregunta_combo != "Tiene Gafas?" && 
+        pregunta_combo != "No Tiene Gafas?" && pregunta_combo != "Es Rubio?" && pregunta_combo != "Es Moreno?" && pregunta_combo != "Es Pelirrojo?" && pregunta_combo != "----"){
+        document.getElementById('texto_salida').innerHTML = "Esa pregunta no estava prevista.";
+        document.getElementById("botonDeColorRojo").style.display = "none";
+        document.getElementById("botonDeColorVerde").style.display = "none";
+    }
+    else{
+        preguntaIncorrecta();
+    }
+}
+
+function preguntaCorrecta(){
+    document.getElementById('texto_salida').innerHTML = "SI";
+    document.getElementById("botonDeColorRojo").style.display = "none";
+    document.getElementById("botonDeColorVerde").style.display = "block";
+    funcionContadorPreguntas();
+    sacarMensajeAlertaSinVolteo();
+}
+function preguntaIncorrecta(){
+    document.getElementById('texto_salida').innerHTML = "NO";
+    document.getElementById("botonDeColorVerde").style.display = "none";
+    document.getElementById("botonDeColorRojo").style.display = "block";
+    funcionContadorPreguntas();
+    sacarMensajeAlertaSinVolteo();
+}
 
 function resetearComboBox(id) {
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
@@ -146,6 +209,7 @@ function resetearComboBox(id) {
     }
 }
 
+/*
 function responderAlJugador(id) {
     nombre_carta = document.getElementById("nombre_php-js").innerHTML;
     gafas_carta = document.getElementById("gafas_php-js").innerHTML;
@@ -187,6 +251,7 @@ function responderAlJugador(id) {
         document.getElementById("botonDeColorRojo").style.display = "none";
     }
 }
+*/
 
 function hasAcabado(){
 

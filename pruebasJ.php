@@ -56,7 +56,6 @@
 					$config_array_sexo[2]=str_replace("_", " ",$config_sexo_4);
 					$config_array_sexo[3]=str_replace("_", " ",$config_sexo_5);
 				}
-
 				fclose($file2);
 				//Punto 2 errores
 				$array=[];
@@ -312,7 +311,7 @@
 					}
 				echo "</select>";
 
-				echo "<button id='hacerPregunta2'>Fes la pregunta2</button>";
+				echo "<button id='hacerPregunta'>Fes la pregunta2</button>";
 
 				?>
 </div>
