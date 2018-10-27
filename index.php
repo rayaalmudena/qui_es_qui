@@ -23,34 +23,37 @@
 				$file2 = fopen("config.txt", "r");
 				$z=0;
 				while(!feof($file2)) {
-					$config_array[$z]=trim(fgets($file2));
+					$config_array[$z]=trim(str_replace(" ,", "",(fgets($file2))));
 					$z=$z+1;
 				}
 				//guarda en un array el archivo de configuracion, es el array de las gafas
 				if (strpos($config_array[0], " ")){
 					//sirve para encontrar si existe el espacio para poder meterlo en un array
-					list($config_gafas_1, $config_gafas_2, $config_gafas_3) = explode(" ", $config_array[0]);
-					//$config_array_gafas[0]=$config_gafas_1;
-					$config_array_gafas[1]=$config_gafas_2;
-					$config_array_gafas[2]=$config_gafas_3;
+					list($config_gafas_1, $config_gafas_2, $config_gafas_3, $config_gafas_4, $config_gafas_5) = explode(" ", $config_array[0]);
+					$config_array_gafas[0]=$config_gafas_2;
+					$config_array_gafas[1]=$config_gafas_3;
+					$config_array_gafas[2]=(str_replace("_", " ",$config_gafas_4));
+					$config_array_gafas[3]=(str_replace("_", " ",$config_gafas_5));
 				}
 				//guarda en un array el archivo de configuracion, es el array del cabello
 				if (strpos($config_array[1], " ")){
 					//sirve para encontrar si existe el espacio para poder meterlo en un array
-					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4) =
+					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4, $config_cabello_5, $config_cabello_6) =
 						explode(" ", $config_array[1]);
-					//$config_array_cabello[0]=$config_cabello_1;
-					$config_array_cabello[1]=$config_cabello_2;
-					$config_array_cabello[2]=$config_cabello_3;
-					$config_array_cabello[3]=$config_cabello_4;
+					$config_array_cabello[0]=$config_cabello_2;
+					$config_array_cabello[1]=$config_cabello_3;
+					$config_array_cabello[2]=$config_cabello_4;
+					$config_array_cabello[3]=$config_cabello_5;
+					$config_array_cabello[4]=$config_cabello_6;
 				}
 				//guarda en un array el archivo de configuracion, es el array del sexo
 				if (strpos($config_array[2], " ")){
 					//sirve para encontrar si existe el espacio para poder meterlo en un array
-					list($config_sexo_1, $config_sexo_2, $config_sexo_3) = explode(" ", $config_array[2]);
-					//$config_array_sexo[0]=$config_sexo_1;
-					$config_array_sexo[1]=$config_sexo_2;
-					$config_array_sexo[2]=$config_sexo_3;
+					list($config_sexo_1, $config_sexo_2, $config_sexo_3, $config_sexo_4, $config_sexo_5) = explode(" ", $config_array[2]);
+					$config_array_sexo[0]=$config_sexo_2;
+					$config_array_sexo[1]=$config_sexo_3;
+					$config_array_sexo[2]=$config_sexo_4;
+					$config_array_sexo[3]=$config_sexo_5;
 				}
 				fclose($file2);
 				//Punto 2 errores
@@ -292,41 +295,25 @@
 			<p id='sexo_php-js' hidden>$sexo_carta</p>";
 		}
 
-
-		function submitRecord()	{
-			$nombreUsusario=$_GET['nombreJugador'];	
-			echo "$nombreUsusario";
-			$intentos=$_GET['contador_preguntas'];	
-			$file = fopen("taularecords.txt", "a");
-			$txt = "$intentos"+" "+"$nombreUsusario"+"\n";
-			fwrite($file, $txt);
-			fclose($file);
-		}
 	?>
 
 	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
 
-<!-- Comienza el modal -->
-<!-- Trigger/Open The Modal -->
-<button id="myBtn">Escribe tu nombre AQUÍ</button>
+<!-- Comienza el modal de introducir datos -->
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="modal_guardar_nombre" class="modal">
 
-  <!-- Modal content -->
+  <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
-    <span class="close">&times;</span>    
-    <form id="modulonombre" name="modulonombre" action="" method="get">
-    <p>Escribe tu nombre o nick para guardar récord:</p>
-    <input type="text" name="nombreJugador"><br>
-    <input type="hidden" name="intentos" id="intentos" value="">
-    <button onclick="setIntentos();submitRecord()">Aceptar</button>
-    <button type="reset" value="Reset">Reset</button></form>
-
+  	<!-------------------------------------------------------------------------------------------------------------------------------- -->
+	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
+	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
+	    <button class="enviarNombre">Aceptar</button>
+	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>
   </div>
 
 </div>
-<!-- acaba el modal -->
+<!-- acaba el modal de introducir datos -->
 
 
 <!-- Comienza el modal del aviso -->
@@ -335,26 +322,24 @@
 
   <!-- Modal content -->
   <div class="modal-content">
-    <p style="text-align: center;" id="letra_modal_aviso">Has preguntado sin girar carta!</p>
+    <p id="letra_modal_aviso">Has preguntado sin girar carta!</p>
 	<button class="cerrar_Aviso">Ok</button>
 
   </div>
 
 </div>
-<!-- acaba el modal -->
+<!-- acaba el modal del aviso -->
 
 <!-- Comienza el modal del fin del juego-->
 
 <div id="Fin_del_juego" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content">
-    <p style="text-align: center;" id="letra_modal_aviso">Has acabado el juego!, Quieres guardar tu puntuacion?</p>
+  <div class="modal-content_pregunta">
+    <p id="letra_modal_aviso">Has acabado el juego!, Quieres guardar tu puntuacion?</p>
 	<button class="fin_Opcion_Si">Si</button>
 	<button class="fin_Opcion_No">No</button>
-
   </div>
-
 </div>
 <!-- acaba el modal -->
 

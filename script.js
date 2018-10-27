@@ -201,8 +201,26 @@ function hasAcabado(){
        modal_fin_juego.style.display = "none";
     }
     boton_Guardar.onclick = function() {
-    document.getElementById("canvas").style.visibility = "visible";
-       modal_fin_juego.style.display = "none";
+        //document.getElementById("canvas").style.visibility = "visible";
+        modal_fin_juego.style.display = "none";
+        
+        var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
+
+        var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
+
+        var enviarNombre = document.getElementsByClassName("enviarNombre")[0];
+
+        modal_guardar_nombre.style.display = "block";
+        
+        Cerrar_Ventana_Usuario.onclick = function() {
+            modal_guardar_nombre.style.display = "none";
+        }
+
+        enviarNombre.onclick = function() {
+            var nombreJugador = document.getElementById('nombre_para_enviar').value;
+            alert(nombreJugador);
+        }
+
     }
 
     // When the user clicks anywhere outside of the modal, close it
@@ -212,16 +230,6 @@ function hasAcabado(){
         }
     }
     ///Fin modal
-
-
-    var endGame = compararServerConUsuario();
-
-    if (endGame == true) {
-        document.getElementById("canvas").style.visibility = "visible";
-        // Aqui va el modal de haber ganado
-    } else {
-        // Modal diciendole al jugador que perdió, hacer refresh de la página
-    }
     
 }
 
@@ -413,43 +421,6 @@ function windowResized(){
     ctx.fillRect(0, 0, width, height);
 }
 /////Fin FIREWORKS
-
-
-////////////MODAL
-// Get the modal
-
-
-document.addEventListener('DOMContentLoaded', function(){
-
-    var modal = document.getElementById('myModal');
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-});
-
-
-
-////////////fin modal
 
 
 ///set intentos en input secreto en modulo nombre
