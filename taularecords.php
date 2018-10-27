@@ -17,14 +17,17 @@
 					if (empty($record)) {
 						# salto
 					} else {
+						$recordArray;
 						$record=explode(' ',$record);						
 						$puntuacion=array_shift($record);
 						$nombre=implode(" ", $record);
-						$records[$puntuacion]=$nombre;
+						$recordArray[$nombre]=$puntuacion;
+						$records=$records+$recordArray;
+
 					} 	
 		  		}
 		    		fclose($file);
-		    		ksort($records);
+		    		asort($records);
 		    		return $records;
 		    	
 			}
@@ -32,7 +35,7 @@
 			function tableroCartas($records){
 
 				$tablaRec='<div id="tablaRecords"><table id="records"> <tr><th>Nombre</th><th>Puntuación</th></tr>';
-				foreach ($records as $puntuacion => $nombre) {
+				foreach ($records as $nombre=> $puntuacion) {
 					$tablaRec .="<tr><td>$nombre</td><td>$puntuacion</td></tr>\n";
 				}
 				$tablaRec .='</table></div>';
