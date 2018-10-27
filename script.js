@@ -52,8 +52,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function botonActivado() {
     desaparecerBotonEasy();
-    sacarMensajeAlertaSinVolteo();
-    funcionContadorPreguntas();
     preguntarAlServer();
 }
 
@@ -127,6 +125,8 @@ function preguntarAlServer() {
     
     } else if (semaforo == 2) {
         // Esto es correcto
+        sacarMensajeAlertaSinVolteo();
+        funcionContadorPreguntas();
         responderAlJugador(id);
         
     } else if (semaforo == 1 || semaforo == 0) {
