@@ -8,6 +8,10 @@
 </head>
 <body>
 				<?php 
+
+				$nombre_para_enviar = $_POST["nombre_para_enviar"];
+				
+
 			function ordenarRecords(){
 				$records=[];
 				$file = fopen("taularecords.txt", "r");
@@ -45,6 +49,8 @@
 			}
 			$tablarecord=tableroCartas(ordenarRecords());
 			echo "$tablarecord";
+
+
 	?>
 
 

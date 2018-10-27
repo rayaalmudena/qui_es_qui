@@ -269,11 +269,13 @@ function hasAcabado(){
             modal_guardar_nombre.style.display = "none";
         }
 
-        /*enviarNombre.onclick = function() {
-            var nombreJugador = document.getElementById('nombre_para_enviar').value;
-            alert(nombreJugador);
-        }*/
+        enviarNombre.onclick = function() {
 
+            var nombreJugador = document.getElementById('nombre_para_enviar').value;
+            
+            alert(nombreJugador);
+            alert(contadorPreguntas);
+        }
     }
 
     // When the user clicks anywhere outside of the modal, close it

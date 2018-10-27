@@ -381,6 +381,7 @@
   <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
 	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
+	    <p id="contador_preguntas2" hidden></p>
 	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
 	    <button class="enviarNombre">Aceptar</button>
 	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>

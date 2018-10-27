@@ -87,6 +87,7 @@ function sacarMensajeAlertaSinVolteo() {
 function funcionContadorPreguntas() {
     contadorPreguntas++;
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
+    //document.getElementById('contador_preguntas2').innerHTML = contadorPreguntas;
 }
 
 function activarModoEasy() {
@@ -284,6 +285,7 @@ function hasAcabado(){
         enviarNombre.onclick = function() {
             var nombreJugador = document.getElementById('nombre_para_enviar').value;
             alert(nombreJugador);
+            alert(contadorPreguntas);
         }
 
     }
