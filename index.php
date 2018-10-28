@@ -32,19 +32,20 @@
 					list($config_gafas_1, $config_gafas_2, $config_gafas_3, $config_gafas_4, $config_gafas_5) = explode(" ", $config_array[0]);
 					$config_array_gafas[0]=$config_gafas_2;
 					$config_array_gafas[1]=$config_gafas_3;
-					$config_array_gafas[2]=(str_replace("_", " ",$config_gafas_4));
-					$config_array_gafas[3]=(str_replace("_", " ",$config_gafas_5));
+					$config_array_gafas[2]=str_replace("_", " ",$config_gafas_4);
+					$config_array_gafas[3]=str_replace("_", " ",$config_gafas_5);
 				}
 				//guarda en un array el archivo de configuracion, es el array del cabello
 				if (strpos($config_array[1], " ")){
 					//sirve para encontrar si existe el espacio para poder meterlo en un array
-					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4, $config_cabello_5, $config_cabello_6) =
+					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4, $config_cabello_5, $config_cabello_6, $config_cabello_7) =
 						explode(" ", $config_array[1]);
 					$config_array_cabello[0]=$config_cabello_2;
 					$config_array_cabello[1]=$config_cabello_3;
 					$config_array_cabello[2]=$config_cabello_4;
-					$config_array_cabello[3]=$config_cabello_5;
-					$config_array_cabello[4]=$config_cabello_6;
+					$config_array_cabello[3]=str_replace("_", " ",$config_cabello_5);
+					$config_array_cabello[4]=str_replace("_", " ",$config_cabello_6);
+					$config_array_cabello[5]=str_replace("_", " ",$config_cabello_7);
 				}
 				//guarda en un array el archivo de configuracion, es el array del sexo
 				if (strpos($config_array[2], " ")){
@@ -52,8 +53,8 @@
 					list($config_sexo_1, $config_sexo_2, $config_sexo_3, $config_sexo_4, $config_sexo_5) = explode(" ", $config_array[2]);
 					$config_array_sexo[0]=$config_sexo_2;
 					$config_array_sexo[1]=$config_sexo_3;
-					$config_array_sexo[2]=$config_sexo_4;
-					$config_array_sexo[3]=$config_sexo_5;
+					$config_array_sexo[2]=str_replace("_", " ",$config_sexo_4);
+					$config_array_sexo[3]=str_replace("_", " ",$config_sexo_5);
 				}
 				fclose($file2);
 				//Punto 2 errores
@@ -199,7 +200,7 @@
 					$carta=$cartas[$c];
 					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card rotableCard"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card" onclick="girarCarta(event)"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -242,7 +243,7 @@
 			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
 
 			<div id="combobox">
-
+				<!---
 				<p>¿Qué lleva? </p>
 				<select id="gafas" class="cbox gafas">
 					<option  name="gafas" value="---">---</option>
@@ -270,13 +271,60 @@
 				</select>
 
 				<br><br>
+
 				
 				<button id="hacerPregunta">Fes la pregunta</button>
+				-->
+
+				
+<!-------------------------------------------------------------------------------- NUEVA INSERCION -->
+
+				<?php 
+				$config_array=[];
+
+				$file2 = fopen("config.txt", "r");
+				$z=0;
+				while(!feof($file2)) {
+					$config_array[$z]=trim(str_replace(" ,", "",(fgets($file2))));
+					$z=$z+1;
+				}
+				fclose($file2);
+
+				$nuevoCombobox=[];
+
+				$combo_gafas = explode(" ", $config_array[0]);
+				unset($combo_gafas[0],$combo_gafas[1],$combo_gafas[2]);
+
+				$combo_cabello = explode(" ", $config_array[1]);
+				unset($combo_cabello[0],$combo_cabello[1],$combo_cabello[2],$combo_cabello[3]);
+
+				$combo_sexo = explode(" ", $config_array[2]);
+				unset($combo_sexo[0],$combo_sexo[1],$combo_sexo[2]);
+
+
+				$nuevoCombobox = str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
+				echo "<select id='pregunta' onchange='activarBoton()'>";
+				echo "<option>----</option>";
+					foreach ($nuevoCombobox as $key => $value) {
+						echo "<option name='pregunta_combo' value='$value'>$value</option>";
+					}
+				echo "</select> <br><br>";
+
+
+				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta2</button>";
+
+				?>
+
+<!---------------------------------------------------------------------------------- --->
 
 				<br>
 				<p id="texto_salida"></p>
 				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
 				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
+
+				<br>
+
+				<p id="CuentaAtras"></p>
 
 			</div>
 
@@ -337,6 +385,7 @@
   <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
 	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
+	    <p id="contador_preguntas2" hidden></p>
 	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
 	    <button class="enviarNombre">Aceptar</button>
 	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>

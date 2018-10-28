@@ -1,11 +1,12 @@
 var cards;
 var botonHacerPregunta;
-var botonHacerPregunta2;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
 var cartaServidor;
+var totalTiempo=20;//funcion de girar carta
+var intervalo1;//funcion de girar carta
 
 // estas dos variables son para preguntar
 // "Segur que vols realitzar un altre pregunta sense girar cap carta?"
@@ -44,11 +45,6 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta = document.getElementById("hacerPregunta");
     botonHacerPregunta.addEventListener("click", botonActivado);
 });
-document.addEventListener('DOMContentLoaded', function(){
-    // Activa el botón y todas las funciones que hay dentro de él
-    botonHacerPregunta2 = document.getElementById("hacerPregunta2");
-    botonHacerPregunta2.addEventListener("click", botonActivado2);
-});
 
 document.addEventListener('DOMContentLoaded', function(){
     //Activar modo Easy
@@ -59,10 +55,6 @@ document.addEventListener('DOMContentLoaded', function(){
 function botonActivado() {
     desaparecerBotonEasy();
     preguntarAlServer();
-}
-function botonActivado2() {
-    desaparecerBotonEasy();
-    preguntarAlServer2();
 }
 
 function sacarMensajeAlertaSinVolteo() {
@@ -111,6 +103,7 @@ function desaparecerBotonEasy() {
     document.getElementById("buttonEasy").style.display="none";
 }
 
+/*
 function preguntarAlServer() {
     respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
 
@@ -149,8 +142,9 @@ function preguntarAlServer() {
     }
     resetearComboBox(id);
 }
+*/
 
-function preguntarAlServer2() {
+function preguntarAlServer() {
 
     nombre_carta=document.getElementById("nombre_php-js").innerHTML;
     gafas_carta=document.getElementById("gafas_php-js").innerHTML;
@@ -160,38 +154,70 @@ function preguntarAlServer2() {
     var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
 
     if (pregunta_combo == "Es Hombre?" && sexo_carta == "hombre") {
-        alert("SI");
+        preguntaCorrecta();
     }
     else if (pregunta_combo == "Es Mujer?" && sexo_carta == "mujer") {
-        alert("SI");
+        preguntaCorrecta();
     }
     else if (pregunta_combo == "Tiene Gafas?" && gafas_carta == "si") {
-        alert("SI");
+        preguntaCorrecta();
     }
     else if (pregunta_combo == "No Tiene Gafas?" && gafas_carta == "no") {
-        alert("SI")
+        preguntaCorrecta();
     }
     else if (pregunta_combo == "Es Rubio?" && cabello_carta == "rubio") {
-        alert("SI");
+        preguntaCorrecta();
     }
     else if (pregunta_combo == "Es Moreno?" && cabello_carta == "moreno") {
-        alert("SI")
+        preguntaCorrecta();
     }
     else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "pelirrojo") {
-        alert("SI")
+        preguntaCorrecta();
     }
+    /*
     else if (pregunta_combo == "----") {
-        alert("Selecciona una pregunta")
+        document.getElementById('texto_salida').innerHTML = "Selecciona una pregunta";
+        document.getElementById("botonDeColorRojo").style.display = "none";
+        document.getElementById("botonDeColorVerde").style.display = "none";
     }
+    */
     else if (pregunta_combo != "Es Hombre?" && pregunta_combo != "Es Mujer?" && pregunta_combo != "Tiene Gafas?" && 
         pregunta_combo != "No Tiene Gafas?" && pregunta_combo != "Es Rubio?" && pregunta_combo != "Es Moreno?" && pregunta_combo != "Es Pelirrojo?" && pregunta_combo != "----"){
-        alert("Esa pregunta no estava prevista.")
+        document.getElementById('texto_salida').innerHTML = "Esa pregunta no estava prevista.";
+        document.getElementById("botonDeColorRojo").style.display = "none";
+        document.getElementById("botonDeColorVerde").style.display = "none";
     }
     else{
-        alert("NO")
+        preguntaIncorrecta();
     }
 }
 
+function preguntaCorrecta(){
+    document.getElementById('texto_salida').innerHTML = "SI";
+    document.getElementById("botonDeColorRojo").style.display = "none";
+    document.getElementById("botonDeColorVerde").style.display = "block";
+    funcionContadorPreguntas();
+    sacarMensajeAlertaSinVolteo();
+}
+function preguntaIncorrecta(){
+    document.getElementById('texto_salida').innerHTML = "NO";
+    document.getElementById("botonDeColorVerde").style.display = "none";
+    document.getElementById("botonDeColorRojo").style.display = "block";
+    funcionContadorPreguntas();
+    sacarMensajeAlertaSinVolteo();
+}
+
+function activarBoton(){
+
+    var lista = document.getElementById("pregunta");
+    var boton = document.getElementById("hacerPregunta");
+    if(lista.selectedIndex !=0 )
+      boton.disabled = false;
+    else{
+      boton.disabled = true;
+    }
+
+}
 
 function resetearComboBox(id) {
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
@@ -200,6 +226,39 @@ function resetearComboBox(id) {
     }
 }
 
+function girarCuandoDeba(){
+    clearTimeout(intervalo1);
+    //Para parar el contador, sino volvera a llamar a la funcion y se restara de 2 en 2
+    totalTiempo=20;
+    //Cuando llamemos a la funcion, el contador vuelve a estar en 20
+    tiempoRecursivo();
+}
+
+function tiempoRecursivo(){
+    document.getElementById('CuentaAtras').innerHTML = "Te quedan "+totalTiempo+" segundos para girar una carta";
+        if(totalTiempo==0){
+                document.getElementById('CuentaAtras').innerHTML = "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "+totalTiempo+" segundos)";
+            }
+            else{
+                /* Restamos un segundo al tiempo restante */
+                totalTiempo-=1;
+                /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+                intervalo1 = setTimeout("tiempoRecursivo()",1000);
+        }
+}
+
+function girarCarta(event){
+    if(totalTiempo==0)
+        {
+         //No la podra girar, ya que no tiene tiempo
+        }
+    else{
+        //podra girar la carta
+        flip(event);
+    }
+}
+
+/*
 function responderAlJugador(id) {
     nombre_carta = document.getElementById("nombre_php-js").innerHTML;
     gafas_carta = document.getElementById("gafas_php-js").innerHTML;
@@ -241,6 +300,7 @@ function responderAlJugador(id) {
         document.getElementById("botonDeColorRojo").style.display = "none";
     }
 }
+*/
 
 function hasAcabado(){
 
@@ -270,11 +330,13 @@ function hasAcabado(){
             modal_guardar_nombre.style.display = "none";
         }
 
-        /*enviarNombre.onclick = function() {
-            var nombreJugador = document.getElementById('nombre_para_enviar').value;
-            alert(nombreJugador);
-        }*/
+        enviarNombre.onclick = function() {
 
+            var nombreJugador = document.getElementById('nombre_para_enviar').value;
+            
+            alert(nombreJugador);
+            alert(contadorPreguntas);
+        }
     }
 
     // When the user clicks anywhere outside of the modal, close it
