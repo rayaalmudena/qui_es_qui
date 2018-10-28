@@ -227,10 +227,9 @@
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
+
+
 			?>
-
-			
-
 			<div id="comboDif">
 				<p>Elige dificultad </p>
 				<select id="dificultad" class="cboxdificultad">
@@ -242,9 +241,9 @@
 			<p id="textoEasy"></p>	
 			<button id="buttonEasy">EASY</button>
 			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
-<!--
-			<div id="combobox">
 
+			<div id="combobox">
+				<!---
 				<p>¿Qué lleva? </p>
 				<select id="gafas" class="cbox gafas">
 					<option  name="gafas" value="---">---</option>
@@ -272,15 +271,15 @@
 				</select>
 
 				<br><br>
+
 				
 				<button id="hacerPregunta">Fes la pregunta</button>
+				-->
 
-				<br>
-			-->
-				<p id="texto_salida"></p>
-				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
-				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
-			<?php 
+				
+<!-------------------------------------------------------------------------------- NUEVA INSERCION -->
+
+				<?php 
 				$config_array=[];
 
 				$file2 = fopen("config.txt", "r");
@@ -303,18 +302,28 @@
 				unset($combo_sexo[0],$combo_sexo[1],$combo_sexo[2]);
 
 
-				$array_resultante= str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
-				echo "<select id='pregunta'>";
+				$nuevoCombobox = str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
+				echo "<select id='pregunta' onchange='activarBoton()'>";
 				echo "<option>----</option>";
-					foreach ($array_resultante as $key => $value) {
+					foreach ($nuevoCombobox as $key => $value) {
 						echo "<option name='pregunta_combo' value='$value'>$value</option>";
 					}
-				echo "</select>";
+				echo "</select> <br><br>";
 
-				echo "<button id='hacerPregunta'>Fes la pregunta2</button>";
+
+				echo "<button id='hacerPregunta' disabled>Fes la pregunta2</button>";
 
 				?>
-</div>
+
+<!---------------------------------------------------------------------------------- --->
+				<br>
+				<p id="texto_salida"></p>
+				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
+				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
+
+
+			</div>
+
 			<?php 
 
 
@@ -372,6 +381,7 @@
   <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
 	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
+	    <p id="contador_preguntas2" hidden></p>
 	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
 	    <button class="enviarNombre">Aceptar</button>
 	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>

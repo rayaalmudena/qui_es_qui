@@ -276,10 +276,7 @@
 				<button id="hacerPregunta">Fes la pregunta</button>
 				-->
 
-				<br>
-				<p id="texto_salida"></p>
-				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
-				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
+				
 <!-------------------------------------------------------------------------------- NUEVA INSERCION -->
 
 				<?php 
@@ -305,22 +302,27 @@
 				unset($combo_sexo[0],$combo_sexo[1],$combo_sexo[2]);
 
 
-				$array_resultante= str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
-				echo "<select id='pregunta'>";
+				$nuevoCombobox = str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
+				echo "<select id='pregunta' onchange='activarBoton()'>";
 				echo "<option>----</option>";
-					foreach ($array_resultante as $key => $value) {
+					foreach ($nuevoCombobox as $key => $value) {
 						echo "<option name='pregunta_combo' value='$value'>$value</option>";
 					}
 				echo "</select> <br><br>";
 
 
-				echo "<button id='hacerPregunta'>Fes la pregunta2</button>";
+				echo "<button id='hacerPregunta' disabled>Fes la pregunta2</button>";
 
 				?>
 
 <!---------------------------------------------------------------------------------- --->
 
+				<br>
+				<p id="texto_salida"></p>
+				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
+				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
 
+				
 
 			</div>
 
