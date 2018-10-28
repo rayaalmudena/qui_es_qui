@@ -247,7 +247,7 @@ function tiempoRecursivo(){
         }
 }
 
-function girarCarta(){
+function girarCarta(event){
     if(totalTiempo==0)
         {
          //No la podra girar, ya que no tiene tiempo
