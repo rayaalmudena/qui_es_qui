@@ -200,7 +200,7 @@
 					$carta=$cartas[$c];
 					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" onclick="flip(event)"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card" onclick="girarCarta()"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -311,16 +311,20 @@
 				echo "</select> <br><br>";
 
 
-				echo "<button id='hacerPregunta' disabled>Fes la pregunta2</button>";
+				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta2</button>";
 
 				?>
 
 <!---------------------------------------------------------------------------------- --->
+
 				<br>
 				<p id="texto_salida"></p>
 				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
 				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
 
+				<br>
+				
+				<p id="CuentaAtras"></p>
 
 			</div>
 

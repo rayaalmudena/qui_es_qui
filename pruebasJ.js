@@ -5,6 +5,8 @@ var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
 var cartaServidor;
+var totalTiempo=20;//funcion de girar carta
+var intervalo1;//funcion de girar carta
 
 // estas dos variables son para preguntar
 // "Segur que vols realitzar un altre pregunta sense girar cap carta?"
@@ -221,6 +223,38 @@ function resetearComboBox(id) {
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
         id = respuestasPosiblesCBox[i];
         id.selectedIndex = 0;
+    }
+}
+
+function girarCuandoDeba(){
+    clearTimeout(intervalo1);
+    //Para parar el contador, sino volvera a llamar a la funcion y se restara de 2 en 2
+    totalTiempo=20;
+    //Cuando llamemos a la funcion, el contador vuelve a estar en 20
+    tiempoRecursivo();
+}
+
+function tiempoRecursivo(){
+    document.getElementById('CuentaAtras').innerHTML = "Te quedan "+totalTiempo+" segundos para girar una carta";
+        if(totalTiempo==0){
+                document.getElementById('CuentaAtras').innerHTML = "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "+totalTiempo+" segundos)";
+            }
+            else{
+                /* Restamos un segundo al tiempo restante */
+                totalTiempo-=1;
+                /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+                intervalo1 = setTimeout("tiempoRecursivo()",1000);
+        }
+}
+
+function girarCarta(){
+    if(totalTiempo==0)
+        {
+         //No la podra girar, ya que no tiene tiempo
+        }
+    else{
+        //podra girar la carta
+        flip(event);
     }
 }
 
