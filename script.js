@@ -5,9 +5,6 @@ var respuestasPosiblesCBox;
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
 var cartaServidor;
-var juegoTerminado = false;
-var totalTiempo=20;//funcion de girar carta
-var intervalo1;//funcion de girar carta
 
 // estas dos variables son para preguntar
 // "Segur que vols realitzar un altre pregunta sense girar cap carta?"
@@ -15,24 +12,25 @@ var pregunta_clicada=0;
 var pregunta_sinGirarCarta=0;
 
 
-function flipEvent(event) {
-
-    var element = event;
-    var cartasRestantes = obtenerCartasSinRotar().length;
-    
-
-    if (cartasRestantes > 1) {
+function girarCarta(event) {
+    if (contadorVolteo >= 11) {
+        return false;
+    }
+    else{
+        var element = event.currentTarget;
         if (element.className != "card cardE") {
-            if(!isCardFlipped(element)) {
-                flipCard(element);
+            if(element.style.transform == "rotateY(180deg)") {
+
+            } else {
+                element.style.transform = "rotateY(180deg)";
                 contadorVolteo++;
                 flipCardSound.play();
             }
         }
-    } else if (!juegoTerminado) {
-        juegoTerminado = true;
-        finDelJuego();
-        flipCard(document.getElementById('cartaElegida')); // Rotamos la carta del servidor
+    }
+
+    if (contadorVolteo >= 11) {
+        hasAcabado();
     }
   }
 
@@ -40,65 +38,19 @@ document.addEventListener('DOMContentLoaded', function(){
     // Activa el botón y todas las funciones que hay dentro de él
     botonHacerPregunta = document.getElementById("hacerPregunta");
     botonHacerPregunta.addEventListener("click", botonActivado);
+});
 
+document.addEventListener('DOMContentLoaded', function(){
     //Activar modo Easy
     botonHacerPregunta = document.getElementById("buttonEasy");
     botonHacerPregunta.addEventListener("click", activarModoEasy);
-    
-    addListenerCartas()
 });
-
-
-// carta sin rotar, obtener listado cartas, obtener cartas sin rotar, añadir listener cartas
-
-function cartaSinRotar() {
-    cartas = obtenerCartasSinRotar();
-    return cartas[0];
-}
-
-function obtenerListadoCartas() {
-    return document.getElementsByClassName('rotableCard');
-}
-
-function obtenerCartasSinRotar() {
-    // codigo
-    var unRotatedCards = [];
-    var cards = obtenerListadoCartas();
-
-    for (var n = 0; n < cards.length; n++) {
-        var card = cards[n];
-        if (!isCardFlipped(card)) {
-            unRotatedCards.push(card);
-        }
-    }
-
-    return unRotatedCards;
-}
-
-function addListenerCartas() {
-    // más codigo :(
-    var cards = obtenerListadoCartas();
-
-    for (var n = 0; n < cards.length; n++) {
-        var card = cards[n];
-        card.addEventListener('click', function() {
-            flipEvent(this);
-        });
-    }
-}
-
 
 function botonActivado() {
     desaparecerBotonEasy();
+    sacarMensajeAlertaSinVolteo();
+    funcionContadorPreguntas();
     preguntarAlServer();
-}
-
-function flipCard(card) {
-    card.classList.toggle('rotated');
-}
-
-function isCardFlipped(card) {
-    return card.classList.contains('rotated');
 }
 
 function sacarMensajeAlertaSinVolteo() {
@@ -133,7 +85,6 @@ function sacarMensajeAlertaSinVolteo() {
 function funcionContadorPreguntas() {
     contadorPreguntas++;
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
-    //document.getElementById('contador_preguntas2').innerHTML = contadorPreguntas;
 }
 
 function activarModoEasy() {
@@ -147,7 +98,6 @@ function desaparecerBotonEasy() {
     document.getElementById("buttonEasy").style.display="none";
 }
 
-/*
 function preguntarAlServer() {
     respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
 
@@ -173,8 +123,6 @@ function preguntarAlServer() {
     
     } else if (semaforo == 2) {
         // Esto es correcto
-        sacarMensajeAlertaSinVolteo();
-        funcionContadorPreguntas();
         responderAlJugador(id);
         
     } else if (semaforo == 1 || semaforo == 0) {
@@ -186,81 +134,6 @@ function preguntarAlServer() {
     }
     resetearComboBox(id);
 }
-*/
-
-function preguntarAlServer() {
-
-    nombre_carta=document.getElementById("nombre_php-js").innerHTML;
-    gafas_carta=document.getElementById("gafas_php-js").innerHTML;
-    cabello_carta=document.getElementById("cabello_php-js").innerHTML;
-    sexo_carta=document.getElementById("sexo_php-js").innerHTML;
-
-    var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
-
-    if (pregunta_combo == "Es Hombre?" && sexo_carta == "hombre") {
-        preguntaCorrecta();
-    }
-    else if (pregunta_combo == "Es Mujer?" && sexo_carta == "mujer") {
-        preguntaCorrecta();
-    }
-    else if (pregunta_combo == "Tiene Gafas?" && gafas_carta == "si") {
-        preguntaCorrecta();
-    }
-    else if (pregunta_combo == "No Tiene Gafas?" && gafas_carta == "no") {
-        preguntaCorrecta();
-    }
-    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "rubio") {
-        preguntaCorrecta();
-    }
-    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "moreno") {
-        preguntaCorrecta();
-    }
-    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "pelirrojo") {
-        preguntaCorrecta();
-    }
-    ///Esta, con el cambio del ultimo sprint, ya no hará falta.
-    /*else if (pregunta_combo == "----") {
-        document.getElementById('texto_salida').innerHTML = "Selecciona una pregunta";
-        document.getElementById("botonDeColorRojo").style.display = "none";
-        document.getElementById("botonDeColorVerde").style.display = "none";
-    }*/
-    else if (pregunta_combo != "Es Hombre?" && pregunta_combo != "Es Mujer?" && pregunta_combo != "Tiene Gafas?" && 
-        pregunta_combo != "No Tiene Gafas?" && pregunta_combo != "Es Rubio?" && pregunta_combo != "Es Moreno?" && pregunta_combo != "Es Pelirrojo?" && pregunta_combo != "----"){
-        document.getElementById('texto_salida').innerHTML = "Esa pregunta no estava prevista.";
-        document.getElementById("botonDeColorRojo").style.display = "none";
-        document.getElementById("botonDeColorVerde").style.display = "none";
-    }
-    else{
-        preguntaIncorrecta();
-    }
-}
-
-function preguntaCorrecta(){
-    document.getElementById('texto_salida').innerHTML = "SI";
-    document.getElementById("botonDeColorRojo").style.display = "none";
-    document.getElementById("botonDeColorVerde").style.display = "block";
-    funcionContadorPreguntas();
-    sacarMensajeAlertaSinVolteo();
-}
-function preguntaIncorrecta(){
-    document.getElementById('texto_salida').innerHTML = "NO";
-    document.getElementById("botonDeColorVerde").style.display = "none";
-    document.getElementById("botonDeColorRojo").style.display = "block";
-    funcionContadorPreguntas();
-    sacarMensajeAlertaSinVolteo();
-}
-
-function activarBoton(){
-
-    var lista = document.getElementById("pregunta");
-    var boton = document.getElementById("hacerPregunta");
-    if(lista.selectedIndex !=0 )
-      boton.disabled = false;
-    else{
-      boton.disabled = true;
-    }
-
-}
 
 function resetearComboBox(id) {
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
@@ -269,39 +142,6 @@ function resetearComboBox(id) {
     }
 }
 
-function girarCuandoDeba(){
-    clearTimeout(intervalo1);
-    //Para parar el contador, sino volvera a llamar a la funcion y se restara de 2 en 2
-    totalTiempo=20;
-    //Cuando llamemos a la funcion, el contador vuelve a estar en 20
-    tiempoRecursivo();
-}
-
-function tiempoRecursivo(){
-    document.getElementById('CuentaAtras').innerHTML = "Te quedan "+totalTiempo+" segundos para girar una carta";
-        if(totalTiempo==0){
-                document.getElementById('CuentaAtras').innerHTML = "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "+totalTiempo+" segundos)";
-            }
-            else{
-                /* Restamos un segundo al tiempo restante */
-                totalTiempo-=1;
-                /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
-                intervalo1 = setTimeout("tiempoRecursivo()",1000);
-        }
-}
-
-function girarCarta(event){
-    if(totalTiempo==0)
-        {
-         //No la podra girar, ya que no tiene tiempo
-        }
-    else{
-        //podra girar la carta
-        flip(event);
-    }
-}
-
-/*
 function responderAlJugador(id) {
     nombre_carta = document.getElementById("nombre_php-js").innerHTML;
     gafas_carta = document.getElementById("gafas_php-js").innerHTML;
@@ -343,51 +183,16 @@ function responderAlJugador(id) {
         document.getElementById("botonDeColorRojo").style.display = "none";
     }
 }
-*/
 
-function finDelJuego(){
-
-    ////Modal
-    var modal_fin_juego = document.getElementById('Fin_del_juego');
-    var boton_NoGuardar = document.getElementsByClassName("fin_Opcion_No")[0];
-    var boton_Guardar = document.getElementsByClassName("fin_Opcion_Si")[0];
-
-    modal_fin_juego.style.display = "block";
-        
-    boton_NoGuardar.onclick = function() {
-       modal_fin_juego.style.display = "none";
+function hasAcabado(){
+    mostrarCartaServer();
+    var endGame = compararServerConUsuario();
+    if (endGame == true) {
+        document.getElementById("canvas").style.visibility = "visible";
+        // Aqui va el modal de haber ganado
+    } else {
+        // Modal diciendole al jugador que perdió, hacer refresh de la página
     }
-    boton_Guardar.onclick = function() {
-        //document.getElementById("canvas").style.visibility = "visible";
-        modal_fin_juego.style.display = "none";
-        
-        var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
-
-        var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
-
-        var enviarNombre = document.getElementsByClassName("enviarNombre")[0];
-
-        modal_guardar_nombre.style.display = "block";
-        
-        Cerrar_Ventana_Usuario.onclick = function() {
-            modal_guardar_nombre.style.display = "none";
-        }
-
-        enviarNombre.onclick = function() {
-            var nombreJugador = document.getElementById('nombre_para_enviar').value;
-            alert(nombreJugador);
-            alert(contadorPreguntas);
-        }
-
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal_fin_juego) {
-            modal_fin_juego.style.display = "none";
-        }
-    }
-    ///Fin modal
     
 }
 
@@ -399,8 +204,8 @@ function recogerCartaServidor() {
 function mostrarCartaServer() {
     var chosenOneCard = recogerCartaServidor();
     var elementos = document.getElementsByClassName(cartaElegida)[0];
-    elementos.setAttribute(cartaElegida, final);
-    document.cartaelegida.src="cartas/"+chosenOneCard;
+    element.removeAttribute('src')
+    elementos.setAttribute(src, chosenOneCard);
 }
 
 
@@ -581,16 +386,38 @@ function windowResized(){
 /////Fin FIREWORKS
 
 
-///set intentos en input secreto en modulo nombre
-function setIntentos(){
+////////////MODAL
+// Get the modal
 
-    document.modulonombre.intentos.value = contadorPreguntas;
-    document.forms["modulonombre"].submit();
-}
 
-function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
-// To disable f5
-    /* jQuery < 1.7 */
-$(document).bind("keydown", disableF5);
-/* OR jQuery >= 1.7 */
-$(document).on("keydown", disableF5);
+document.addEventListener('DOMContentLoaded', function(){
+
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+
+
+
+////////////fin modal
