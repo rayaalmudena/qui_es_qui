@@ -54,7 +54,8 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 
-if ( window.addEventListener ) {  
+if ( window.addEventListener ) {
+    // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
     var state = 0, konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
     window.addEventListener("keydown", function(e) {  
         if ( e.keyCode == konami[state] ) state++;  
