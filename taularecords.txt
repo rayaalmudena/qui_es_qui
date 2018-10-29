@@ -11,8 +11,4 @@
 74 Bot
 74 Bot
 1 Almudena
-74 Bot 
-<<<<<<< HEAD
-6 Cosa
-=======
->>>>>>> 8312f4af0b4d4b8684f1bcf48c6c59f65b7291b1
+74 Bot
