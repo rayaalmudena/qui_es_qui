@@ -215,19 +215,52 @@ function puedeGirarCarta(event){
 
 function hasAcabado(){
 
-    ////Modal
-    var modal_fin_juego = document.getElementById('Fin_del_juego');
-    var boton_NoGuardar = document.getElementsByClassName("fin_Opcion_No")[0];
-    var boton_Guardar = document.getElementsByClassName("fin_Opcion_Si")[0];
+    //if ganado:
+    juegoGanado();
+    //if perdido:
+    //juegoPerdido();
+    
+}
+
+function juegoGanado(){
+
+    var modal_fin_juego = document.getElementById('Fin_del_juego_bueno');
+    var boton_NoGuardar = document.getElementsByClassName("ganado_Opcion_No")[0];
+    var boton_Guardar = document.getElementsByClassName("ganado_Opcion_Si")[0];
 
     modal_fin_juego.style.display = "block";
         
     boton_NoGuardar.onclick = function() {
-       modal_fin_juego.style.display = "none";
-    }
-    boton_Guardar.onclick = function() {
-        //document.getElementById("canvas").style.visibility = "visible";
         modal_fin_juego.style.display = "none";
+    }
+    boton_Guardar.onclick = function(){
+        modal_fin_juego.style.display = "none";
+        guardarUsuario();
+    }
+}
+
+
+function juegoPerdido(){
+
+    var modal_fin_juego = document.getElementById('Fin_del_juego_malo');
+    var boton_NoGuardar = document.getElementsByClassName("perdido_Opcion_No")[0];
+    var boton_Guardar = document.getElementsByClassName("perdido_Opcion_Si")[0];
+
+    modal_fin_juego.style.display = "block";
+        
+    boton_NoGuardar.onclick = function() {
+        modal_fin_juego.style.display = "none";
+    }
+    boton_Guardar.onclick = function(){
+        modal_fin_juego.style.display = "none";
+        guardarUsuario();
+    }
+
+}
+
+//guardar datos
+function guardarUsuario() {
+        //document.getElementById("canvas").style.visibility = "visible";
         
         var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
 
@@ -242,22 +275,14 @@ function hasAcabado(){
         }
 
         enviarNombre.onclick = function() {
+
             var nombreJugador = document.getElementById('nombre_para_enviar').value;
             alert(nombreJugador);
             alert(contadorPreguntas);
+            modal_guardar_nombre.style.display = "none";
         }
-
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal_fin_juego) {
-            modal_fin_juego.style.display = "none";
-        }
-    }
-    ///Fin modal
-    
 }
+
 
 function recogerCartaServidor() {
     cartaServidor = document.getElementsByClassName("cartaElegida")[0];
