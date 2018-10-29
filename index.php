@@ -200,7 +200,7 @@
 					$carta=$cartas[$c];
 					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" onclick="girarCarta(event)"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card" onclick="puedeGirarCarta(event)"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -367,18 +367,31 @@
 </div>
 <!-- acaba el modal del aviso -->
 
-<!-- Comienza el modal del fin del juego-->
+<!-- Comienza el modal del fin del juego ganando!-->
 
-<div id="Fin_del_juego" class="modal">
+<div id="Fin_del_juego_bueno" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content_pregunta">
-    <p id="letra_modal_aviso">Has acabado el juego!, Quieres guardar tu puntuacion?</p>
-	<button class="fin_Opcion_Si">Si</button>
-	<button class="fin_Opcion_No">No</button>
+  <div class="modal-content_ganado">
+    <p id="letra_modal_aviso_ganado">Felicidades, has ganado!, Quieres guardar tu puntuacion?</p>
+	<button class="ganado_Opcion_Si">Si</button>
+	<button class="ganado_Opcion_No">No</button>
   </div>
 </div>
-<!-- acaba el modal -->
+<!-- acaba el modal del fin del juego ganando!-->
+
+<!-- Comienza el modal del fin del juego prediendo..-->
+
+<div id="Fin_del_juego_malo" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content_perdido">
+    <p id="letra_modal_aviso_perdido">Has perdido.., Quieres guardar tu puntuacion?</p>
+	<button class="perdido_Opcion_Si">Si</button>
+	<button class="perdido_Opcion_No">No</button>
+  </div>
+</div>
+<!-- acaba el modal del fin del juego perdido..-->
 
 <!-- Comienza el modal de introducir datos -->
 
