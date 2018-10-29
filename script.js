@@ -60,13 +60,7 @@ if ( window.addEventListener ) {
     window.addEventListener("keydown", function(e) {  
         if ( e.keyCode == konami[state] ) state++;  
         else state = 0;  
-        if ( state == 11 )  {
-            // cambiamos la imagen del tablero
-            // este no furula bien
-            var tablero = document.getElementsByTagName("table");
-            // tablero = tablero.style.background-color = "#FFFFFF";
-            // tablero = tablero.style.background-image = "easter_egg/konamiBackground.jpg";
-            
+        if ( state == 11 )  {            
             // cambiamos los sonidos del programa
             flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
             winSound = new Audio("easter_egg/konamiWin.mp3");
