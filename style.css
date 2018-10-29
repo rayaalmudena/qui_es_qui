@@ -230,7 +230,7 @@ div {
     position: relative;
     left: 44%;
 }
-#letra_modal_aviso_ganado, #letra_modal_aviso_predido, #letra_modal_aviso2{
+#letra_modal_aviso_ganado, #letra_modal_aviso_predido, #letra_modal_aviso, #letra_modal_aviso2{
   /*modal del aviso*/
   font-size: 25px;
   font-weight: bold;
