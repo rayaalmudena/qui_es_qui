@@ -46,6 +46,11 @@ document.addEventListener('DOMContentLoaded', function(){
     addListenerCartas()
 });
 
+document.addEventListener('DOMContentLoaded', function(){
+    //Activar modo Easy
+    botonHacerPregunta = document.getElementById("buttonEasy");
+    botonHacerPregunta.addEventListener("click", activarModoEasy);
+});
 
 // carta sin rotar, obtener listado cartas, obtener cartas sin rotar, añadir listener cartas
 

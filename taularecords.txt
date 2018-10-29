@@ -1,0 +1,18 @@
+1111 Almudena
+99999999 Jordi
+44 Jose 
+1 Winner
+45 Nop nop nop
+0 Ez clap	
+5 Nombre
+4 Nombre2
+6 Nombre
+74 Bot
+74 Bot
+74 Bot
+1 Almudena
+74 Bot 
+<<<<<<< HEAD
+6 Cosa
+=======
+>>>>>>> 8312f4af0b4d4b8684f1bcf48c6c59f65b7291b1
