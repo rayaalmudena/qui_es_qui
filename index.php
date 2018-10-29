@@ -243,41 +243,7 @@
 			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
 
 			<div id="combobox">
-				<!---
-				<p>¿Qué lleva? </p>
-				<select id="gafas" class="cbox gafas">
-					<option  name="gafas" value="---">---</option>
-					<option  name="gafas" value="si">Gafas</option>
-					<option  name="gafas" value="no">Nada</option>
-				</select>
 
-				<br>
-
-				<p>¿Su pelo es... ? </p>
-				<select id="cabello" class="cbox cabello">
-					<option name="cabello" value="---">---</option>
-					<option name="cabello" value="moreno">Moreno</option>
-					<option name="cabello" value="rubio">Rubio</option>
-					<option name="cabello" value="pelirrojo">Pelirrojo</option>
-				</select>
-
-				<br>
-
-				<p>¿La persona es... ?</p>
-				<select id="sexo" class="cbox sexo">
-					<option name="sexo" value="---">---</option>
-					<option name="sexo" value="hombre">Hombre</option>
-					<option name="sexo" value="mujer">Mujer</option>
-				</select>
-
-				<br><br>
-
-				
-				<button id="hacerPregunta">Fes la pregunta</button>
-				-->
-
-				
-<!-------------------------------------------------------------------------------- NUEVA INSERCION -->
 
 				<?php 
 				$config_array=[];
@@ -311,11 +277,10 @@
 				echo "</select> <br><br>";
 
 
-				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta2</button>";
+				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta</button>";
 
 				?>
 
-<!---------------------------------------------------------------------------------- --->
 
 				<br>
 				<p id="texto_salida"></p>
