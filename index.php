@@ -182,18 +182,18 @@
 				$cartaElegida = $cartas[0];
 				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]'sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 				$backCarta="<img src='cartas/back.png'>";
-				$Elegida='<div class="container containerElegida"><div class="card cardE" id="cartaElegida"><div class="front">';
+				$Elegida='<div id="lateral"><div class="container containerElegida"><div class="card cardE" id="cartaElegida"><div class="front">';
 				$Elegida .=$backCarta;
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
-				$Elegida .='</div></div></div><td>';
+				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
 				echo $Elegida;
 
 
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
-				$tabla .='<table><tr>';
+				$tabla .='<div id="tablero"><table><tr>';
 				$c = 0;
 				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
@@ -209,7 +209,7 @@
 					if ($c==count($cartas)){
 						$tabla .='</tr>';
 						$tabla .="\n";	
-						$tabla .='</table>';
+						$tabla .='</table></div>';
 						$tabla .="\n";
 					}
 					if ($c%3==0 && $c!=count($cartas)){
@@ -230,6 +230,7 @@
 
 
 			?>
+			<div id="divtexto">
 			<div id="comboDif">
 				<p>Elige dificultad </p>
 				<select id="dificultad" class="cboxdificultad">
@@ -243,6 +244,7 @@
 			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
 
 			<div id="combobox">
+
 				<!---
 				<p>¿Qué lleva? </p>
 				<select id="gafas" class="cbox gafas">
@@ -327,7 +329,7 @@
 				<p id="CuentaAtras"></p>
 
 			</div>
-
+			</div>
 			<?php 
 
 
@@ -346,7 +348,7 @@
 
 	?>
 
-	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
+	
 
 
 

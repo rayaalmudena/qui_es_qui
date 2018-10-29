@@ -1,17 +1,20 @@
 body{
   overflow-y: scroll;
   overflow-x: hidden;
+  background-color: lightblue;
+
 }
 .cartaElegida {
   height: 200px;
   background-image: url("cartas/backgroundCS.png");
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   background-size: 150px;
   border: solid 3px black;
   text-align: center;
 }
 
 table{
+  position: relative;
   height: 100%;
   background-color: green;
   padding: 10px;
@@ -79,9 +82,10 @@ canvas{
 }
 
 #enlaceRecords{
-  position: absolute;
-  top: 245px;
-  right: 5px;  
+  position: relative;
+  float: right;
+  top: 200px;
+  right: -200px;  
   padding:13px;
   border:1px solid black;
   background-color: #dfc416;
@@ -101,7 +105,7 @@ div {
   perspective: 1000px;
 }
 .containerElegida{
-  position: absolute;
+  float: right;
   top: 0;
   right: 0;
   padding:5px;
@@ -247,3 +251,49 @@ div {
 
 /* ************************************************************ */
 /*Aqui acaba el modal*/
+
+#lateral{
+  position: absolute;
+  height: 250px;
+}
+@media only screen and (max-width: 600px) {
+    body {
+        background-color: lightblue;
+    }
+}
+@media screen and (max-width: 600px) {
+  #lateral{
+    position: center;
+  }
+       table {
+           width:20%;
+           left: 50px;
+       }
+       thead {
+           display: none;
+       }
+       tr:nth-of-type(2n) {
+           background-color: inherit;
+       }
+       tr td:first-child {
+           
+           font-weight:bold;
+           font-size:1.3em;
+       }
+       tbody td {
+           display: block;
+           text-align:center;
+       }
+       tbody td:before {
+           content: attr(data-th);
+           display: block;
+           text-align:center;
+       }
+}
+  
+  
+  }
+#divtexto{
+  position: relative;
+  top: 0px;
+}
