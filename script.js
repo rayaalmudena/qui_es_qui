@@ -2,9 +2,13 @@ var cards;
 var botonHacerPregunta;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
-var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
 var cartaServidor;
+
+// Audios
+var flipCardSound = new Audio('sounds/flipCardSound.mp3');
+var winSound = new Audio("sounds/victory_theme.mp3");
+var loseSound = new Audio("sounds/defeat_theme.mp3");
 
 // estas dos variables son para preguntar
 // "Segur que vols realitzar un altre pregunta sense girar cap carta?"
@@ -45,6 +49,29 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta = document.getElementById("buttonEasy");
     botonHacerPregunta.addEventListener("click", activarModoEasy);
 });
+
+
+// CODIGO DEL EASTER EGG, IR CON CUIDADO PORQUE NO ESTÁ IMPLEMENTADO! 
+if ( window.addEventListener ) {  
+    var state = 0, konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
+    window.addEventListener("keydown", function(e) {  
+      if ( e.keyCode == konami[state] ) state++;  
+      else state = 0;  
+      if ( state == 11 )  {
+        flipCardSound = "easter_egg/konamiFlip3.mp3";
+        winSound = "easter_egg/konamiWin.mp3";
+        loseSound = "easter_egg/konamiLose.mp3";
+        var backgroundMusic = new Audio("easter_egg/konamiBackground.mp3");
+        
+        backgroundMusic.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        backgroundMusic.play();
+      }
+  }, true);  
+}  
+
 
 function botonActivado() {
     desaparecerBotonEasy();
@@ -156,9 +183,12 @@ function responderAlJugador(id) {
         if (llevaGafas.value == gafas_carta && llevaGafas.value != "---") {
             document.getElementById('texto_salida').innerHTML = "SI";
             document.getElementById("botonDeColorVerde").style.display = "block";
+            winSound.play();
+
         } else {
             document.getElementById('texto_salida').innerHTML = "NO";
             document.getElementById("botonDeColorRojo").style.display = "block";
+            loseSound.play();
         }
     
     } else if (id == "cabello") {
