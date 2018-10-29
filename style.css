@@ -197,15 +197,16 @@ div {
     padding: 20px;
     border: 1px solid #888;
     width: 55%;
-    height: 20%;
+    height: 30%;
 }
-.modal-content_pregunta{
+
+.modal-content_ganado, .modal-content_perdido {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 55%;
-    height: 15%;
+    height: 25%;
 }
 
 /* Para cerrar el boton */
@@ -221,7 +222,7 @@ div {
   position: relative;
     left: 40%;
 }
-.cerrar_Aviso, .fin_Opcion_Si, .fin_Opcion_No {
+.cerrar_Aviso, .ganado_Opcion_Si, .ganado_Opcion_No, .perdido_Opcion_Si, .perdido_Opcion_No {
   /*modal del aviso*/
     color: #aaaaaa;
     font-size: 28px;
@@ -229,7 +230,7 @@ div {
     position: relative;
     left: 44%;
 }
-#letra_modal_aviso, #letra_modal_aviso2{
+#letra_modal_aviso_ganado, #letra_modal_aviso_predido, #letra_modal_aviso, #letra_modal_aviso2{
   /*modal del aviso*/
   font-size: 25px;
   font-weight: bold;
@@ -237,8 +238,8 @@ div {
 }
 
 /* Hover de la cruz para cerrar el modal*/
-.Cerrar_Ventana_Usuario:hover, .cerrar_Aviso:hover, .fin_Opcion_Si:hover,
-.Cerrar_Ventana_Usuario:focus, .cerrar_Aviso:focus, .fin_Opcion_No:focus {
+.Cerrar_Ventana_Usuario:hover, .cerrar_Aviso:hover, .ganado_Opcion_Si:hover, .perdido_Opcion_Si:hover,
+.Cerrar_Ventana_Usuario:focus, .cerrar_Aviso:focus, .ganado_Opcion_No:focus, .perdido_Opcion_No:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
