@@ -85,7 +85,6 @@ if ( window.addEventListener ) {
 
 function botonActivado() {
     desaparecerBotonEasy();
-    sacarMensajeAlertaSinVolteo();
     preguntarAlServer();
 }
 
