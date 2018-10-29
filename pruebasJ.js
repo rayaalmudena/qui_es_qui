@@ -174,13 +174,6 @@ function preguntarAlServer() {
     else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "pelirrojo") {
         preguntaCorrecta();
     }
-    /*
-    else if (pregunta_combo == "----") {
-        document.getElementById('texto_salida').innerHTML = "Selecciona una pregunta";
-        document.getElementById("botonDeColorRojo").style.display = "none";
-        document.getElementById("botonDeColorVerde").style.display = "none";
-    }
-    */
     else if (pregunta_combo != "Es Hombre?" && pregunta_combo != "Es Mujer?" && pregunta_combo != "Tiene Gafas?" && 
         pregunta_combo != "No Tiene Gafas?" && pregunta_combo != "Es Rubio?" && pregunta_combo != "Es Moreno?" && pregunta_combo != "Es Pelirrojo?" && pregunta_combo != "----"){
         document.getElementById('texto_salida').innerHTML = "Esa pregunta no estava prevista.";
