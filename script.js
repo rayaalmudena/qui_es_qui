@@ -37,6 +37,8 @@ function girarCarta(event) {
     }
 
     if (contadorVolteo >= 11) {
+        // Rotamos la carta del servidor
+        flipCard(document.getElementById('cartaElegida'));
         hasAcabado();
     }
   }
@@ -243,7 +245,7 @@ function puedeGirarCarta(event){
 }
 
 function hasAcabado(){
-
+    
     //if ganado:
     juegoGanado();
     //if perdido:
