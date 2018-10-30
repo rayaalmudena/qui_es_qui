@@ -14,6 +14,8 @@ body{
 }
 
 table{
+  position: relative;
+  top: 0;
   height: 100%;
   background-color: green;
   padding: 10px;
@@ -123,7 +125,7 @@ div {
 }
 
 .front, .back {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -262,7 +264,7 @@ div {
 }
 @media screen and (max-width: 600px) {
   .container {width: 150px;}
-  .containerElegida{width:250px; height: 220px;}
+  .containerElegida{width:220px; }
        table {
            width:20%;
            left: 50px;
