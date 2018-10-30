@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<title>¿Quién es quién?</title>
 	<link rel="stylesheet" type="text/css" href="style.css">	
-	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="pruebasJ.js"></script>
 </head>
 <body>
 	
@@ -198,9 +198,10 @@
 				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
-					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
+					//var_dump($carta);
+					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' id='$carta[nombre]' onclick='clickPasaNombre(event)'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" onclick="puedeGirarCarta(event)"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card" id="$carta[nombre]"  onclick="puedeGirarCarta(event)"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -219,12 +220,26 @@
 				}
 				return $tabla;
 			}
+
 			
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
 			echo "<br>";
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
+
+			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
+			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
+			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
+			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
+			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
+
+			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
+			echo "<p id='nombre_php-js' >$nombre_carta</p>
+			<p id='gafas_php-js' hidden>$gafas_carta</p>
+			<p id='cabello_php-js' hidden>$cabello_carta</p>
+			<p id='sexo_php-js' hidden>$sexo_carta</p>";
+			
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
 
@@ -296,17 +311,7 @@
 			<?php 
 
 
-			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
-			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
-			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
-			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
-			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
-
-			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
-			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
-			<p id='gafas_php-js' hidden>$gafas_carta</p>
-			<p id='cabello_php-js' hidden>$cabello_carta</p>
-			<p id='sexo_php-js' hidden>$sexo_carta</p>";
+			
 		}
 
 	?>
