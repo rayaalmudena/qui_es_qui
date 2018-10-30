@@ -7,19 +7,23 @@ body{
 .cartaElegida {
   height: 200px;
   background-image: url("cartas/backgroundCS.png");
-  background-repeat: no-repeat;
-  background-size: 150px;
+  background-repeat:repeat;
+  background-size: 100px;
   border: solid 3px black;
   text-align: center;
 }
 
-table{
+table{  
+  position: relative;
+  top: 0;
+  left: 50px;
   height: 100%;
+  padding: 5px;
   background-color: green;
-  padding: 10px;
   border-spacing: 5px;
 }
 #records {
+  left: 0px;
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
@@ -82,12 +86,10 @@ canvas{
 
 #enlaceRecords{
   float: right;
-  position: relative;
-  float: right;
   top: 200px;
-  right: -200px;  
+  left: 200px;  
   padding:10px;
-  border:1px solid black;
+  padding-right: 10px;
   background-color: #dfc416;
 }
 
@@ -105,16 +107,17 @@ div {
   perspective: 1000px;
 }
 .containerElegida{
+  padding-right: 15px;
   float: right;
-  padding:5px;
   width: 200px;
   height: 200px;
+
   perspective: 1000px;
 }
 .containerElegida .front{
   background-image: url("cartas/backgroundCS.png");
-  background-repeat: repeat;
-  background-size: 150px;
+  background-repeat:repeat;
+  background-size: 100px;
 }
 .card {
   transition: transform 2s;
@@ -123,7 +126,7 @@ div {
 }
 
 .front, .back {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -252,7 +255,7 @@ div {
 /*Aqui acaba el modal*/
 
 #lateral{
-  position: relative;
+  position: absolute;
   height: 270px;
 }
 @media only screen and (max-width: 600px) {
@@ -262,10 +265,11 @@ div {
 }
 @media screen and (max-width: 600px) {
   .container {width: 150px;}
-  .containerElegida{width:250px; height: 220px;}
+  .containerElegida{width:220px; }
        table {
            width:20%;
            left: 50px;
+           top:260px;
        }
        thead {
            display: none;
@@ -274,20 +278,15 @@ div {
            background-color: inherit;
        }
        tr td:first-child {
-           
-           font-weight:bold;
-           font-size:1.3em;
        }
        tbody td {
            display: block;
            text-align:center;
        }
-       tbody td:before {
-           content: attr(data-th);
-           display: block;
-           text-align:center;
-       }
-  #divtexto{
+       
+       #records{position: relative;top:0; }
+       #records tbody td {display: inline-block; text-align:none;}
+      #divtexto{position: relative;top: 500px;left: 0px;
     position: relative;
   }
 }
