@@ -230,7 +230,7 @@
 
 
 			?>
-			<div id="divtexto">
+			
 			<div id="comboDif">
 				<p id="parrafoElegirDificultad">Elige dificultad </p>
 				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
@@ -240,7 +240,7 @@
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
+			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p>
 
 			<div id="combobox">
 
