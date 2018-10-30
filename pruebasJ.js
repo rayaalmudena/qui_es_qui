@@ -7,6 +7,11 @@ var cartaServidor;
 var totalTiempo=20;//funcion de girar carta
 var intervalo1;//funcion de girar carta
 
+var nombre_carta;
+
+
+var haGanado=true;
+
 
 // Audios
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
@@ -127,12 +132,16 @@ function desaparecerBotonEasy() {
     document.getElementById("buttonEasy").style.display="none";
 }
 
-function preguntarAlServer() {
-
+function cogerDatos(){
     nombre_carta=document.getElementById("nombre_php-js").innerHTML;
     gafas_carta=document.getElementById("gafas_php-js").innerHTML;
     cabello_carta=document.getElementById("cabello_php-js").innerHTML;
     sexo_carta=document.getElementById("sexo_php-js").innerHTML;
+}
+
+function preguntarAlServer() {
+
+    cogerDatos();
 
     var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
 
@@ -238,20 +247,53 @@ function puedeGirarCarta(event){
         }
     else{
         //podra girar la carta
+        //var x = document.getElementById("hola").id;
+        //var x = document.getElementsByClassName("carta card")[1].id;
+        //alert(x);
         girarCarta(event);
+
+/*
+        var element = event.currentTarget;
+        alert(event.currentTarget.id);
+            if(element.style.transform == "rotateY(180deg)") {
+                alert(element[1]);
+            } else {
+                element.style.transform = "rotateY(180deg)";
+                
+            }
+
+        if (document.getElementsByClassName("carta card") == "rotateY(180deg)") {
+            alert("girada");
+        }*/
+    }
+}
+
+function clickPasaNombre(event){
+
+    cogerDatos();
+    //alert(nombre_carta);
+    //alert(event.currentTarget.id);
+    //alert(haGanado);
+    if (event.currentTarget.id==nombre_carta){
+        haGanado=false;
     }
 }
 
 function hasAcabado(){
 
     //if ganado:
-    juegoGanado();
+    if (haGanado==true) {
+        juegoGanado();
+    }else{
     //if perdido:
-    //juegoPerdido();
+        juegoPerdido();
+    }
     
 }
 
 function juegoGanado(){
+
+    document.getElementById("canvas").style.visibility = "visible";
 
     var modal_fin_juego = document.getElementById('Fin_del_juego_bueno');
     var boton_NoGuardar = document.getElementsByClassName("ganado_Opcion_No")[0];
@@ -289,7 +331,6 @@ function juegoPerdido(){
 
 //guardar datos
 function guardarUsuario() {
-        //document.getElementById("canvas").style.visibility = "visible";
         
         var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
 
