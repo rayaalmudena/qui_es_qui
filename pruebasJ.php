@@ -199,7 +199,7 @@
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
 					//var_dump($carta);
-					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' id='$carta[nombre]' onclick='clickPasaNombre(event)'>";
+					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' onclick=clickPasaNombre('$carta[nombre]')>";
 					$tabla .="\n";
 					$tabla .='<td><div class="container"><div class="card" id="$carta[nombre]"  onclick="puedeGirarCarta(event)"><div class="front">';
 					$tabla .=$cartaImg;
@@ -248,14 +248,13 @@
 			<div id="divtexto">
 			<div id="comboDif">
 				<p>Elige dificultad </p>
-				<select id="dificultad" class="cboxdificultad">
+				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
 					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
-					<option  name="dificultad" value="easy">EASY</option>
-					<option  name="dificultad" value="veryEasy">VERY EASY</option>
+					<option  name="dificultad" value="Easy">EASY</option>
+					<option  name="dificultad" value="Very Easy">VERY EASY</option>
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<button id="buttonEasy">EASY</button>
 			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
 
 			<div id="combobox">

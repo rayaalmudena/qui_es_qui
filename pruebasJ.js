@@ -52,13 +52,6 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta.addEventListener("click", botonActivado);
 });
 
-document.addEventListener('DOMContentLoaded', function(){
-    //Activar modo Easy
-    botonHacerPregunta = document.getElementById("buttonEasy");
-    botonHacerPregunta.addEventListener("click", activarModoEasy);
-});
-
-
 if ( window.addEventListener ) {
     // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
     var state = 0, konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
@@ -121,15 +114,9 @@ function funcionContadorPreguntas() {
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
 }
 
-function activarModoEasy() {
-    //Si activamos el boton easy, aparecera un texto diciendolo.
-    document.getElementById("buttonEasy").style.display="none";
-    document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
-}
-
 function desaparecerBotonEasy() {
     //Si hacemos la pregunta, simplemente desactivara el boton
-    document.getElementById("buttonEasy").style.display="none";
+    document.getElementById("dificultad").style.display="none";
 }
 
 function cogerDatos(){
@@ -212,6 +199,18 @@ function activarBoton(){
 
 }
 
+function fijarDificultad(){
+
+    var lista = document.getElementById("dificultad");
+    document.getElementById("textoEasy").innerHTML = "Modo "+document.getElementById("dificultad").value+ " Activado";
+
+    if(lista.selectedIndex !=0 )
+        alert(lista.selectedIndex.text);
+        alert(document.getElementById("dificultad").value);
+      lista.disabled = true;   
+    
+}
+
 function resetearComboBox(id) {
     for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
         id = respuestasPosiblesCBox[i];
@@ -272,9 +271,9 @@ function clickPasaNombre(event){
 
     cogerDatos();
     //alert(nombre_carta);
-    //alert(event.currentTarget.id);
+    alert(event);
     //alert(haGanado);
-    if (event.currentTarget.id==nombre_carta){
+    if (event==nombre_carta){
         haGanado=false;
     }
 }
@@ -395,6 +394,8 @@ function recogerCartaUsuario() {
         }
     }
 }
+
+
 
 
 ////Fireworks 

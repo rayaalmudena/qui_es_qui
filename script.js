@@ -47,13 +47,6 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta.addEventListener("click", botonActivado);
 });
 
-document.addEventListener('DOMContentLoaded', function(){
-    //Activar modo Easy
-    botonHacerPregunta = document.getElementById("buttonEasy");
-    botonHacerPregunta.addEventListener("click", activarModoEasy);
-});
-
-
 if ( window.addEventListener ) {
     // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
     var state = 0, konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
@@ -116,15 +109,10 @@ function funcionContadorPreguntas() {
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
 }
 
-function activarModoEasy() {
-    //Si activamos el boton easy, aparecera un texto diciendolo.
-    document.getElementById("buttonEasy").style.display="none";
-    document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
-}
-
 function desaparecerBotonEasy() {
     //Si hacemos la pregunta, simplemente desactivara el boton
-    document.getElementById("buttonEasy").style.display="none";
+    document.getElementById("dificultad").style.display="none";
+    document.getElementById("parrafoElegirDificultad").style.display="none";
 }
 
 function preguntarAlServer() {
@@ -201,6 +189,18 @@ function activarBoton(){
       boton.disabled = true;
     }
 
+}
+
+function fijarDificultad(){
+
+    var lista = document.getElementById("dificultad");
+    document.getElementById("textoEasy").innerHTML = "Modo "+document.getElementById("dificultad").value+ " Activado";
+    //devuelve en texto el combo que has seleccionado
+
+    if(lista.selectedIndex !=0 )
+        lista.disabled = true;
+        document.getElementById("parrafoElegirDificultad").style.display="none";
+    
 }
 
 function resetearComboBox(id) {

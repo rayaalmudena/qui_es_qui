@@ -232,15 +232,14 @@
 			?>
 			<div id="divtexto">
 			<div id="comboDif">
-				<p>Elige dificultad </p>
-				<select id="dificultad" class="cboxdificultad">
+				<p id="parrafoElegirDificultad">Elige dificultad </p>
+				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
 					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
-					<option  name="dificultad" value="easy">EASY</option>
-					<option  name="dificultad" value="veryEasy">VERY EASY</option>
+					<option  name="dificultad" value="Easy">EASY</option>
+					<option  name="dificultad" value="Very Easy">VERY EASY</option>
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<button id="buttonEasy">EASY</button>
 			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
 
 			<div id="combobox">
