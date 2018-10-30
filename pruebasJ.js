@@ -7,6 +7,8 @@ var cartaServidor;
 var totalTiempo=20;//funcion de girar carta
 var intervalo1;//funcion de girar carta
 
+var nombreJugador;
+
 var nombre_carta;
 
 
@@ -271,7 +273,7 @@ function clickPasaNombre(event){
 
     cogerDatos();
     //alert(nombre_carta);
-    alert(event);
+    //alert(event);
     //alert(haGanado);
     if (event==nombre_carta){
         haGanado=false;
@@ -344,12 +346,31 @@ function guardarUsuario() {
         }
 
         enviarNombre.onclick = function() {
-
             var nombreJugador = document.getElementById('nombre_para_enviar').value;
-            alert(nombreJugador);
-            alert(contadorPreguntas);
             modal_guardar_nombre.style.display = "none";
+            introducirDatos();
         }
+}
+
+function introducirDatos() {
+        
+        var guardar_en_txt = document.getElementById('guardar_en_txt');
+
+        var nombreJugador = document.getElementById('nombre_para_enviar').value;
+
+        //document.getElementById('dos2').innerHTML = contadorPreguntas;
+        //alert(nombreJugador);
+        //document.getElementById('uno1').innerHTML = nombreJugador;
+
+        var Cerrar_Guardado = document.getElementsByClassName("Cerrar_Guardado")[0];
+
+        guardar_en_txt.style.display = "block";
+        
+        Cerrar_Guardado.onclick = function() {
+            guardar_en_txt.style.display = "none";
+        }
+
+
 }
 
 
