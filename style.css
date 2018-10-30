@@ -1,4 +1,7 @@
 body{
+  background-image: url("background.jpeg");  
+  background-repeat:repeat;
+  background-size: 100px;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: lightblue;
