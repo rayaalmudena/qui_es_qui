@@ -26,10 +26,8 @@ function girarCarta(event) {
     else{
         var element = event.currentTarget;
         if (element.className != "card cardE") {
-            if(element.style.transform == "rotateY(180deg)") {
-
-            } else {
-                element.style.transform = "rotateY(180deg)";
+            if(!isCardFlipped(element)) {
+                flipCard(element);
                 contadorVolteo++;
                 flipCardSound.play();
             }
@@ -37,9 +35,19 @@ function girarCarta(event) {
     }
 
     if (contadorVolteo >= 11) {
-        hasAcabado();
+        // Rotamos la carta del servidor
+        flipCard(document.getElementById('cartaElegida'));
+        finDelJuego();
     }
-  }
+}
+
+function flipCard(card) {
+    card.classList.toggle('rotated');
+}
+
+function isCardFlipped(card) {
+    return card.classList.contains('rotated');
+}
 
 document.addEventListener('DOMContentLoaded', function(){
     // Activa el botón y todas las funciones que hay dentro de él
@@ -242,8 +250,8 @@ function puedeGirarCarta(event){
     }
 }
 
-function hasAcabado(){
-
+function finDelJuego(){
+    
     //if ganado:
     juegoGanado();
     //if perdido:
@@ -311,50 +319,6 @@ function guardarUsuario() {
             modal_guardar_nombre.style.display = "none";
         }
 }
-
-
-function recogerCartaServidor() {
-    cartaServidor = document.getElementsByClassName("cartaElegida")[0];
-    return cartaServidor.name;
-}
-
-function mostrarCartaServer() {
-    var chosenOneCard = recogerCartaServidor();
-    var elementos = document.getElementsByClassName(cartaElegida)[0];
-    element.removeAttribute('src')
-    elementos.setAttribute(src, chosenOneCard);
-}
-
-
-
-
-function compararServerConUsuario() {
-    //var cartaFinal = recogerCartaUsuario();
-    cartaServidor = recogerCartaServidor();
-    /*
-    if (cartaFinal == cartaServidor) {
-        return true;
-    }
-    */
-    return false;
-}
-
-// No me sale :(
-function recogerCartaUsuario() {
-    // Aqui compararemos la imagen que tiene el server con la que tiene el usuario
-    arrayCartasPosibles = document.getElementsByClassName("card");
-    var cartaUsuario;
-    for (var i = 0; i < arrayCartasPosibles.length; i++) {
-        var elemento = arrayCartasPosibles[i].classList.value
-        
-        if (elemento == "carta card") {
-            cartaUsuario = arrayCartasPosibles[i];
-            alert(cartaUsuario);
-            return cartaUsuario.name;
-        }
-    }
-}
-
 
 ////Fireworks 
 "use strict";
