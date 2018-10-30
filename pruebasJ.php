@@ -366,15 +366,45 @@
 
   <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
-	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
-	    <p id="contador_preguntas2" hidden></p>
-	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
-	    <button class="enviarNombre">Aceptar</button>
-	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>
+  		<form action="taularecords.php" method="POST" target="_blank">
+		    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
+		    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
+		    <input type="text" name="puntuacionJugador" hidden>
+		    <button type="button" class="enviarNombre">Aceptar</button>
+		    <button type="button" class="Cerrar_Ventana_Usuario"> Cancelar</button>
+		   
   </div>
 
 </div>
 <!-- acaba el modal de introducir datos -->
+
+<!-- Comienza el modal que se utilizara para guardar los datos introducidos -->
+
+<div id="guardar_en_txt" class="modal">
+  <div class="modal-content">
+
+  		<?php 
+
+  			//$enviarNombreJugador= echo "<p id='dos'></p>";	
+  			//$enviarPuntuacion = echo "<p id='uno'></p>";
+  			//<p id="uno1"></p>
+	    	
+
+  			//echo "$enviarNombreJugador";
+  			//echo "$enviarPuntuacion";
+
+				//$flog = fopen("taularecords.txt","a");
+				//fwrite($flog, "<p>sdf</p>" . PHP_EOL);
+				//fclose($flog);
+
+		?>
+
+	    <p id="letra_modal_aviso2">Tu nombre se ha guardado correctamente!</p>
+	    <button class="Cerrar_Guardado">Aceptar</button>
+	    </form>
+  </div>
+</div>
+<!-- acaba el modal que se utilizara para guardar los datos introducidos -->
 
 </body>
 </html>
