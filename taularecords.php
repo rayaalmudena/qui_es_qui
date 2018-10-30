@@ -9,8 +9,12 @@
 <body>
 				<?php 
 
-				$nombre_para_enviar = $_POST["nombre_para_enviar"];
-				
+				//$valor = $_POST["nombreJugador"];
+				//$valor2 = $_POST["puntuacionJugador"];
+				//echo "<p id='dos2'></p>";
+				//echo $valor; 
+				//echo "<br>";
+				//echo $valor2;
 
 			function ordenarRecords(){
 				$records=[];
