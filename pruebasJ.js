@@ -2,11 +2,21 @@ var cards;
 var botonHacerPregunta;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
-var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
 var cartaServidor;
 var totalTiempo=20;//funcion de girar carta
 var intervalo1;//funcion de girar carta
+
+var nombre_carta;
+
+
+var haGanado=true;
+
+
+// Audios
+var flipCardSound = new Audio('sounds/flipCardSound.mp3');
+var winSound = new Audio("sounds/victory_theme.mp3");
+var loseSound = new Audio("sounds/defeat_theme.mp3");
 
 // estas dos variables son para preguntar
 // "Segur que vols realitzar un altre pregunta sense girar cap carta?"
@@ -14,9 +24,7 @@ var pregunta_clicada=0;
 var pregunta_sinGirarCarta=0;
 
 
-function flip(event) {
-
-    var element = event.currentTarget;
+function girarCarta(event) {
     if (contadorVolteo >= 11) {
         return false;
     }
@@ -35,8 +43,6 @@ function flip(event) {
 
     if (contadorVolteo >= 11) {
         hasAcabado();
-        var cartaS = document.getElementByClassName('cardE');
-        cartaS.element.style.transform = "rotateY(180deg)";
     }
   }
 
@@ -46,11 +52,28 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta.addEventListener("click", botonActivado);
 });
 
-document.addEventListener('DOMContentLoaded', function(){
-    //Activar modo Easy
-    botonHacerPregunta = document.getElementById("buttonEasy");
-    botonHacerPregunta.addEventListener("click", activarModoEasy);
-});
+if ( window.addEventListener ) {
+    // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
+    var state = 0, konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
+    window.addEventListener("keydown", function(e) {  
+        if ( e.keyCode == konami[state] ) state++;  
+        else state = 0;  
+        if ( state == 11 )  {            
+            // cambiamos los sonidos del programa
+            flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
+            winSound = new Audio("easter_egg/konamiWin.mp3");
+            loseSound = new Audio("easter_egg/konamiLose.mp3");
+            var backgroundMusic = new Audio("easter_egg/konamiBackground.mp3");
+            
+            backgroundMusic.addEventListener('ended', function() {
+                this.currentTime = 0;
+                this.play();
+            }, false);
+            backgroundMusic.play();
+      }
+  }, true);  
+}  
+
 
 function botonActivado() {
     desaparecerBotonEasy();
@@ -89,67 +112,23 @@ function sacarMensajeAlertaSinVolteo() {
 function funcionContadorPreguntas() {
     contadorPreguntas++;
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
-    //document.getElementById('contador_preguntas2').innerHTML = contadorPreguntas;
-}
-
-function activarModoEasy() {
-    //Si activamos el boton easy, aparecera un texto diciendolo.
-    document.getElementById("buttonEasy").style.display="none";
-    document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
 }
 
 function desaparecerBotonEasy() {
     //Si hacemos la pregunta, simplemente desactivara el boton
-    document.getElementById("buttonEasy").style.display="none";
+    document.getElementById("dificultad").style.display="none";
 }
 
-/*
-function preguntarAlServer() {
-    respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
-
-    // Si no han respondido = 3, si han respondido una = 2
-    // Si han respondido mas de una = 0 o 1
-    var semaforo = 0;
-    var id;
-    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        if (respuestasPosiblesCBox[i].value != "---") {
-            id = respuestasPosiblesCBox[i].getAttribute("class");
-            id = id.replace("cbox ","");
-        } else {
-            semaforo++;            
-        }
-    }
-    //Si no se deshabilita el gif, aparecera doble cuando se vuelva a hacer otra pregunta
-    document.getElementById("botonDeColorVerde").style.display = "none";
-    document.getElementById("botonDeColorRojo").style.display = "none";
-
-    if (semaforo == 3) {
-        document.getElementById('texto_salida').innerHTML =
-        "No hay nada seleccionado";
-    
-    } else if (semaforo == 2) {
-        // Esto es correcto
-        sacarMensajeAlertaSinVolteo();
-        funcionContadorPreguntas();
-        responderAlJugador(id);
-        
-    } else if (semaforo == 1 || semaforo == 0) {
-        document.getElementById('texto_salida').innerHTML =
-        "No se pueden seleccionar más de dos elementos";
-
-    } else {
-        document.getElementById('texto_salida').innerHTML = "ERROR";
-    }
-    resetearComboBox(id);
-}
-*/
-
-function preguntarAlServer() {
-
+function cogerDatos(){
     nombre_carta=document.getElementById("nombre_php-js").innerHTML;
     gafas_carta=document.getElementById("gafas_php-js").innerHTML;
     cabello_carta=document.getElementById("cabello_php-js").innerHTML;
     sexo_carta=document.getElementById("sexo_php-js").innerHTML;
+}
+
+function preguntarAlServer() {
+
+    cogerDatos();
 
     var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
 
@@ -174,9 +153,15 @@ function preguntarAlServer() {
     else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "pelirrojo") {
         preguntaCorrecta();
     }
+    ///Esta, con el cambio del ultimo sprint, ya no hará falta.
+    /*else if (pregunta_combo == "----") {
+        document.getElementById('texto_salida').innerHTML = "Selecciona una pregunta";
+        document.getElementById("botonDeColorRojo").style.display = "none";
+        document.getElementById("botonDeColorVerde").style.display = "none";
+    }*/
     else if (pregunta_combo != "Es Hombre?" && pregunta_combo != "Es Mujer?" && pregunta_combo != "Tiene Gafas?" && 
         pregunta_combo != "No Tiene Gafas?" && pregunta_combo != "Es Rubio?" && pregunta_combo != "Es Moreno?" && pregunta_combo != "Es Pelirrojo?" && pregunta_combo != "----"){
-        document.getElementById('texto_salida').innerHTML = "Esa pregunta no estava prevista.";
+        document.getElementById('texto_salida').innerHTML = "Esa pregunta no estaba prevista.";
         document.getElementById("botonDeColorRojo").style.display = "none";
         document.getElementById("botonDeColorVerde").style.display = "none";
     }
@@ -191,6 +176,7 @@ function preguntaCorrecta(){
     document.getElementById("botonDeColorVerde").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
+    winSound.play();
 }
 function preguntaIncorrecta(){
     document.getElementById('texto_salida').innerHTML = "NO";
@@ -198,6 +184,7 @@ function preguntaIncorrecta(){
     document.getElementById("botonDeColorRojo").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
+    loseSound.play();
 }
 
 function activarBoton(){
@@ -210,6 +197,18 @@ function activarBoton(){
       boton.disabled = true;
     }
 
+}
+
+function fijarDificultad(){
+
+    var lista = document.getElementById("dificultad");
+    document.getElementById("textoEasy").innerHTML = "Modo "+document.getElementById("dificultad").value+ " Activado";
+
+    if(lista.selectedIndex !=0 )
+        alert(lista.selectedIndex.text);
+        alert(document.getElementById("dificultad").value);
+      lista.disabled = true;   
+    
 }
 
 function resetearComboBox(id) {
@@ -240,76 +239,97 @@ function tiempoRecursivo(){
         }
 }
 
-function girarCarta(event){
+function puedeGirarCarta(event){
     if(totalTiempo==0)
         {
          //No la podra girar, ya que no tiene tiempo
         }
     else{
         //podra girar la carta
-        flip(event);
-    }
-}
+        //var x = document.getElementById("hola").id;
+        //var x = document.getElementsByClassName("carta card")[1].id;
+        //alert(x);
+        girarCarta(event);
 
 /*
-function responderAlJugador(id) {
-    nombre_carta = document.getElementById("nombre_php-js").innerHTML;
-    gafas_carta = document.getElementById("gafas_php-js").innerHTML;
-    cabello_carta = document.getElementById("cabello_php-js").innerHTML;
-    sexo_carta = document.getElementById("sexo_php-js").innerHTML;
+        var element = event.currentTarget;
+        alert(event.currentTarget.id);
+            if(element.style.transform == "rotateY(180deg)") {
+                alert(element[1]);
+            } else {
+                element.style.transform = "rotateY(180deg)";
+                
+            }
 
-    llevaGafas = document.getElementById('gafas')[document.getElementById('gafas').selectedIndex];
-    llevaCabello = document.getElementById('cabello')[document.getElementById('cabello').selectedIndex];
-    llevaSexo = document.getElementById('sexo')[document.getElementById('sexo').selectedIndex];
-
-    if (id == "gafas") {
-        if (llevaGafas.value == gafas_carta && llevaGafas.value != "---") {
-            document.getElementById('texto_salida').innerHTML = "SI";
-            document.getElementById("botonDeColorVerde").style.display = "block";
-        } else {
-            document.getElementById('texto_salida').innerHTML = "NO";
-            document.getElementById("botonDeColorRojo").style.display = "block";
-        }
-    
-    } else if (id == "cabello") {
-        if (llevaCabello.value == cabello_carta && llevaCabello.value != "---") {
-            document.getElementById('texto_salida').innerHTML = "SI";
-            document.getElementById("botonDeColorVerde").style.display = "block";
-        } else {
-            document.getElementById('texto_salida').innerHTML = "NO";
-            document.getElementById("botonDeColorRojo").style.display = "block";
-        }
-    } else if (id == "sexo") {
-        if (llevaSexo.value == sexo_carta && llevaSexo.value != "---") {
-            document.getElementById('texto_salida').innerHTML = "SI";
-            document.getElementById("botonDeColorVerde").style.display = "block";
-        } else {
-            document.getElementById('texto_salida').innerHTML = "NO";
-            document.getElementById("botonDeColorRojo").style.display = "block";
-        }
-    } else {
-        document.getElementById('texto_salida').innerHTML = "ERROR";
-        document.getElementById("botonDeColorVerde").style.display = "none";
-        document.getElementById("botonDeColorRojo").style.display = "none";
+        if (document.getElementsByClassName("carta card") == "rotateY(180deg)") {
+            alert("girada");
+        }*/
     }
 }
-*/
+
+function clickPasaNombre(event){
+
+    cogerDatos();
+    //alert(nombre_carta);
+    alert(event);
+    //alert(haGanado);
+    if (event==nombre_carta){
+        haGanado=false;
+    }
+}
 
 function hasAcabado(){
 
-    ////Modal
-    var modal_fin_juego = document.getElementById('Fin_del_juego');
-    var boton_NoGuardar = document.getElementsByClassName("fin_Opcion_No")[0];
-    var boton_Guardar = document.getElementsByClassName("fin_Opcion_Si")[0];
+    //if ganado:
+    if (haGanado==true) {
+        juegoGanado();
+    }else{
+    //if perdido:
+        juegoPerdido();
+    }
+    
+}
+
+function juegoGanado(){
+
+    document.getElementById("canvas").style.visibility = "visible";
+
+    var modal_fin_juego = document.getElementById('Fin_del_juego_bueno');
+    var boton_NoGuardar = document.getElementsByClassName("ganado_Opcion_No")[0];
+    var boton_Guardar = document.getElementsByClassName("ganado_Opcion_Si")[0];
 
     modal_fin_juego.style.display = "block";
         
     boton_NoGuardar.onclick = function() {
-       modal_fin_juego.style.display = "none";
-    }
-    boton_Guardar.onclick = function() {
-        //document.getElementById("canvas").style.visibility = "visible";
         modal_fin_juego.style.display = "none";
+    }
+    boton_Guardar.onclick = function(){
+        modal_fin_juego.style.display = "none";
+        guardarUsuario();
+    }
+}
+
+
+function juegoPerdido(){
+
+    var modal_fin_juego = document.getElementById('Fin_del_juego_malo');
+    var boton_NoGuardar = document.getElementsByClassName("perdido_Opcion_No")[0];
+    var boton_Guardar = document.getElementsByClassName("perdido_Opcion_Si")[0];
+
+    modal_fin_juego.style.display = "block";
+        
+    boton_NoGuardar.onclick = function() {
+        modal_fin_juego.style.display = "none";
+    }
+    boton_Guardar.onclick = function(){
+        modal_fin_juego.style.display = "none";
+        guardarUsuario();
+    }
+
+}
+
+//guardar datos
+function guardarUsuario() {
         
         var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
 
@@ -326,21 +346,12 @@ function hasAcabado(){
         enviarNombre.onclick = function() {
 
             var nombreJugador = document.getElementById('nombre_para_enviar').value;
-            
             alert(nombreJugador);
             alert(contadorPreguntas);
+            modal_guardar_nombre.style.display = "none";
         }
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal_fin_juego) {
-            modal_fin_juego.style.display = "none";
-        }
-    }
-    ///Fin modal
-
 }
+
 
 function recogerCartaServidor() {
     cartaServidor = document.getElementsByClassName("cartaElegida")[0];
@@ -350,8 +361,8 @@ function recogerCartaServidor() {
 function mostrarCartaServer() {
     var chosenOneCard = recogerCartaServidor();
     var elementos = document.getElementsByClassName(cartaElegida)[0];
-    elementos.setAttribute(cartaElegida, final);
-    document.cartaelegida.src="cartas/"+chosenOneCard;
+    element.removeAttribute('src')
+    elementos.setAttribute(src, chosenOneCard);
 }
 
 
@@ -383,6 +394,8 @@ function recogerCartaUsuario() {
         }
     }
 }
+
+
 
 
 ////Fireworks 
@@ -530,18 +543,3 @@ function windowResized(){
     ctx.fillRect(0, 0, width, height);
 }
 /////Fin FIREWORKS
-
-
-///set intentos en input secreto en modulo nombre
-function setIntentos(){
-
-    document.modulonombre.intentos.value = contadorPreguntas;
-    document.forms["modulonombre"].submit();
-}
-
-function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
-// To disable f5
-    /* jQuery < 1.7 */
-$(document).bind("keydown", disableF5);
-/* OR jQuery >= 1.7 */
-$(document).on("keydown", disableF5);

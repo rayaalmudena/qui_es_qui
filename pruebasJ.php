@@ -182,25 +182,26 @@
 				$cartaElegida = $cartas[0];
 				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]'sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 				$backCarta="<img src='cartas/back.png'>";
-				$Elegida='<div class="container containerElegida"><div class="card cardE" onclick="flip(event)"><div class="front">';
+				$Elegida='<div id="lateral"><div class="container containerElegida"><div class="card cardE" id="cartaElegida"><div class="front">';
 				$Elegida .=$backCarta;
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
-				$Elegida .='</div></div></div><td>';
+				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
 				echo $Elegida;
 
 
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
-				$tabla .='<table><tr>';
+				$tabla .='<div id="tablero"><table><tr>';
 				$c = 0;
 				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
-					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
+					//var_dump($carta);
+					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' onclick=clickPasaNombre('$carta[nombre]')>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" onclick="girarCarta(event)"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card" id="$carta[nombre]"  onclick="puedeGirarCarta(event)"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -209,7 +210,7 @@
 					if ($c==count($cartas)){
 						$tabla .='</tr>';
 						$tabla .="\n";	
-						$tabla .='</table>';
+						$tabla .='</table></div>';
 						$tabla .="\n";
 					}
 					if ($c%3==0 && $c!=count($cartas)){
@@ -219,65 +220,44 @@
 				}
 				return $tabla;
 			}
+
 			
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
 			echo "<br>";
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
+
+			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
+			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
+			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
+			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
+			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
+
+			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
+			echo "<p id='nombre_php-js' >$nombre_carta</p>
+			<p id='gafas_php-js' hidden>$gafas_carta</p>
+			<p id='cabello_php-js' hidden>$cabello_carta</p>
+			<p id='sexo_php-js' hidden>$sexo_carta</p>";
+			
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
 
 
 			?>
+			<div id="divtexto">
 			<div id="comboDif">
 				<p>Elige dificultad </p>
-				<select id="dificultad" class="cboxdificultad">
+				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
 					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
-					<option  name="dificultad" value="easy">EASY</option>
-					<option  name="dificultad" value="veryEasy">VERY EASY</option>
+					<option  name="dificultad" value="Easy">EASY</option>
+					<option  name="dificultad" value="Very Easy">VERY EASY</option>
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<button id="buttonEasy">EASY</button>
 			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
 
 			<div id="combobox">
-				<!---
-				<p>¿Qué lleva? </p>
-				<select id="gafas" class="cbox gafas">
-					<option  name="gafas" value="---">---</option>
-					<option  name="gafas" value="si">Gafas</option>
-					<option  name="gafas" value="no">Nada</option>
-				</select>
-
-				<br>
-
-				<p>¿Su pelo es... ? </p>
-				<select id="cabello" class="cbox cabello">
-					<option name="cabello" value="---">---</option>
-					<option name="cabello" value="moreno">Moreno</option>
-					<option name="cabello" value="rubio">Rubio</option>
-					<option name="cabello" value="pelirrojo">Pelirrojo</option>
-				</select>
-
-				<br>
-
-				<p>¿La persona es... ?</p>
-				<select id="sexo" class="cbox sexo">
-					<option name="sexo" value="---">---</option>
-					<option name="sexo" value="hombre">Hombre</option>
-					<option name="sexo" value="mujer">Mujer</option>
-				</select>
-
-				<br><br>
-
-				
-				<button id="hacerPregunta">Fes la pregunta</button>
-				-->
-
-				
-<!-------------------------------------------------------------------------------- NUEVA INSERCION -->
 
 				<?php 
 				$config_array=[];
@@ -311,11 +291,10 @@
 				echo "</select> <br><br>";
 
 
-				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta2</button>";
+				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta</button>";
 
 				?>
 
-<!---------------------------------------------------------------------------------- --->
 
 				<br>
 				<p id="texto_salida"></p>
@@ -323,30 +302,20 @@
 				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
 
 				<br>
-				
+
 				<p id="CuentaAtras"></p>
 
 			</div>
-
+			</div>
 			<?php 
 
 
-			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
-			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
-			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
-			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
-			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
-
-			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
-			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
-			<p id='gafas_php-js' hidden>$gafas_carta</p>
-			<p id='cabello_php-js' hidden>$cabello_carta</p>
-			<p id='sexo_php-js' hidden>$sexo_carta</p>";
+			
 		}
 
 	?>
 
-	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
+	
 
 
 
@@ -365,18 +334,31 @@
 </div>
 <!-- acaba el modal del aviso -->
 
-<!-- Comienza el modal del fin del juego-->
+<!-- Comienza el modal del fin del juego ganando!-->
 
-<div id="Fin_del_juego" class="modal">
+<div id="Fin_del_juego_bueno" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content_pregunta">
-    <p id="letra_modal_aviso">Has acabado el juego!, Quieres guardar tu puntuacion?</p>
-	<button class="fin_Opcion_Si">Si</button>
-	<button class="fin_Opcion_No">No</button>
+  <div class="modal-content_ganado">
+    <p id="letra_modal_aviso_ganado">Felicidades, has ganado!, Quieres guardar tu puntuacion?</p>
+	<button class="ganado_Opcion_Si">Si</button>
+	<button class="ganado_Opcion_No">No</button>
   </div>
 </div>
-<!-- acaba el modal -->
+<!-- acaba el modal del fin del juego ganando!-->
+
+<!-- Comienza el modal del fin del juego prediendo..-->
+
+<div id="Fin_del_juego_malo" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content_perdido">
+    <p id="letra_modal_aviso_perdido">Has perdido.., Quieres guardar tu puntuacion?</p>
+	<button class="perdido_Opcion_Si">Si</button>
+	<button class="perdido_Opcion_No">No</button>
+  </div>
+</div>
+<!-- acaba el modal del fin del juego perdido..-->
 
 <!-- Comienza el modal de introducir datos -->
 
