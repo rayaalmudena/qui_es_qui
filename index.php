@@ -230,7 +230,7 @@
 
 
 			?>
-			
+			<div id="divtexto">
 			<div id="comboDif">
 				<p id="parrafoElegirDificultad">Elige dificultad </p>
 				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
