@@ -32,19 +32,20 @@
 					list($config_gafas_1, $config_gafas_2, $config_gafas_3, $config_gafas_4, $config_gafas_5) = explode(" ", $config_array[0]);
 					$config_array_gafas[0]=$config_gafas_2;
 					$config_array_gafas[1]=$config_gafas_3;
-					$config_array_gafas[2]=(str_replace("_", " ",$config_gafas_4));
-					$config_array_gafas[3]=(str_replace("_", " ",$config_gafas_5));
+					$config_array_gafas[2]=str_replace("_", " ",$config_gafas_4);
+					$config_array_gafas[3]=str_replace("_", " ",$config_gafas_5);
 				}
 				//guarda en un array el archivo de configuracion, es el array del cabello
 				if (strpos($config_array[1], " ")){
 					//sirve para encontrar si existe el espacio para poder meterlo en un array
-					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4, $config_cabello_5, $config_cabello_6) =
+					list($config_cabello_1, $config_cabello_2, $config_cabello_3, $config_cabello_4, $config_cabello_5, $config_cabello_6, $config_cabello_7) =
 						explode(" ", $config_array[1]);
 					$config_array_cabello[0]=$config_cabello_2;
 					$config_array_cabello[1]=$config_cabello_3;
 					$config_array_cabello[2]=$config_cabello_4;
-					$config_array_cabello[3]=$config_cabello_5;
-					$config_array_cabello[4]=$config_cabello_6;
+					$config_array_cabello[3]=str_replace("_", " ",$config_cabello_5);
+					$config_array_cabello[4]=str_replace("_", " ",$config_cabello_6);
+					$config_array_cabello[5]=str_replace("_", " ",$config_cabello_7);
 				}
 				//guarda en un array el archivo de configuracion, es el array del sexo
 				if (strpos($config_array[2], " ")){
@@ -52,8 +53,8 @@
 					list($config_sexo_1, $config_sexo_2, $config_sexo_3, $config_sexo_4, $config_sexo_5) = explode(" ", $config_array[2]);
 					$config_array_sexo[0]=$config_sexo_2;
 					$config_array_sexo[1]=$config_sexo_3;
-					$config_array_sexo[2]=$config_sexo_4;
-					$config_array_sexo[3]=$config_sexo_5;
+					$config_array_sexo[2]=str_replace("_", " ",$config_sexo_4);
+					$config_array_sexo[3]=str_replace("_", " ",$config_sexo_5);
 				}
 				fclose($file2);
 				//Punto 2 errores
@@ -181,25 +182,26 @@
 				$cartaElegida = $cartas[0];
 				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]'sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 				$backCarta="<img src='cartas/back.png'>";
-				$Elegida='<div class="container containerElegida"><div class="card cardE" onclick="flip(event)"><div class="front">';
+				$Elegida='<div id="lateral"><div class="container containerElegida"><div class="card cardE" id="cartaElegida"><div class="front">';
 				$Elegida .=$backCarta;
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
-				$Elegida .='</div></div></div><td>';
+				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
 				echo $Elegida;
 
 
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
-				$tabla .='<table><tr>';
+				$tabla .='<div id="tablero"><table><tr>';
 				$c = 0;
 				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
-					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
+					//var_dump($carta);
+					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' onclick=clickPasaNombre('$carta[nombre]')>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" onclick="flip(event)"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card" id="$carta[nombre]"  onclick="puedeGirarCarta(event)"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -208,7 +210,7 @@
 					if ($c==count($cartas)){
 						$tabla .='</tr>';
 						$tabla .="\n";	
-						$tabla .='</table>';
+						$tabla .='</table></div>';
 						$tabla .="\n";
 					}
 					if ($c%3==0 && $c!=count($cartas)){
@@ -218,70 +220,13 @@
 				}
 				return $tabla;
 			}
+
 			
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
 			echo "<br>";
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-			//Fuegos artificiales
-			echo '<canvas id="canvas"></canvas>';
-
-
-			?>
-			<div id="comboDif">
-				<p>Elige dificultad </p>
-				<select id="dificultad" class="cboxdificultad">
-					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
-					<option  name="dificultad" value="easy">EASY</option>
-					<option  name="dificultad" value="veryEasy">VERY EASY</option>
-				</select>
-			</div>
-			<p id="textoEasy"></p>	
-			<button id="buttonEasy">EASY</button>
-			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
-
-			<div id="combobox">
-
-				<p>¿Qué lleva? </p>
-				<select id="gafas" class="cbox gafas">
-					<option  name="gafas" value="---">---</option>
-					<option  name="gafas" value="si">Gafas</option>
-					<option  name="gafas" value="no">Nada</option>
-				</select>
-
-				<br>
-
-				<p>¿Su pelo es... ? </p>
-				<select id="cabello" class="cbox cabello">
-					<option name="cabello" value="---">---</option>
-					<option name="cabello" value="moreno">Moreno</option>
-					<option name="cabello" value="rubio">Rubio</option>
-					<option name="cabello" value="pelirrojo">Pelirrojo</option>
-				</select>
-
-				<br>
-
-				<p>¿La persona es... ?</p>
-				<select id="sexo" class="cbox sexo">
-					<option name="sexo" value="---">---</option>
-					<option name="sexo" value="hombre">Hombre</option>
-					<option name="sexo" value="mujer">Mujer</option>
-				</select>
-
-				<br><br>
-				
-				<button id="hacerPregunta">Fes la pregunta</button>
-
-				<br>
-				<p id="texto_salida"></p>
-				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
-				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
-
-			</div>
-
-			<?php 
-
 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
 			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
@@ -290,15 +235,87 @@
 			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
 
 			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
-			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
+			echo "<p id='nombre_php-js' >$nombre_carta</p>
 			<p id='gafas_php-js' hidden>$gafas_carta</p>
 			<p id='cabello_php-js' hidden>$cabello_carta</p>
 			<p id='sexo_php-js' hidden>$sexo_carta</p>";
+			
+			//Fuegos artificiales
+			echo '<canvas id="canvas"></canvas>';
+
+
+			?>
+			<div id="divtexto">
+			<div id="comboDif">
+				<p>Elige dificultad </p>
+				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
+					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
+					<option  name="dificultad" value="Easy">EASY</option>
+					<option  name="dificultad" value="Very Easy">VERY EASY</option>
+				</select>
+			</div>
+			<p id="textoEasy"></p>	
+			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
+
+			<div id="combobox">
+
+				<?php 
+				$config_array=[];
+
+				$file2 = fopen("config.txt", "r");
+				$z=0;
+				while(!feof($file2)) {
+					$config_array[$z]=trim(str_replace(" ,", "",(fgets($file2))));
+					$z=$z+1;
+				}
+				fclose($file2);
+
+				$nuevoCombobox=[];
+
+				$combo_gafas = explode(" ", $config_array[0]);
+				unset($combo_gafas[0],$combo_gafas[1],$combo_gafas[2]);
+
+				$combo_cabello = explode(" ", $config_array[1]);
+				unset($combo_cabello[0],$combo_cabello[1],$combo_cabello[2],$combo_cabello[3]);
+
+				$combo_sexo = explode(" ", $config_array[2]);
+				unset($combo_sexo[0],$combo_sexo[1],$combo_sexo[2]);
+
+
+				$nuevoCombobox = str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
+				echo "<select id='pregunta' onchange='activarBoton()'>";
+				echo "<option>----</option>";
+					foreach ($nuevoCombobox as $key => $value) {
+						echo "<option name='pregunta_combo' value='$value'>$value</option>";
+					}
+				echo "</select> <br><br>";
+
+
+				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta</button>";
+
+				?>
+
+
+				<br>
+				<p id="texto_salida"></p>
+				<img  src="botones/BotonRojo.gif" id="botonDeColorRojo">
+				<img  src="botones/BotonVerde.gif" id="botonDeColorVerde">
+
+				<br>
+
+				<p id="CuentaAtras"></p>
+
+			</div>
+			</div>
+			<?php 
+
+
+			
 		}
 
 	?>
 
-	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
+	
 
 
 
@@ -317,18 +334,31 @@
 </div>
 <!-- acaba el modal del aviso -->
 
-<!-- Comienza el modal del fin del juego-->
+<!-- Comienza el modal del fin del juego ganando!-->
 
-<div id="Fin_del_juego" class="modal">
+<div id="Fin_del_juego_bueno" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content_pregunta">
-    <p id="letra_modal_aviso">Has acabado el juego!, Quieres guardar tu puntuacion?</p>
-	<button class="fin_Opcion_Si">Si</button>
-	<button class="fin_Opcion_No">No</button>
+  <div class="modal-content_ganado">
+    <p id="letra_modal_aviso_ganado">Felicidades, has ganado!, Quieres guardar tu puntuacion?</p>
+	<button class="ganado_Opcion_Si">Si</button>
+	<button class="ganado_Opcion_No">No</button>
   </div>
 </div>
-<!-- acaba el modal -->
+<!-- acaba el modal del fin del juego ganando!-->
+
+<!-- Comienza el modal del fin del juego prediendo..-->
+
+<div id="Fin_del_juego_malo" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content_perdido">
+    <p id="letra_modal_aviso_perdido">Has perdido.., Quieres guardar tu puntuacion?</p>
+	<button class="perdido_Opcion_Si">Si</button>
+	<button class="perdido_Opcion_No">No</button>
+  </div>
+</div>
+<!-- acaba el modal del fin del juego perdido..-->
 
 <!-- Comienza el modal de introducir datos -->
 
@@ -336,14 +366,45 @@
 
   <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
-	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
-	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
-	    <button class="enviarNombre">Aceptar</button>
-	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>
+  		<form action="taularecords.php" method="POST" target="_blank">
+		    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
+		    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
+		    <input type="text" name="puntuacionJugador" hidden>
+		    <button type="button" class="enviarNombre">Aceptar</button>
+		    <button type="button" class="Cerrar_Ventana_Usuario"> Cancelar</button>
+		   
   </div>
 
 </div>
 <!-- acaba el modal de introducir datos -->
+
+<!-- Comienza el modal que se utilizara para guardar los datos introducidos -->
+
+<div id="guardar_en_txt" class="modal">
+  <div class="modal-content">
+
+  		<?php 
+
+  			//$enviarNombreJugador= echo "<p id='dos'></p>";	
+  			//$enviarPuntuacion = echo "<p id='uno'></p>";
+  			//<p id="uno1"></p>
+	    	
+
+  			//echo "$enviarNombreJugador";
+  			//echo "$enviarPuntuacion";
+
+				//$flog = fopen("taularecords.txt","a");
+				//fwrite($flog, "<p>sdf</p>" . PHP_EOL);
+				//fclose($flog);
+
+		?>
+
+	    <p id="letra_modal_aviso2">Tu nombre se ha guardado correctamente!</p>
+	    <button class="Cerrar_Guardado">Aceptar</button>
+	    </form>
+  </div>
+</div>
+<!-- acaba el modal que se utilizara para guardar los datos introducidos -->
 
 </body>
 </html>

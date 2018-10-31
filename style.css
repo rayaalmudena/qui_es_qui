@@ -1,30 +1,33 @@
 body{
+  background-image: url("background.jpeg");  
   overflow-y: scroll;
   overflow-x: hidden;
+  background-color: lightblue;
+  background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 .cartaElegida {
   height: 200px;
   background-image: url("cartas/backgroundCS.png");
-  background-repeat: repeat;
-  background-size: 150px;
+  background-repeat:repeat;
+  background-size: 100px;
   border: solid 3px black;
   text-align: center;
 }
-.container.card.back{
-  height: 200px;
-}
 
-.carta{
-  height: 134px;
-  } 
-
-table{
+table{  
+  position: relative;
+  top: 0;
+  left: 50px;
   height: 100%;
+  padding: 5px;
   background-color: green;
-  padding: 10px;
   border-spacing: 5px;
 }
 #records {
+  left: 0px;
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
@@ -86,11 +89,11 @@ canvas{
 }
 
 #enlaceRecords{
-  position: absolute;
-  top: 245px;
-  right: 5px;  
-  padding:13px;
-  border:1px solid black;
+  float: right;
+  top: 200px;
+  left: 200px;  
+  padding:10px;
+  padding-right: 10px;
   background-color: #dfc416;
 }
 
@@ -108,18 +111,17 @@ div {
   perspective: 1000px;
 }
 .containerElegida{
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding:5px;
+  padding-right: 15px;
+  float: right;
   width: 200px;
   height: 200px;
+
   perspective: 1000px;
 }
 .containerElegida .front{
   background-image: url("cartas/backgroundCS.png");
-  background-repeat: repeat;
-  background-size: 150px;
+  background-repeat:repeat;
+  background-size: 100px;
 }
 .card {
   transition: transform 2s;
@@ -128,12 +130,22 @@ div {
 }
 
 .front, .back {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.front img, .back img {
+  width: 100%;
+  height: 100%;
+}
+
+.rotated {
+  transform: rotateY(180deg);
 }
 
 .front {
@@ -165,7 +177,7 @@ div {
   display: none;
 }
 #botonDeColorVerde{
-  height: 50px;
+  height: 25px;
   display: none;
 }
 
@@ -194,15 +206,16 @@ div {
     padding: 20px;
     border: 1px solid #888;
     width: 55%;
-    height: 20%;
+    height: 30%;
 }
-.modal-content_pregunta{
+
+.modal-content_ganado, .modal-content_perdido {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 55%;
-    height: 15%;
+    height: 25%;
 }
 
 /* Para cerrar el boton */
@@ -218,7 +231,7 @@ div {
   position: relative;
     left: 40%;
 }
-.cerrar_Aviso, .fin_Opcion_Si, .fin_Opcion_No {
+.cerrar_Aviso, .ganado_Opcion_Si, .ganado_Opcion_No, .perdido_Opcion_Si, .perdido_Opcion_No {
   /*modal del aviso*/
     color: #aaaaaa;
     font-size: 28px;
@@ -226,7 +239,7 @@ div {
     position: relative;
     left: 44%;
 }
-#letra_modal_aviso, #letra_modal_aviso2{
+#letra_modal_aviso_ganado, #letra_modal_aviso_predido, #letra_modal_aviso, #letra_modal_aviso2, #letra_modal_aviso_perdido{
   /*modal del aviso*/
   font-size: 25px;
   font-weight: bold;
@@ -234,8 +247,8 @@ div {
 }
 
 /* Hover de la cruz para cerrar el modal*/
-.Cerrar_Ventana_Usuario:hover, .cerrar_Aviso:hover, .fin_Opcion_Si:hover,
-.Cerrar_Ventana_Usuario:focus, .cerrar_Aviso:focus, .fin_Opcion_No:focus {
+.Cerrar_Ventana_Usuario:hover, .cerrar_Aviso:hover, .ganado_Opcion_Si:hover, .perdido_Opcion_Si:hover,
+.Cerrar_Ventana_Usuario:focus, .cerrar_Aviso:focus, .ganado_Opcion_No:focus, .perdido_Opcion_No:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -244,3 +257,47 @@ div {
 
 /* ************************************************************ */
 /*Aqui acaba el modal*/
+
+#lateral{
+  position: absolute;
+  height: 270px;
+}
+@media only screen and (max-width: 600px) {
+    body {
+        background-color: lightblue;
+    }
+}
+@media screen and (max-width: 600px) {
+  .container {width: 150px;}
+  .containerElegida{width:220px; }
+       table {
+           width:20%;
+           left: 50px;
+           top:260px;
+       }
+       thead {
+           display: none;
+       }
+       tr:nth-of-type(2n) {
+           background-color: inherit;
+       }
+       tr td:first-child {
+       }
+       tbody td {
+           display: block;
+           text-align:center;
+       }
+       
+       #records{position: relative;top:0; }
+       #records tbody td {display: inline-block; text-align:none;}
+      #divtexto{position: relative;top: 500px;left: 0px;
+    position: relative;
+  }
+}
+  
+  
+  }
+#divtexto{
+  position: relative;
+  background-color: red;
+}
