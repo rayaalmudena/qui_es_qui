@@ -243,25 +243,25 @@ div#divtexto{
       div#divtexto{
         width: 90%;
 }
-       table {
+      div#tablero table {
            width:20%;
        }
-       thead {
+       div#tablero thead {
            display: none;
        }
-       tr:nth-of-type(2n) {
+       div#tablero tr:nth-of-type(2n) {
            background-color: inherit;
        }
       
-       tbody td {
+       div#tablero tbody td {
            display: block;
            text-align:center;
        }
-       
-      #records{position: relative; width:90%;}
-      #records tbody td {display: block; }
      
-
+        #records {
+          width: 90%;
+        }
+  
   
   
   }
