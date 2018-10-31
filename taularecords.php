@@ -8,6 +8,14 @@
 </head>
 <body>
 				<?php 
+
+				//$valor = $_POST["nombreJugador"];
+				//$valor2 = $_POST["puntuacionJugador"];
+				//echo "<p id='dos2'></p>";
+				//echo $valor; 
+				//echo "<br>";
+				//echo $valor2;
+
 			function ordenarRecords(){
 				$records=[];
 				$file = fopen("taularecords.txt", "r");
@@ -45,6 +53,8 @@
 			}
 			$tablarecord=tableroCartas(ordenarRecords());
 			echo "$tablarecord";
+
+
 	?>
 
 
