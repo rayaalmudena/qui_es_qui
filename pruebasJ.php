@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">	
 	<script type="text/javascript" src="pruebasJ.js"></script>
 </head>
-<body>
+<body onload="ok()">
 	
 	<?php 
 	//Comienzo de los posibles errores
@@ -168,10 +168,10 @@
 		    		foreach ($cartas as $carta) {
 						$cartaNueva;
 						$carta=explode(' ',$carta);
-						$nombre="$carta[0]";
-						$gafas="$carta[2]";
-						$cabello="$carta[5]";
-						$sexo="$carta[8]";
+						$nombre=trim("$carta[0]");
+						$gafas=trim("$carta[2]");
+						$cabello=trim("$carta[5]");
+						$sexo=trim("$carta[8]");
 						$contador=$contador+1;
 						$cartaNueva= array("nombre"=>$nombre,"gafas"=>$gafas,"cabello"=>$cabello,"sexo"=>$sexo);
 						$cartasFinal[]=$cartaNueva;	
@@ -199,9 +199,10 @@
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
 					//var_dump($carta);
-					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' onclick=clickPasaNombre('$carta[nombre]')>";
+					$cartaImg="<img src='cartas/$carta[nombre]' id='$c' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' 
+					onload=pasaNombre('posicion:$c','_nombre:$carta[nombre]_','gafas:$carta[gafas]_','cabello:$carta[cabello]_','sexo:$carta[sexo]')>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" id="$carta[nombre]"  onclick="puedeGirarCarta(event)"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card" id="$c" onclick="puedeGirarCarta(event)"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -307,9 +308,7 @@
 
 			</div>
 			</div>
-			<?php 
-
-
+			<?php
 			
 		}
 
