@@ -581,6 +581,11 @@ function preguntaCorrecta(){
     document.getElementById("botonDeColorVerde").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
+    if (contadorVolteo >= 11) {
+        // Rotamos la carta del servidor
+        flipCard(document.getElementById('cartaElegida'));
+        finDelJuego();
+    }
     
 }
 function preguntaIncorrecta(){
@@ -589,6 +594,11 @@ function preguntaIncorrecta(){
     document.getElementById("botonDeColorRojo").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
+    if (contadorVolteo >= 11) {
+        // Rotamos la carta del servidor
+        flipCard(document.getElementById('cartaElegida'));
+        finDelJuego();
+    }
     
 }
 
