@@ -76,7 +76,7 @@ function asignarID(){
     }
 }
 
-function pasaNombre(posicion,nombre,gafas,cabello,sexo,nombre2){
+function pasaNombre(posicion,nombre,gafas,cabello,sexo){
 
     //guarda los atributos
     array_atributos[contador_array]=posicion+nombre+gafas+cabello+sexo;
