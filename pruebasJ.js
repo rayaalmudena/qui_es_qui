@@ -7,6 +7,7 @@ var cartaServidor;
 var totalTiempo=20;//funcion de girar carta
 var intervalo1;//funcion de girar carta
 
+//easy y very easy se quedaran en false hasta que sean activados
 var easy=false;
 var veryeasy=false;
 
@@ -14,10 +15,14 @@ var nombreJugador;
 
 var nombre_carta;
 
-var mxs=0;//Le da un ID al back de la carta para que se gire.
-var probitas=0;
+//Le da un ID al back de la carta para que se gire con el easy.
+var asignarid=0;
 
-var arrayprobitas = {};
+//Es un contador que se utiliza para las posiciones del array de atributos
+var contador_array=0;
+
+//Array de atributos para pasarlos al javascript
+var array_atributos = {};
 
 var haGanado=true;
 
@@ -60,27 +65,27 @@ function giraCartaV2(i){
     contadorVolteo++;
 }
 
-function ok(){
+function asignarID(){
     //Le da un ID al back de la carta para que se gire.
-    while (mxs<12){
-        document.getElementById('$c').id=mxs;
-        mxs++;
+    while (asignarid<12){
+        document.getElementById('$c').id=asignarid;
+        asignarid++;
     }
 }
 
 function pasaNombre(posicion,nombre,gafas,cabello,sexo){
 
-    arrayprobitas[probitas]=posicion+nombre+gafas+cabello+sexo;
+    array_atributos[contador_array]=posicion+nombre+gafas+cabello+sexo;
 
-    nan = arrayprobitas[probitas].indexOf("_");
+    buscaindex = array_atributos[contador_array].indexOf("_");
 
-    while (nan>0){//quitamos las barras bajas
-        arrayprobitas[probitas]=arrayprobitas[probitas].replace("_", " ");
-        nan = arrayprobitas[probitas].indexOf("_");
+    while (buscaindex>0){//quitamos las barras bajas
+        array_atributos[contador_array]=array_atributos[contador_array].replace("_", " ");
+        buscaindex = array_atributos[contador_array].indexOf("_");
     }
-    //alert(arrayprobitas[probitas]);
+    //alert(array_atributos[contador_array]);
     //alert(document.getElementById(1));
-    probitas++;
+    contador_array++;
 
     cogerDatos();
     //alert(nombre_carta);
@@ -193,8 +198,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("sexo:mujer");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("sexo:mujer");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -212,8 +217,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("sexo:hombre");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("sexo:hombre");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -230,8 +235,8 @@ function preguntarAlServer() {
     else if (pregunta_combo == "Es Mujer?" && sexo_carta == "mujer") {
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("sexo:hombre");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("sexo:hombre");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -248,8 +253,8 @@ function preguntarAlServer() {
     else if (pregunta_combo == "Es Mujer?" && sexo_carta == "hombre") {
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("sexo:mujer");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("sexo:mujer");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -267,8 +272,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("gafas:no");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("gafas:no");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -286,8 +291,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("gafas:si");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("gafas:si");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -305,8 +310,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("gafas:si");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("gafas:si");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -324,8 +329,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("gafas:no");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("gafas:no");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -343,9 +348,9 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:moreno");
-                nan2 = arrayprobitas[i].indexOf("cabello:pelirrojo");
-                if (nan>0 || nan2>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:moreno");
+                buscaindex2 = array_atributos[i].indexOf("cabello:pelirrojo");
+                if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -363,8 +368,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:rubio");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:rubio");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -382,8 +387,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:rubio");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:rubio");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -401,9 +406,9 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:rubio");
-                nan2 = arrayprobitas[i].indexOf("cabello:pelirrojo");
-                if (nan>0 || nan2>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:rubio");
+                buscaindex2 = array_atributos[i].indexOf("cabello:pelirrojo");
+                if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -421,8 +426,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:moreno");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:moreno");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -440,8 +445,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:moreno");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:moreno");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -459,9 +464,9 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:moreno");
-                nan2 = arrayprobitas[i].indexOf("cabello:rubio");
-                if (nan>0 || nan2>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:moreno");
+                buscaindex2 = array_atributos[i].indexOf("cabello:rubio");
+                if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -479,8 +484,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:pelirrojo");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:pelirrojo");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
@@ -498,8 +503,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                nan = arrayprobitas[i].indexOf("cabello:pelirrojo");
-                if (nan>0) {
+                buscaindex = array_atributos[i].indexOf("cabello:pelirrojo");
+                if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";

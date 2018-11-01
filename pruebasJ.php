@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">	
 	<script type="text/javascript" src="pruebasJ.js"></script>
 </head>
-<body onload="ok()">
+<body onload="asignarID()">
 	
 	<?php 
 	//Comienzo de los posibles errores
@@ -198,7 +198,6 @@
 				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
-					//var_dump($carta);
 					$cartaImg="<img src='cartas/$carta[nombre]' id='$c' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' 
 					onload=pasaNombre('posicion:$c','_nombre:$carta[nombre]_','gafas:$carta[gafas]_','cabello:$carta[cabello]_','sexo:$carta[sexo]')>";
 					$tabla .="\n";
