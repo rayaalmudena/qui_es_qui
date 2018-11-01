@@ -6,6 +6,8 @@ var contadorPreguntas = 0;
 var cartaServidor;
 var totalTiempo=20;//funcion de girar carta
 var intervalo1;//funcion de girar carta
+var botonHacerPregunta = document.getElementById("hacerPregunta");
+
 
 //easy y very easy se quedaran en false hasta que sean activados
 var easy=false;
@@ -131,6 +133,17 @@ if ( window.addEventListener ) {
 function botonActivado() {
     desaparecerBotonEasy();
     preguntarAlServer();
+    if (veryeasy==true){
+        eliminarOpcion();
+    }
+}
+
+function eliminarOpcion(){
+    var x = document.getElementById("pregunta");
+    x.remove(x.selectedIndex);
+    x.selectedIndex = 0;
+    botonHacerPregunta.disabled = true;
+
 }
 
 function sacarMensajeAlertaSinVolteo() {
@@ -165,7 +178,7 @@ function sacarMensajeAlertaSinVolteo() {
         pregunta_clicada++;
     }
     else if (easy==true) {
-        
+
         if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
 
             var modal_aviso = document.getElementById('AvisoPregunta');
@@ -583,11 +596,11 @@ function preguntaIncorrecta(){
 function activarBoton(){
 
     var lista = document.getElementById("pregunta");
-    var boton = document.getElementById("hacerPregunta");
+    botonHacerPregunta = document.getElementById("hacerPregunta");
     if(lista.selectedIndex !=0 )
-      boton.disabled = false;
+      botonHacerPregunta.disabled = false;
     else{
-      boton.disabled = true;
+      botonHacerPregunta.disabled = true;
     }
 
 }
