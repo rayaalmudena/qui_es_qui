@@ -41,6 +41,11 @@ function girarCarta(event) {
         if (element.className != "card cardE") {
             if(!isCardFlipped(element)) {
                 flipCard(element);
+                ///Es necesario para el contador, para que no se junte con el easy
+                id_elemento=element.id;
+                document.getElementById(id_elemento).id="card rotated";
+                document.getElementById(id_elemento).id="card rotated";
+                ///
                 contadorVolteo++;
                 flipCardSound.play();
             }
@@ -233,7 +238,7 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
