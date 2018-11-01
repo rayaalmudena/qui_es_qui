@@ -129,32 +129,36 @@ function botonActivado() {
 }
 
 function sacarMensajeAlertaSinVolteo() {
-    if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
 
-        var modal_aviso = document.getElementById('AvisoPregunta');
-        var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+    if (easy==false && veryeasy==false) {
 
-        modal_aviso.style.display = "block";
-        
-        boton_cerrar.onclick = function() {
-            modal_aviso.style.display = "none";
-        }
+        if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal_aviso) {
+            var modal_aviso = document.getElementById('AvisoPregunta');
+            var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+
+            modal_aviso.style.display = "block";
+            
+            boton_cerrar.onclick = function() {
                 modal_aviso.style.display = "none";
             }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal_aviso) {
+                    modal_aviso.style.display = "none";
+                }
+            }
         }
+        else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
+            //nada
+        }
+        else{
+            pregunta_clicada=0;
+        }
+        pregunta_sinGirarCarta = contadorVolteo;
+        pregunta_clicada++;
     }
-    else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
-        //nada
-    }
-    else{
-        pregunta_clicada=0;
-    }
-    pregunta_sinGirarCarta = contadorVolteo;
-    pregunta_clicada++;
 }
 
 function funcionContadorPreguntas() {
