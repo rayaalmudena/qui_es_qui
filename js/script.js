@@ -6,6 +6,8 @@ var contadorPreguntas = 0;
 var cartaServidor;
 var totalTiempo=20;//funcion de girar carta
 var intervalo1;//funcion de girar carta
+var state = 0;
+var konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
 
 
 // Audios
@@ -55,28 +57,35 @@ document.addEventListener('DOMContentLoaded', function(){
     botonHacerPregunta.addEventListener("click", botonActivado);
 });
 
-if ( window.addEventListener ) {
+function activarEasterEgg() {
+    if ( ! window.addEventListener ) {
+        return false;
+    }
     // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
-    var state = 0, konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
-    window.addEventListener("keydown", function(e) {  
-        if ( e.keyCode == konami[state] ) state++;  
-        else state = 0;  
-        if ( state == 11 )  {            
-            // cambiamos los sonidos del programa
-            flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
-            winSound = new Audio("easter_egg/konamiWin.mp3");
-            loseSound = new Audio("easter_egg/konamiLose.mp3");
-            var backgroundMusic = new Audio("easter_egg/konamiBackground.mp3");
-            
-            backgroundMusic.addEventListener('ended', function() {
-                this.currentTime = 0;
-                this.play();
-            }, false);
-            backgroundMusic.play();
-      }
-  }, true);  
-}  
+    window.addEventListener("keydown", konamiCode, true);   
+}
 
+function konamiCode(e) {
+    if ( e.keyCode == konami[state] ) state++;  
+    else state = 0;  
+    if ( state == 11 )  {            
+        // cambiamos los sonidos del programa
+        flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
+        winSound = new Audio("easter_egg/konamiWin.mp3");
+        loseSound = new Audio("easter_egg/konamiLose.mp3");
+        var backgroundMusic = new Audio("easter_egg/konamiBackground.mp3");
+        
+        backgroundMusic.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        backgroundMusic.play();
+
+        window.removeEventListener("keydown", konamiCode, true);
+    }
+}
+
+activarEasterEgg();
 
 function botonActivado() {
     desaparecerBotonEasy();
@@ -176,7 +185,7 @@ function preguntaCorrecta(){
     document.getElementById("botonDeColorVerde").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
-    winSound.play();
+    
 }
 function preguntaIncorrecta(){
     document.getElementById('texto_salida').innerHTML = "NO";
@@ -184,7 +193,7 @@ function preguntaIncorrecta(){
     document.getElementById("botonDeColorRojo").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
-    loseSound.play();
+    
 }
 
 function activarBoton(){
@@ -205,10 +214,10 @@ function fijarDificultad(){
     document.getElementById("textoEasy").innerHTML = "Modo "+document.getElementById("dificultad").value+ " Activado";
     //devuelve en texto el combo que has seleccionado
 
-    if(lista.selectedIndex !=0 )
+    if(lista.selectedIndex !=0 ) {
         lista.disabled = true;
         document.getElementById("parrafoElegirDificultad").style.display="none";
-    
+    }
 }
 
 function resetearComboBox(id) {
@@ -228,24 +237,19 @@ function girarCuandoDeba(){
 
 function tiempoRecursivo(){
     document.getElementById('CuentaAtras').innerHTML = "Te quedan "+totalTiempo+" segundos para girar una carta";
-        if(totalTiempo==0){
-                document.getElementById('CuentaAtras').innerHTML = "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "+totalTiempo+" segundos)";
-            }
-            else{
-                /* Restamos un segundo al tiempo restante */
-                totalTiempo-=1;
-                /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
-                intervalo1 = setTimeout("tiempoRecursivo()",1000);
-        }
+    if(totalTiempo==0){
+        document.getElementById('CuentaAtras').innerHTML = "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "+totalTiempo+" segundos)";
+    }
+    else{
+        /* Restamos un segundo al tiempo restante */
+        totalTiempo--;
+        /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+        intervalo1 = setTimeout("tiempoRecursivo()",1000);
+    }
 }
 
 function puedeGirarCarta(event){
-    if(totalTiempo==0)
-        {
-         //No la podra girar, ya que no tiene tiempo
-        }
-    else{
-        //podra girar la carta
+    if(totalTiempo != 0) {
         girarCarta(event);
     }
 }
@@ -260,7 +264,9 @@ function finDelJuego(){
 }
 
 function juegoGanado(){
-
+    winSound.play();
+    document.getElementById("canvas").style.visibility = "visible";
+    
     var modal_fin_juego = document.getElementById('Fin_del_juego_bueno');
     var boton_NoGuardar = document.getElementsByClassName("ganado_Opcion_No")[0];
     var boton_Guardar = document.getElementsByClassName("ganado_Opcion_Si")[0];
@@ -278,7 +284,7 @@ function juegoGanado(){
 
 
 function juegoPerdido(){
-
+    loseSound.play();
     var modal_fin_juego = document.getElementById('Fin_del_juego_malo');
     var boton_NoGuardar = document.getElementsByClassName("perdido_Opcion_No")[0];
     var boton_Guardar = document.getElementsByClassName("perdido_Opcion_Si")[0];
@@ -296,9 +302,7 @@ function juegoPerdido(){
 }
 
 //guardar datos
-function guardarUsuario() {
-        //document.getElementById("canvas").style.visibility = "visible";
-        
+function guardarUsuario() {        
         var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
 
         var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
@@ -319,149 +323,3 @@ function guardarUsuario() {
             modal_guardar_nombre.style.display = "none";
         }
 }
-
-////Fireworks 
-"use strict";
-
-let canvas, width, height, ctx;
-let fireworks = [];
-let particles = [];
-
-function setup() {
-    canvas = document.getElementById("canvas");
-    setSize(canvas);
-    ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-    fireworks.push(new Firework(Math.random()*(width-200)+100));
-    window.addEventListener("resize",windowResized);
-    document.addEventListener("click",onClick);
-}
-
-setTimeout(setup,1);
-
-function loop(){
-    ctx.globalAlpha = 0.1;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-    ctx.globalAlpha = 1;
-
-    for(let i=0; i<fireworks.length; i++){
-        let done = fireworks[i].update();
-        fireworks[i].draw();
-        if(done) fireworks.splice(i, 1);
-    }
-
-    for(let i=0; i<particles.length; i++){
-        particles[i].update();
-        particles[i].draw();
-        if(particles[i].lifetime>90) particles.splice(i,1);
-    }
-
-    if(Math.random()<1/60) fireworks.push(new Firework(Math.random()*(width-200)+50));
-}
-setInterval(loop, 1/50);
-class Particle{
-    constructor(x, y, col){
-        this.x = x;
-        this.y = y;
-        this.col = col;
-        this.vel = randomVec(2);
-        this.lifetime = 0;
-    }
-
-    update(){
-        this.x += this.vel.x;
-        this.y += this.vel.y;
-        this.vel.y += 0.02;
-        this.vel.x *= 0.99;
-        this.vel.y *= 0.99;
-        this.lifetime++;
-    }
-
-    draw(){
-        ctx.globalAlpha = Math.max(1-this.lifetime/80, 0);
-        ctx.fillStyle = this.col;
-        ctx.fillRect(this.x, this.y, 2, 2);
-    }
-}
-
-class Firework{
-    constructor(x){
-        this.x = x;
-        this.y = height;
-        this.isBlown = false;
-        this.col = randomCol();
-    }
-
-    update(){
-        this.y -= 3;
-        if(this.y < 350-Math.sqrt(Math.random()*500)*40){
-            this.isBlown = true;
-            for(let i=0; i<60; i++){
-                particles.push(new Particle(this.x, this.y, this.col))
-            }
-        }
-        return this.isBlown;
-    }
-
-    draw(){
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = this.col;
-        ctx.fillRect(this.x, this.y, 2, 2);
-    }
-}
-
-function randomCol(){
-    var letter = '0123456789ABCDEF';
-    var nums = [];
-
-    for(var i=0; i<3; i++){
-        nums[i] = Math.floor(Math.random()*256);
-    }
-
-    let brightest = 0;
-    for(var i=0; i<3; i++){
-        if(brightest<nums[i]) brightest = nums[i];
-    }
-
-    brightest /=255;
-    for(var i=0; i<3; i++){
-        nums[i] /= brightest;
-    }
-
-    let color = "#";
-    for(var i=0; i<3; i++){
-        color += letter[Math.floor(nums[i]/16)];
-        color += letter[Math.floor(nums[i]%16)];
-    }
-    return color;
-}
-
-function randomVec(max){
-    let dir = Math.random()*Math.PI*2;
-    let spd = Math.random()*max;
-    return{x: Math.cos(dir)*spd, y: Math.sin(dir)*spd};
-}
-
-function setSize(canv){
-    canv.style.width = (innerWidth) + "px";
-    canv.style.height = (innerHeight) + "px";
-    width = innerWidth;
-    height = innerHeight;
-
-    canv.width = innerWidth*window.devicePixelRatio;
-    canv.height = innerHeight*window.devicePixelRatio;
-    canvas.getContext("2d").scale(window.devicePixelRatio, window.devicePixelRatio);
-}
-
-function onClick(e){
-    fireworks.push(new Firework(e.clientX));
-}
-
-function windowResized(){
-    setSize(canvas);
-    ctx.fillStyle = "#22264b";
-    ctx.fillRect(0, 0, width, height);
-}
-/////Fin FIREWORKS
