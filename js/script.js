@@ -10,6 +10,8 @@ var state = 0;
 var konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
 var botonHacerPregunta = document.getElementById("hacerPregunta");
 
+//para saber si la carta ganadora ha sido bajada ya.
+var haGanado=true;
 
 //easy y very easy se quedaran en false hasta que sean activados
 var easy=false;
@@ -57,9 +59,7 @@ function girarCarta(event) {
     }
 
     if (contadorVolteo >= 11) {
-        // Rotamos la carta del servidor
-        flipCard(document.getElementById('cartaElegida'));
-        finDelJuego();
+        saberSiHaGanado();
     }
 }
 
@@ -76,7 +76,7 @@ function asignarID(){
     }
 }
 
-function pasaNombre(posicion,nombre,gafas,cabello,sexo){
+function pasaNombre(posicion,nombre,gafas,cabello,sexo,nombre2){
 
     //guarda los atributos
     array_atributos[contador_array]=posicion+nombre+gafas+cabello+sexo;
@@ -88,11 +88,6 @@ function pasaNombre(posicion,nombre,gafas,cabello,sexo){
         buscaindex = array_atributos[contador_array].indexOf("_");
     }
     contador_array++;
-
-    cogerDatos();
-    if (nombre==nombre_carta){
-        haGanado=false;
-    }
 }
 
 function flipCard(card) {
@@ -520,7 +515,7 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -581,25 +576,39 @@ function preguntaCorrecta(){
     document.getElementById("botonDeColorVerde").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
-    if (contadorVolteo >= 11) {
-        // Rotamos la carta del servidor
-        flipCard(document.getElementById('cartaElegida'));
-        finDelJuego();
-    }
-    
+    saberSiHaGanado();
 }
+
 function preguntaIncorrecta(){
     document.getElementById('texto_salida').innerHTML = "NO";
     document.getElementById("botonDeColorVerde").style.display = "none";
     document.getElementById("botonDeColorRojo").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
+    saberSiHaGanado();
+}
+
+function saberSiHaGanado(){
     if (contadorVolteo >= 11) {
-        // Rotamos la carta del servidor
-        flipCard(document.getElementById('cartaElegida'));
+
+        //se utiliza para saber el nombre de la carta principal:
+        cogerDatos();
+
+        for (var i = 0; i < 12; i++) {
+            if (isNaN(document.getElementsByClassName("carta card")[i].id)==false){
+                //se guardara la ultima carta para luego compararla con la principal:
+                nun=array_atributos[i].indexOf(nombre_carta);
+            }
+        }
+        if (nun>0) {
+            haGanado=true;
+        }
+        else{
+            haGanado=false;
+        }
+
         finDelJuego();
     }
-    
 }
 
 function activarBoton(){
@@ -677,11 +686,16 @@ function puedeGirarCarta(event){
 }
 
 function finDelJuego(){
+
+    // Rotamos la carta del servidor
+    flipCard(document.getElementById('cartaElegida'));
     
-    //if ganado:
-    juegoGanado();
-    //if perdido:
-    //juegoPerdido();
+    if (haGanado==true) {
+        juegoGanado();
+    }
+    if (haGanado==false){
+        juegoPerdido();
+    }
     
 }
 
@@ -708,19 +722,12 @@ function juegoGanado(){
 function juegoPerdido(){
     loseSound.play();
     var modal_fin_juego = document.getElementById('Fin_del_juego_malo');
-    var boton_NoGuardar = document.getElementsByClassName("perdido_Opcion_No")[0];
-    var boton_Guardar = document.getElementsByClassName("perdido_Opcion_Si")[0];
-
+    var boton_NoGuardar = document.getElementsByClassName("perdido_Opcion_Cerrar")[0];
     modal_fin_juego.style.display = "block";
         
     boton_NoGuardar.onclick = function() {
         modal_fin_juego.style.display = "none";
     }
-    boton_Guardar.onclick = function(){
-        modal_fin_juego.style.display = "none";
-        guardarUsuario();
-    }
-
 }
 
 //guardar datos

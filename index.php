@@ -200,7 +200,7 @@
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
 					$cartaImg="<img src='cartas/$carta[nombre]' id='$c' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' 
-					onload=pasaNombre('posicion:$c','_nombre:$carta[nombre]_','gafas:$carta[gafas]_','cabello:$carta[cabello]_','sexo:$carta[sexo]')>";
+					onload=pasaNombre('posicion:$c','_nombre:$carta[nombre]_','gafas:$carta[gafas]_','cabello:$carta[cabello]_','sexo:$carta[sexo]','$carta[nombre]')>";
 					$tabla .="\n";
 					$tabla .='<td><div class="container"><div class="card" id="$c" onclick="puedeGirarCarta(event)"><div class="front">';
 					$tabla .=$cartaImg;
@@ -350,9 +350,8 @@
 
   <!-- Modal content -->
   <div class="modal-content_perdido">
-    <p id="letra_modal_aviso_perdido">Has perdido.., Quieres guardar tu puntuacion?</p>
-	<button class="perdido_Opcion_Si">Si</button>
-	<button class="perdido_Opcion_No">No</button>
+    <p id="letra_modal_aviso_perdido">Has perdido.., buena suerte la proxima vez!</p>
+	<button class="perdido_Opcion_Cerrar">Cerrar</button>
   </div>
 </div>
 <!-- acaba el modal del fin del juego perdido..-->
