@@ -10,6 +10,25 @@
 <body onload="asignarID()">
 	
 	<?php 
+	function explodeConfigValues($config, $totalPreguntas = 2) {
+		$data = array();
+
+		$combo = explode(" ", $config);
+		$keyPregunta = substr($combo[0], 0, -1);
+		
+		for ($n = 0; $n < $totalPreguntas; $n++) {
+			$posicionRespuesta = 1 + $n;
+			$posicionPregunta = 1 + $totalPreguntas + $n;
+			$data[] = array(
+				$keyPregunta,
+				$combo[$posicionRespuesta],
+				str_replace("_", " ", $combo[$posicionPregunta])
+			);
+		}
+
+		return $data;
+	}
+
 	//Comienzo de los posibles errores
 	//Los errores apareceran por orden que indica en la guia del leandro, primero apareceran los nombres repetidos,
 	//luego los atributos repetidos y luego los atributos que no existan en el config
@@ -257,23 +276,17 @@
 				}
 				fclose($file2);
 
-				$nuevoCombobox=[];
+				$nuevoCombobox= array_merge(
+					explodeConfigValues($config_array[0], 2),
+					explodeConfigValues($config_array[1], 3),
+					explodeConfigValues($config_array[2], 2)
+				);
 
-				$combo_gafas = explode(" ", $config_array[0]);
-				unset($combo_gafas[0],$combo_gafas[1],$combo_gafas[2]);
-
-				$combo_cabello = explode(" ", $config_array[1]);
-				unset($combo_cabello[0],$combo_cabello[1],$combo_cabello[2],$combo_cabello[3]);
-
-				$combo_sexo = explode(" ", $config_array[2]);
-				unset($combo_sexo[0],$combo_sexo[1],$combo_sexo[2]);
-
-
-				$nuevoCombobox = str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
 				echo "<select id='pregunta' onchange='activarBoton()'>";
 				echo "<option>----</option>";
-					foreach ($nuevoCombobox as $key => $value) {
-						echo "<option name='pregunta_combo' value='$value'>$value</option>";
+					foreach ($nuevoCombobox as $data) {
+						echo "<option name='".$data[0]."' 
+							value='".$data[1]."'>".$data[2]."</option>";
 					}
 				echo "</select> <br><br>";
 
