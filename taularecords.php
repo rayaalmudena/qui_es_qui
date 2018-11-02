@@ -6,15 +6,21 @@
 	<link rel="stylesheet" type="text/css" href="style.css">	
 	<script type="text/javascript" src="script.js"></script>
 </head>
-<body>
+<body onload="guardarUsuario()">
 				<?php 
 
-				//$valor = $_POST["nombreJugador"];
-				//$valor2 = $_POST["puntuacionJugador"];
-				//echo "<p id='dos2'></p>";
-				//echo $valor; 
-				//echo "<br>";
-				//echo $valor2;
+				if ($_POST==null){
+					  //entra a la pagina sin guardar informacion
+					} else{
+					  	$nombre_jugador = $_POST["nombreJugador"];
+						$puntuacion_jugador = $_POST["puntuacionJugador"];
+
+						$flog = fopen("taularecords.txt","a");
+						fwrite($flog, $puntuacion_jugador." ".$nombre_jugador . PHP_EOL);
+						fclose($flog);
+					}  
+
+				
 
 			function ordenarRecords(){
 				$records=[];

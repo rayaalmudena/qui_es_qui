@@ -676,31 +676,25 @@ function juegoGanado(){
 
 
 function juegoPerdido(){
-
+    loseSound.play();
     var modal_fin_juego = document.getElementById('Fin_del_juego_malo');
-    var boton_NoGuardar = document.getElementsByClassName("perdido_Opcion_No")[0];
-    var boton_Guardar = document.getElementsByClassName("perdido_Opcion_Si")[0];
-
+    var boton_NoGuardar = document.getElementsByClassName("perdido_Opcion_Cerrar")[0];
     modal_fin_juego.style.display = "block";
         
     boton_NoGuardar.onclick = function() {
         modal_fin_juego.style.display = "none";
     }
-    boton_Guardar.onclick = function(){
-        modal_fin_juego.style.display = "none";
-        guardarUsuario();
-    }
-
 }
 
 //guardar datos
 function guardarUsuario() {
-        
         var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
 
         var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
 
         var enviarNombre = document.getElementsByClassName("enviarNombre")[0];
+
+        document.formulario.puntuacionJugador.value = contadorPreguntas;
 
         modal_guardar_nombre.style.display = "block";
         
@@ -709,7 +703,6 @@ function guardarUsuario() {
         }
 
         enviarNombre.onclick = function() {
-            var nombreJugador = document.getElementById('nombre_para_enviar').value;
             modal_guardar_nombre.style.display = "none";
             introducirDatos();
         }
@@ -719,12 +712,6 @@ function introducirDatos() {
         
         var guardar_en_txt = document.getElementById('guardar_en_txt');
 
-        var nombreJugador = document.getElementById('nombre_para_enviar').value;
-
-        //document.getElementById('dos2').innerHTML = contadorPreguntas;
-        //alert(nombreJugador);
-        //document.getElementById('uno1').innerHTML = nombreJugador;
-
         var Cerrar_Guardado = document.getElementsByClassName("Cerrar_Guardado")[0];
 
         guardar_en_txt.style.display = "block";
@@ -732,8 +719,6 @@ function introducirDatos() {
         Cerrar_Guardado.onclick = function() {
             guardar_en_txt.style.display = "none";
         }
-
-
 }
 
 

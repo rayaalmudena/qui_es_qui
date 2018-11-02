@@ -731,12 +731,14 @@ function juegoPerdido(){
 }
 
 //guardar datos
-function guardarUsuario() {        
+function guardarUsuario() {
         var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
 
         var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
 
         var enviarNombre = document.getElementsByClassName("enviarNombre")[0];
+
+        document.formulario.puntuacionJugador.value = contadorPreguntas;
 
         modal_guardar_nombre.style.display = "block";
         
@@ -745,10 +747,20 @@ function guardarUsuario() {
         }
 
         enviarNombre.onclick = function() {
-
-            var nombreJugador = document.getElementById('nombre_para_enviar').value;
-            alert(nombreJugador);
-            alert(contadorPreguntas);
             modal_guardar_nombre.style.display = "none";
+            introducirDatos();
+        }
+}
+
+function introducirDatos() {
+        
+        var guardar_en_txt = document.getElementById('guardar_en_txt');
+
+        var Cerrar_Guardado = document.getElementsByClassName("Cerrar_Guardado")[0];
+
+        guardar_en_txt.style.display = "block";
+        
+        Cerrar_Guardado.onclick = function() {
+            guardar_en_txt.style.display = "none";
         }
 }

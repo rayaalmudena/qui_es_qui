@@ -2,13 +2,5 @@
 99999999 Jordi
 44 Jose 
 1 Winner
-45 Nop nop nop
 0 Ez clap	
-5 Nombre
-4 Nombre2
-6 Nombre
-74 Bot
-74 Bot
-74 Bot
-1 Almudena
-74 Bot
+4 ejemplo1
