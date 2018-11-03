@@ -156,6 +156,9 @@ function botonActivado() {
     if (veryeasy==true){
         eliminarOpcion();
     }
+    else{
+        resetearComboBox();
+    }
 }
 
 function eliminarOpcion(){
@@ -197,40 +200,22 @@ function sacarMensajeAlertaSinVolteo() {
         pregunta_sinGirarCarta = contadorVolteo;
         pregunta_clicada++;
     }
-    else if (easy==true) {
-
-        if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
-
-            var modal_aviso = document.getElementById('AvisoPregunta');
-            var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
-
-            modal_aviso.style.display = "block";
-            
-            boton_cerrar.onclick = function() {
-                modal_aviso.style.display = "none";
-            }
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal_aviso) {
-                    modal_aviso.style.display = "none";
-                }
-            }
-        }
-        else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
-            //nada
-        }
-        else{
-            pregunta_clicada=0;
-        }
-        pregunta_sinGirarCarta = contadorVolteo;
-        pregunta_clicada++;
-
-    }
 }
 
 function funcionContadorPreguntas() {
-    contadorPreguntas++;
+
+    if (easy==true){
+        //si el modo easy esta activado, sumara de 3 en 3
+        contadorPreguntas=contadorPreguntas+3;
+    }
+    else if (veryeasy==true){
+        //si el modo very easy esta activado, sumara de 4 en 4
+        contadorPreguntas=contadorPreguntas+4;
+    }
+    else{
+        //si no, solamente sumara 1
+        contadorPreguntas++;
+    }
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
 }
 
@@ -668,22 +653,21 @@ function fijarDificultad(){
         lista.disabled = true;  
         if (lista.selectedIndex == 1){
             document.getElementById("parrafoElegirDificultad").style.display="none";
+             document.getElementById("textoEasy").innerHTML =  document.getElementById("textoEasy").innerHTML + "<br> (al haber activado el modo easy, se sumaran los intentos de 3 en 3)"
             easy=true;
 
         }
         if (lista.selectedIndex == 2){
             document.getElementById("parrafoElegirDificultad").style.display="none";
+            document.getElementById("textoEasy").innerHTML =  document.getElementById("textoEasy").innerHTML + "<br> (al haber activado el modo very easy, se sumaran los intentos de 4 en 4)"
             veryeasy=true;
-            var cont = document.getElementsByClassName('container')[0];
         }
     }    
 }
 
-function resetearComboBox(id) {
-    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        id = respuestasPosiblesCBox[i];
-        id.selectedIndex = 0;
-    }
+function resetearComboBox() {
+    var x = document.getElementById("pregunta");
+    x.selectedIndex = 0;
 }
 
 function girarCuandoDeba(){
