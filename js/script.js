@@ -261,7 +261,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("sexo:mujer");
+                buscaindex = array_atributos_ordenados[i].indexOf("sexo:mujer");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -279,7 +279,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("sexo:hombre");
+                buscaindex = array_atributos_ordenados[i].indexOf("sexo:hombre");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -296,7 +296,7 @@ function preguntarAlServer() {
     else if (pregunta_combo == "mujer" && sexo_carta == "mujer") {
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("sexo:hombre");
+                buscaindex = array_atributos_ordenados[i].indexOf("sexo:hombre");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -314,7 +314,7 @@ function preguntarAlServer() {
     else if (pregunta_combo == "mujer" && sexo_carta == "hombre") {
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("sexo:mujer");
+                buscaindex = array_atributos_ordenados[i].indexOf("sexo:mujer");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -332,7 +332,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("gafas:no");
+                buscaindex = array_atributos_ordenados[i].indexOf("gafas:no");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -350,7 +350,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("gafas:si");
+                buscaindex = array_atributos_ordenados[i].indexOf("gafas:si");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -368,7 +368,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("gafas:si");
+                buscaindex = array_atributos_ordenados[i].indexOf("gafas:si");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -386,7 +386,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("gafas:no");
+                buscaindex = array_atributos_ordenados[i].indexOf("gafas:no");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -404,8 +404,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:moreno");
-                buscaindex2 = array_atributos[i].indexOf("cabello:pelirrojo");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:moreno");
+                buscaindex2 = array_atributos_ordenados[i].indexOf("cabello:pelirrojo");
                 if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -423,7 +423,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:rubio");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:rubio");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -441,7 +441,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:rubio");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:rubio");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -459,8 +459,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:rubio");
-                buscaindex2 = array_atributos[i].indexOf("cabello:pelirrojo");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:rubio");
+                buscaindex2 = array_atributos_ordenados[i].indexOf("cabello:pelirrojo");
                 if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -478,7 +478,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:moreno");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:moreno");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -496,7 +496,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:moreno");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:moreno");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -514,8 +514,8 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:moreno");
-                buscaindex2 = array_atributos[i].indexOf("cabello:rubio");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:moreno");
+                buscaindex2 = array_atributos_ordenados[i].indexOf("cabello:rubio");
                 if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -534,7 +534,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:pelirrojo");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:pelirrojo");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -552,7 +552,7 @@ function preguntarAlServer() {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:pelirrojo");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:pelirrojo");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
@@ -601,7 +601,7 @@ function saberSiHaGanado(){
         for (var i = 0; i < 12; i++) {
             if (isNaN(document.getElementsByClassName("carta card")[i].id)==false){
                 //se guardara la ultima carta para luego compararla con la principal:
-                nun=array_atributos[i].indexOf(nombre_carta);
+                nun=array_atributos_ordenados[i].indexOf(nombre_carta);
             }
         }
         if (nun>0) {
