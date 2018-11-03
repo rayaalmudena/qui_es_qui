@@ -307,9 +307,6 @@ function preguntarAlServer() {
                         document.getElementById(i).id="card rotated";
                         document.getElementById(i).id="card rotated";
                         
-                        document.getElementById(i).id="card rotated";
-                        document.getElementById(i).id="card rotated";
-                        
                     }
                 }
                 i++;
@@ -549,9 +546,6 @@ function preguntarAlServer() {
                 if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
-                        document.getElementById(i).id="card rotated";
-                        document.getElementById(i).id="card rotated";
-                        
                         document.getElementById(i).id="card rotated";
                         document.getElementById(i).id="card rotated";
                         
