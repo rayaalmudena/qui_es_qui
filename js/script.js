@@ -629,7 +629,7 @@ function preguntaIncorrecta(){
     girarCuandoDeba();
     saberSiHaGanado();
 }
-/*
+
 function saberSiHaGanado(){
     if (contadorVolteo >= 11) {
 
@@ -648,10 +648,9 @@ function saberSiHaGanado(){
         else{
             haGanado=false;
         }
-
         finDelJuego();
     }
-}*/
+}
 
 function activarBoton(){
 

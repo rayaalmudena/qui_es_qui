@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/fireworks.js"></script>
 </head>
-<body onload="asignarID()">
+<body onload="asignarID(), ordenarArrayDeAtributos()">
 	
 	<?php 
 	function explodeConfigValues($config, $totalPreguntas = 2) {
