@@ -97,7 +97,7 @@ function ordenarArrayDeAtributos(){
     posicion_nuevo_array=0;
     while(array_atributos_ordenados[11]==null){
         for (var i = 0; i < 12; i++) {
-            buscaindex = array_atributos[i].indexOf("posicion:"+posicion_nuevo_array);
+            buscaindex = array_atributos[i].indexOf("posicion:"+posicion_nuevo_array+" ");
             if (buscaindex>-1) {
                 array_atributos_ordenados[posicion_nuevo_array]=array_atributos[i];
                 posicion_nuevo_array++;
