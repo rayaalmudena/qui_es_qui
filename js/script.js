@@ -26,6 +26,9 @@ var contador_array=0;
 //Array de atributos para pasarlos al javascript
 var array_atributos = {};
 
+//La primera vez los atributos no salen ordenados, asi que los guardamos en una segunda variable:
+var array_atributos_ordenados = {};
+
 
 // Audios
 var flipCardSound = new Audio('sounds/flipCardSound.mp3');
@@ -77,7 +80,6 @@ function asignarID(){
 }
 
 function pasaNombre(posicion,nombre,gafas,cabello,sexo){
-
     //guarda los atributos
     array_atributos[contador_array]=posicion+nombre+gafas+cabello+sexo;
 
@@ -88,6 +90,20 @@ function pasaNombre(posicion,nombre,gafas,cabello,sexo){
         buscaindex = array_atributos[contador_array].indexOf("_");
     }
     contador_array++;
+}
+
+function ordenarArrayDeAtributos(){
+    //en el primer intento, el array sale desordenado, asi que lo ordenaremos para que funcione bien tanto easy como very easy
+    posicion_nuevo_array=0;
+    while(array_atributos_ordenados[11]==null){
+        for (var i = 0; i < 12; i++) {
+            buscaindex = array_atributos[i].indexOf("posicion:"+posicion_nuevo_array);
+            if (buscaindex>-1) {
+                array_atributos_ordenados[posicion_nuevo_array]=array_atributos[i];
+                posicion_nuevo_array++;
+            }
+        }    
+    }
 }
 
 function flipCard(card) {
@@ -233,6 +249,8 @@ function cogerDatos(){
 
 function preguntarAlServer() {
 
+    ordenarArrayDeAtributos();
+
     cogerDatos();
     //var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
     pregunta_combo = document.getElementById('pregunta').value;
@@ -248,7 +266,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -267,7 +284,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -303,7 +319,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -322,7 +337,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -341,7 +355,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -360,7 +373,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -379,7 +391,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -399,7 +410,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -418,7 +428,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -437,7 +446,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -457,7 +465,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -476,7 +483,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -495,7 +501,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -534,7 +539,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;
@@ -553,7 +557,6 @@ function preguntarAlServer() {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
                     }
                 }
                 i++;

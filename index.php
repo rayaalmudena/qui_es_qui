@@ -218,7 +218,7 @@
 				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
-					$cartaImg="<img src='cartas/$carta[nombre]' id='$c' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' 
+					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' 
 					onload=pasaNombre('posicion:$c','_nombre:$carta[nombre]_','gafas:$carta[gafas]_','cabello:$carta[cabello]_','sexo:$carta[sexo]')>";
 					$tabla .="\n";
 					$tabla .='<td><div class="container"><div class="card" id="$c" onclick="puedeGirarCarta(event)"><div class="front">';
