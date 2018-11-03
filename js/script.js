@@ -159,14 +159,13 @@ function botonActivado() {
     else{
         resetearComboBox();
     }
+    botonHacerPregunta.disabled = true;
 }
 
 function eliminarOpcion(){
     var x = document.getElementById("pregunta");
     x.remove(x.selectedIndex);
     x.selectedIndex = 0;
-    botonHacerPregunta.disabled = true;
-
 }
 
 function sacarMensajeAlertaSinVolteo() {
