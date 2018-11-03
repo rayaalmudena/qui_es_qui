@@ -609,7 +609,7 @@ function preguntaIncorrecta(){
 }
 
 function saberSiHaGanado(){
-    if (contadorVolteo >= 11) {
+    if (contadorVolteo == 11) {
 
         //se utiliza para saber el nombre de la carta principal:
         cogerDatos();
@@ -627,6 +627,11 @@ function saberSiHaGanado(){
             haGanado=false;
         }
         finDelJuego();
+    }
+    if (contadorVolteo == 12){
+        haGanado=false;
+        finDelJuego();
+
     }
 }
 
