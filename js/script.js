@@ -234,12 +234,12 @@ function cogerDatos(){
 function preguntarAlServer() {
 
     cogerDatos();
-
-    var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
+    //var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
+    pregunta_combo = document.getElementById('pregunta').value;
 
     var i=0;
 
-    if (pregunta_combo == "Es Hombre?" && sexo_carta == "hombre") {
+    if (pregunta_combo == "hombre" && sexo_carta == "hombre") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -258,7 +258,7 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Hombre?" && sexo_carta == "mujer") {
+    else if (pregunta_combo == "hombre" && sexo_carta == "mujer") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -277,7 +277,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Mujer?" && sexo_carta == "mujer") {
+    else if (pregunta_combo == "mujer" && sexo_carta == "mujer") {
         if (easy==true || veryeasy==true){
             while (i<12){
                 buscaindex = array_atributos[i].indexOf("sexo:hombre");
@@ -295,7 +295,7 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Mujer?" && sexo_carta == "hombre") {
+    else if (pregunta_combo == "mujer" && sexo_carta == "hombre") {
         if (easy==true || veryeasy==true){
             while (i<12){
                 buscaindex = array_atributos[i].indexOf("sexo:mujer");
@@ -313,7 +313,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Tiene Gafas?" && gafas_carta == "si") {
+    else if (pregunta_combo == "si" && gafas_carta == "si") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -332,7 +332,7 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Tiene Gafas?" && gafas_carta == "no") {
+    else if (pregunta_combo == "si" && gafas_carta == "no") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -351,7 +351,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "No Tiene Gafas?" && gafas_carta == "no") {
+    else if (pregunta_combo == "no" && gafas_carta == "no") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -370,7 +370,7 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "No Tiene Gafas?" && gafas_carta == "si") {
+    else if (pregunta_combo == "no" && gafas_carta == "si") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -389,7 +389,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "rubio") {
+    else if (pregunta_combo == "rubio" && cabello_carta == "rubio") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -409,7 +409,7 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "moreno") {
+    else if (pregunta_combo == "rubio" && cabello_carta == "moreno") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -428,7 +428,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "pelirrojo") {
+    else if (pregunta_combo == "rubio" && cabello_carta == "pelirrojo") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -447,7 +447,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "moreno") {
+    else if (pregunta_combo == "moreno" && cabello_carta == "moreno") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -467,7 +467,7 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "rubio") {
+    else if (pregunta_combo == "moreno" && cabello_carta == "rubio") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -486,7 +486,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "pelirrojo") {
+    else if (pregunta_combo == "moreno" && cabello_carta == "pelirrojo") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -505,7 +505,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "pelirrojo") {
+    else if (pregunta_combo == "pelirrojo" && cabello_carta == "pelirrojo") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -525,7 +525,7 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "rubio") {
+    else if (pregunta_combo == "pelirrojo" && cabello_carta == "rubio") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -544,7 +544,7 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "moreno") {
+    else if (pregunta_combo == "pelirrojo" && cabello_carta == "moreno") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
@@ -562,8 +562,7 @@ function preguntarAlServer() {
 
         preguntaIncorrecta();
     }
-    else if (pregunta_combo != "Es Hombre?" && pregunta_combo != "Es Mujer?" && pregunta_combo != "Tiene Gafas?" && 
-        pregunta_combo != "No Tiene Gafas?" && pregunta_combo != "Es Rubio?" && pregunta_combo != "Es Moreno?" && pregunta_combo != "Es Pelirrojo?" && pregunta_combo != "----"){
+    else {
         document.getElementById('texto_salida').innerHTML = "Esa pregunta no estaba prevista.";
         document.getElementById("botonDeColorRojo").style.display = "none";
         document.getElementById("botonDeColorVerde").style.display = "none";
@@ -576,6 +575,7 @@ function preguntaCorrecta(){
     document.getElementById("botonDeColorVerde").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
+    girarCuandoDeba();
     saberSiHaGanado();
 }
 
@@ -585,6 +585,7 @@ function preguntaIncorrecta(){
     document.getElementById("botonDeColorRojo").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
+    girarCuandoDeba();
     saberSiHaGanado();
 }
 

@@ -291,7 +291,7 @@
 				echo "</select> <br><br>";
 
 
-				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta</button>";
+				echo "<button id='hacerPregunta' disabled>Fes la pregunta</button>";
 
 				?>
 
