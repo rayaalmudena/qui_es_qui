@@ -233,10 +233,8 @@ function cogerDatos(){
 
 function preguntarAlServer() {
 
-    ordenarArrayDeAtributos();
 
     cogerDatos();
-    //var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
     pregunta_combo = document.getElementById('pregunta').value;
 
     var i=0;
