@@ -1,4 +1,5 @@
 var cards;
+var cartasSinRotar = [];
 var botonHacerPregunta;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
@@ -57,16 +58,13 @@ function girarCarta(event) {
         }
     }
 
-    if (contadorVolteo >= 11) {
-        saberSiHaGanado();
-    }
+    // saberSiHaGanado();
 }
 
 function obtenerListadoCartas() {
     cartas = document.getElementsByClassName("card-container");
 }
 function obtenerListadoCartasSinRotar() {
-    var cartasSinRotar = [];
     for (var c = 0; c < cartas.length; c++) {
         var carta = cartas[c];
         if (!isCardFlipped(carta)) {
@@ -174,7 +172,7 @@ function sacarMensajeAlertaSinVolteo() {
                 modal_aviso.style.display = "none";
             }
 
-            // When the user clicks anywhere outside of the modal, close it
+            // Cuando el usuario clica en cualquier otro lado que no sea el modal, lo cierra
             window.onclick = function(event) {
                 if (event.target == modal_aviso) {
                     modal_aviso.style.display = "none";
@@ -267,10 +265,15 @@ function preguntarAlServer() {
         girarAutomaticamente(preguntaCombo, respuestaCombo, true);
         preguntaIncorrecta();
     }
+
+    // mover a una funcion que sea "comprobar final" o similar
+    // funcionContadorPreguntas();
+    // sacarMensajeAlertaSinVolteo();
+    // saberSiHaGanado();
 }
 
 /**
- * girarMismaRespuesta:
+ *  Si no se cambia la condición del timer de 20 segundos no se podrán girar cartas
  *  Si es false girara las que NO coincidan con la respuesta
  *  Si es true girara las que SI coincidan con la respuesta
  */
@@ -282,6 +285,7 @@ function girarAutomaticamente(pregunta, respuesta, girarMismaRespuesta) {
             var valorCarta = carta.getAttribute(pregunta);
 
             if (valorCarta == respuesta && girarMismaRespuesta || valorCarta != respuesta && !girarMismaRespuesta) {
+                // contadorVolteo++;
                 girarCarta(carta);
             }
         }
@@ -292,40 +296,38 @@ function preguntaCorrecta(){
     document.getElementById('texto_salida').innerHTML = "SI";
     document.getElementById("botonDeColorRojo").style.display = "none";
     document.getElementById("botonDeColorVerde").style.display = "block";
-    funcionContadorPreguntas();
-    sacarMensajeAlertaSinVolteo();
-    saberSiHaGanado();
 }
 
 function preguntaIncorrecta(){
     document.getElementById('texto_salida').innerHTML = "NO";
     document.getElementById("botonDeColorVerde").style.display = "none";
     document.getElementById("botonDeColorRojo").style.display = "block";
-    funcionContadorPreguntas();
-    sacarMensajeAlertaSinVolteo();
-    saberSiHaGanado();
 }
 
 function saberSiHaGanado(){
-    if (contadorVolteo >= 11) {
+    //return ;
+    var cartasSinRotar = obtenerListadoCartasSinRotar();
+    if (cartasSinRotar.length == 24) {
 
         //se utiliza para saber el nombre de la carta principal:
         var datosCartaServidor = leerDatosCartaServidor();
+        var haGanado = false;
+        console.log(datosCartaServidor);
 
-        for (var i = 0; i < 12; i++) {
-            if (isNaN(document.getElementsByClassName("carta card")[i].id)==false){
-                //se guardara la ultima carta para luego compararla con la principal:
-                nun=array_atributos[i].indexOf(nombre_carta);
-            }
-        }
-        if (nun>0) {
-            haGanado=true;
-        }
-        else{
-            haGanado=false;
-        }
+        // for (var i = 0; i < 12; i++) {
+        //     if (isNaN(document.getElementsByClassName("carta card")[i].id)==false){
+        //         //se guardara la ultima carta para luego compararla con la principal:
+        //         nun=array_atributos[i].indexOf(nombre_carta);
+        //     }
+        // }
+        // if (nun>0) {
+        //     haGanado=true;
+        // }
+        // else{
+        //     haGanado=false;
+        // }
 
-        finDelJuego();
+        finDelJuego(haGanado);
     }
 }
 
@@ -403,7 +405,7 @@ function puedeGirarCarta(event){
     }
 }
 
-function finDelJuego(){
+function finDelJuego(haGanado){
 
     // Rotamos la carta del servidor
     flipCard(document.getElementById('cartaElegida'));
