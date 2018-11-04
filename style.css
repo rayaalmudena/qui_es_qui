@@ -186,7 +186,7 @@ div {
   position: relative;
   left: 40%;
 }
-.cerrar_Aviso, .ganado_Opcion_Si, .ganado_Opcion_No, .perdido_Opcion_Cerrar {
+.cerrar_Aviso, .ganado_Opcion_Si, .ganado_Opcion_No, .perdido_Opcion_Cerrar, .Cerrar_Guardado {
   /*modal del aviso*/
     color: #aaaaaa;
     font-size: 28px;
@@ -201,8 +201,8 @@ div {
   text-align: center;
 }
 /* Hover de la cruz para cerrar el modal*/
-.Cerrar_Ventana_Usuario:hover, .cerrar_Aviso:hover, .ganado_Opcion_Si:hover, .perdido_Opcion_Cerrar:hover,
-.Cerrar_Ventana_Usuario:focus, .cerrar_Aviso:focus, .ganado_Opcion_No:focus, {
+.Cerrar_Ventana_Usuario:hover, .cerrar_Aviso:hover, .ganado_Opcion_Si:hover, .ganado_Opcion_No:hover, .perdido_Opcion_Cerrar:hover, .Cerrar_Guardado:hover
+.Cerrar_Ventana_Usuario:focus, .cerrar_Aviso:focus, .ganado_Opcion_Si:focus, .ganado_Opcion_No:focus, .perdido_Opcion_Cerrar:focus, .Cerrar_Guardado:focus{
     color: #000;
     text-decoration: none;
     cursor: pointer;
