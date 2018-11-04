@@ -4,11 +4,31 @@
 	<meta charset="utf-8" />
 	<title>¿Quién es quién?</title>
 	<link rel="stylesheet" type="text/css" href="style.css">	
-	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/fireworks.js"></script>
 </head>
-<body>
+<body onload="asignarID()">
 	
 	<?php 
+	function explodeConfigValues($config, $totalPreguntas = 2) {
+		$data = array();
+
+		$combo = explode(" ", $config);
+		$keyPregunta = substr($combo[0], 0, -1);
+		
+		for ($n = 0; $n < $totalPreguntas; $n++) {
+			$posicionRespuesta = 1 + $n;
+			$posicionPregunta = 1 + $totalPreguntas + $n;
+			$data[] = array(
+				$keyPregunta,
+				$combo[$posicionRespuesta],
+				str_replace("_", " ", $combo[$posicionPregunta])
+			);
+		}
+
+		return $data;
+	}
+
 	//Comienzo de los posibles errores
 	//Los errores apareceran por orden que indica en la guia del leandro, primero apareceran los nombres repetidos,
 	//luego los atributos repetidos y luego los atributos que no existan en el config
@@ -168,10 +188,10 @@
 		    		foreach ($cartas as $carta) {
 						$cartaNueva;
 						$carta=explode(' ',$carta);
-						$nombre="$carta[0]";
-						$gafas="$carta[2]";
-						$cabello="$carta[5]";
-						$sexo="$carta[8]";
+						$nombre=trim("$carta[0]");
+						$gafas=trim("$carta[2]");
+						$cabello=trim("$carta[5]");
+						$sexo=trim("$carta[8]");
 						$contador=$contador+1;
 						$cartaNueva= array("nombre"=>$nombre,"gafas"=>$gafas,"cabello"=>$cabello,"sexo"=>$sexo);
 						$cartasFinal[]=$cartaNueva;	
@@ -182,25 +202,25 @@
 				$cartaElegida = $cartas[0];
 				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]'sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 				$backCarta="<img src='cartas/back.png'>";
-				$Elegida='<div class="container containerElegida"><div class="card cardE" id="cartaElegida"><div class="front">';
+				$Elegida='<div id="lateral"><div class="container containerElegida"><div class="card cardE" id="cartaElegida"><div class="front">';
 				$Elegida .=$backCarta;
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
-				$Elegida .='</div></div></div><td>';
+				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
 				echo $Elegida;
 
 
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
-				$tabla .='<table><tr>';
+				$tabla .='<div id="tablero"><table><tr>';
 				$c = 0;
 				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
-					$cartaImg="<img src='cartas/$carta[nombre]' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]'>";
+					$cartaImg="<img src='cartas/$carta[nombre]' id='carta-$c' class='carta card'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card rotableCard"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card card-container" id="$c" gafas="'.$carta['gafas'].'" cabello="'.$carta['cabello'].'" sexo="'.$carta['sexo'].'" name="'.$carta['nombre'].'"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -209,7 +229,7 @@
 					if ($c==count($cartas)){
 						$tabla .='</tr>';
 						$tabla .="\n";	
-						$tabla .='</table>';
+						$tabla .='</table></div>';
 						$tabla .="\n";
 					}
 					if ($c%3==0 && $c!=count($cartas)){
@@ -230,54 +250,19 @@
 
 
 			?>
+			<div id="divtexto">
 			<div id="comboDif">
-				<p>Elige dificultad </p>
-				<select id="dificultad" class="cboxdificultad">
+				<p id="parrafoElegirDificultad">Elige dificultad </p>
+				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
 					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
-					<option  name="dificultad" value="easy">EASY</option>
-					<option  name="dificultad" value="veryEasy">VERY EASY</option>
+					<option  name="dificultad" value="Easy">EASY</option>
+					<option  name="dificultad" value="Very Easy">VERY EASY</option>
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<button id="buttonEasy">EASY</button>
-			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
+			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p>
 
 			<div id="combobox">
-				<!---
-				<p>¿Qué lleva? </p>
-				<select id="gafas" class="cbox gafas">
-					<option  name="gafas" value="---">---</option>
-					<option  name="gafas" value="si">Gafas</option>
-					<option  name="gafas" value="no">Nada</option>
-				</select>
-
-				<br>
-
-				<p>¿Su pelo es... ? </p>
-				<select id="cabello" class="cbox cabello">
-					<option name="cabello" value="---">---</option>
-					<option name="cabello" value="moreno">Moreno</option>
-					<option name="cabello" value="rubio">Rubio</option>
-					<option name="cabello" value="pelirrojo">Pelirrojo</option>
-				</select>
-
-				<br>
-
-				<p>¿La persona es... ?</p>
-				<select id="sexo" class="cbox sexo">
-					<option name="sexo" value="---">---</option>
-					<option name="sexo" value="hombre">Hombre</option>
-					<option name="sexo" value="mujer">Mujer</option>
-				</select>
-
-				<br><br>
-
-				
-				<button id="hacerPregunta">Fes la pregunta</button>
-				-->
-
-				
-<!-------------------------------------------------------------------------------- NUEVA INSERCION -->
 
 				<?php 
 				$config_array=[];
@@ -290,32 +275,25 @@
 				}
 				fclose($file2);
 
-				$nuevoCombobox=[];
+				$nuevoCombobox= array_merge(
+					explodeConfigValues($config_array[0], 2),
+					explodeConfigValues($config_array[1], 3),
+					explodeConfigValues($config_array[2], 2)
+				);
 
-				$combo_gafas = explode(" ", $config_array[0]);
-				unset($combo_gafas[0],$combo_gafas[1],$combo_gafas[2]);
-
-				$combo_cabello = explode(" ", $config_array[1]);
-				unset($combo_cabello[0],$combo_cabello[1],$combo_cabello[2],$combo_cabello[3]);
-
-				$combo_sexo = explode(" ", $config_array[2]);
-				unset($combo_sexo[0],$combo_sexo[1],$combo_sexo[2]);
-
-
-				$nuevoCombobox = str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
 				echo "<select id='pregunta' onchange='activarBoton()'>";
 				echo "<option>----</option>";
-					foreach ($nuevoCombobox as $key => $value) {
-						echo "<option name='pregunta_combo' value='$value'>$value</option>";
+					foreach ($nuevoCombobox as $data) {
+						echo "<option name='".$data[0]."' 
+							value='".$data[1]."'>".$data[2]."</option>";
 					}
 				echo "</select> <br><br>";
 
 
-				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta2</button>";
+				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta</button>";
 
 				?>
 
-<!---------------------------------------------------------------------------------- --->
 
 				<br>
 				<p id="texto_salida"></p>
@@ -327,7 +305,7 @@
 				<p id="CuentaAtras"></p>
 
 			</div>
-
+			</div>
 			<?php 
 
 
@@ -346,7 +324,7 @@
 
 	?>
 
-	<br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a>
+	
 
 
 
@@ -365,18 +343,30 @@
 </div>
 <!-- acaba el modal del aviso -->
 
-<!-- Comienza el modal del fin del juego-->
+<!-- Comienza el modal del fin del juego ganando!-->
 
-<div id="Fin_del_juego" class="modal">
+<div id="Fin_del_juego_bueno" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content_pregunta">
-    <p id="letra_modal_aviso">Has acabado el juego!, Quieres guardar tu puntuacion?</p>
-	<button class="fin_Opcion_Si">Si</button>
-	<button class="fin_Opcion_No">No</button>
+  <div class="modal-content_ganado">
+    <p id="letra_modal_aviso_ganado">Felicidades, has ganado!, Quieres guardar tu puntuacion?</p>
+	<button class="ganado_Opcion_Si">Si</button>
+	<button class="ganado_Opcion_No">No</button>
   </div>
 </div>
-<!-- acaba el modal -->
+<!-- acaba el modal del fin del juego ganando!-->
+
+<!-- Comienza el modal del fin del juego prediendo..-->
+
+<div id="Fin_del_juego_malo" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content_perdido">
+    <p id="letra_modal_aviso_perdido">Has perdido.., buena suerte la proxima vez!</p>
+	<button class="perdido_Opcion_Cerrar">Cerrar</button>
+  </div>
+</div>
+<!-- acaba el modal del fin del juego perdido..-->
 
 <!-- Comienza el modal de introducir datos -->
 
@@ -384,15 +374,28 @@
 
   <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
-	    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
-	    <p id="contador_preguntas2" hidden></p>
-	    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
-	    <button class="enviarNombre">Aceptar</button>
-	    <button class="Cerrar_Ventana_Usuario"> Cancelar</button>
+  		<form name="formulario" action="taularecords.php" method="POST" target="_blank">
+		    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
+		    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
+		    <input type="text" id="puntuacionJugador" name="puntuacionJugador" hidden>
+		    <button type="button" class="enviarNombre">Aceptar</button>
+		    <button type="button" class="Cerrar_Ventana_Usuario"> Cancelar</button>
+		   
   </div>
 
 </div>
 <!-- acaba el modal de introducir datos -->
+
+<!-- Comienza el modal que se utilizara para guardar los datos introducidos -->
+
+<div id="guardar_en_txt" class="modal">
+  <div class="modal-content">
+		    <p id="letra_modal_aviso2">Tu nombre se ha guardado correctamente!</p>
+		    <button class="Cerrar_Guardado">Aceptar</button>
+	    </form>
+  </div>
+</div>
+<!-- acaba el modal que se utilizara para guardar los datos introducidos -->
 
 </body>
 </html>

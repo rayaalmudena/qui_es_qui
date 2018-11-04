@@ -2,10 +2,36 @@ var cards;
 var botonHacerPregunta;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
-var flipCardSound = new Audio('sounds/flipCardSound.mp3');
 var contadorPreguntas = 0;
 var cartaServidor;
-var juegoTerminado = false;
+var totalTiempo = 20;//funcion de girar carta
+var intervalo1;//funcion de girar carta
+var state = 0;
+var konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
+var botonHacerPregunta = document.getElementById("hacerPregunta");
+var cartas = []; // Listado de todas las cartas
+
+//para saber si la carta ganadora ha sido bajada ya.
+var haGanado=true;
+
+//easy y very easy se quedaran en false hasta que sean activados
+var easy=false;
+var veryeasy=false;
+
+//Le da un ID al back de la carta para que se gire con el easy.
+var asignarid=0;
+
+//Es un contador que se utiliza para las posiciones del array de atributos
+var contador_array=0;
+
+//Array de atributos para pasarlos al javascript
+var array_atributos = {};
+
+
+// Audios
+var flipCardSound = new Audio('sounds/flipCardSound.mp3');
+var winSound = new Audio("sounds/victory_theme.mp3");
+var loseSound = new Audio("sounds/defeat_theme.mp3");
 
 // estas dos variables son para preguntar
 // "Segur que vols realitzar un altre pregunta sense girar cap carta?"
@@ -13,87 +39,62 @@ var pregunta_clicada=0;
 var pregunta_sinGirarCarta=0;
 
 
-function flipEvent(event) {
-
-    var element = event;
-    var cartasRestantes = obtenerCartasSinRotar().length;
-    
-
-    if (cartasRestantes > 1) {
+function girarCarta(event) {
+    if (contadorVolteo >= 11) {
+        return false;
+    }
+    else{
+        var element = event.currentTarget || event;
         if (element.className != "card cardE") {
             if(!isCardFlipped(element)) {
                 flipCard(element);
+                // Es necesario para el contador, para que no se junte con el easy
+                id_elemento=element.id;
+
                 contadorVolteo++;
                 flipCardSound.play();
             }
         }
-    } else if (!juegoTerminado) {
-        juegoTerminado = true;
-        finDelJuego();
-        flipCard(document.getElementById('cartaElegida')); // Rotamos la carta del servidor
     }
-  }
 
-document.addEventListener('DOMContentLoaded', function(){
-    // Activa el botón y todas las funciones que hay dentro de él
-    botonHacerPregunta = document.getElementById("hacerPregunta");
-    botonHacerPregunta.addEventListener("click", botonActivado);
-
-    //Activar modo Easy
-    botonHacerPregunta = document.getElementById("buttonEasy");
-    botonHacerPregunta.addEventListener("click", activarModoEasy);
-    
-    addListenerCartas()
-});
-
-document.addEventListener('DOMContentLoaded', function(){
-    //Activar modo Easy
-    botonHacerPregunta = document.getElementById("buttonEasy");
-    botonHacerPregunta.addEventListener("click", activarModoEasy);
-});
-
-// carta sin rotar, obtener listado cartas, obtener cartas sin rotar, añadir listener cartas
-
-function cartaSinRotar() {
-    cartas = obtenerCartasSinRotar();
-    return cartas[0];
+    if (contadorVolteo >= 11) {
+        saberSiHaGanado();
+    }
 }
 
 function obtenerListadoCartas() {
-    return document.getElementsByClassName('rotableCard');
+    cartas = document.getElementsByClassName("card-container");
 }
-
-function obtenerCartasSinRotar() {
-    // codigo
-    var unRotatedCards = [];
-    var cards = obtenerListadoCartas();
-
-    for (var n = 0; n < cards.length; n++) {
-        var card = cards[n];
-        if (!isCardFlipped(card)) {
-            unRotatedCards.push(card);
+function obtenerListadoCartasSinRotar() {
+    var cartasSinRotar = [];
+    for (var c = 0; c < cartas.length; c++) {
+        var carta = cartas[c];
+        if (!isCardFlipped(carta)) {
+            cartasSinRotar.push(carta);
         }
     }
 
-    return unRotatedCards;
+    return cartasSinRotar;
+    // cartas = document.getElementsByClassName("card");
 }
-
-function addListenerCartas() {
-    // más codigo :(
-    var cards = obtenerListadoCartas();
-
-    for (var n = 0; n < cards.length; n++) {
-        var card = cards[n];
-        card.addEventListener('click', function() {
-            flipEvent(this);
-        });
+function instanciarClicsCartas() {
+    for (var i = 0; i < cartas.length; i++) {
+        var carta = cartas[i];
+        carta.addEventListener("click", puedeGirarCarta);
     }
 }
 
+function giraCartaV2(i){
+    flipCard(document.getElementById(i));
+    contadorVolteo++;
+}
 
-function botonActivado() {
-    desaparecerBotonEasy();
-    preguntarAlServer();
+function asignarID(){
+    //Le da un ID al back de la carta para que se gire.
+    while (asignarid<12){
+        document.getElementById('$c').id=asignarid;
+        asignarid++;
+    }
 }
 
 function flipCard(card) {
@@ -104,33 +105,121 @@ function isCardFlipped(card) {
     return card.classList.contains('rotated');
 }
 
-function sacarMensajeAlertaSinVolteo() {
-    if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
+document.addEventListener('DOMContentLoaded', function(){
+    // Activa el botón y todas las funciones que hay dentro de él
+    obtenerListadoCartas();
+    instanciarClicsCartas();
+    botonHacerPregunta = document.getElementById("hacerPregunta");
+    botonHacerPregunta.addEventListener("click", botonActivado);
+});
 
-        var modal_aviso = document.getElementById('AvisoPregunta');
-        var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+function activarEasterEgg() {
+    if ( ! window.addEventListener ) {
+        return false;
+    }
+    // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
+    window.addEventListener("keydown", konamiCode, true);   
+}
 
-        modal_aviso.style.display = "block";
+function konamiCode(e) {
+    if ( e.keyCode == konami[state] ) state++;  
+    else state = 0;  
+    if ( state == 11 )  {            
+        // cambiamos los sonidos del programa
+        flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
+        winSound = new Audio("easter_egg/konamiWin.mp3");
+        loseSound = new Audio("easter_egg/konamiLose.mp3");
+        var backgroundMusic = new Audio("easter_egg/konamiBackground.mp3");
         
-        boton_cerrar.onclick = function() {
-            modal_aviso.style.display = "none";
-        }
+        backgroundMusic.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        backgroundMusic.play();
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal_aviso) {
+        window.removeEventListener("keydown", konamiCode, true);
+    }
+}
+
+activarEasterEgg();
+
+function botonActivado() {
+    desaparecerBotonEasy();
+    preguntarAlServer();
+    if (veryeasy==true){
+        eliminarOpcion();
+    }
+}
+
+function eliminarOpcion(){
+    var x = document.getElementById("pregunta");
+    x.remove(x.selectedIndex);
+    x.selectedIndex = 0;
+    botonHacerPregunta.disabled = true;
+
+}
+
+function sacarMensajeAlertaSinVolteo() {
+
+    if (easy==false && veryeasy==false) {
+
+        if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
+
+            var modal_aviso = document.getElementById('AvisoPregunta');
+            var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+
+            modal_aviso.style.display = "block";
+            
+            boton_cerrar.onclick = function() {
                 modal_aviso.style.display = "none";
             }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal_aviso) {
+                    modal_aviso.style.display = "none";
+                }
+            }
         }
+        else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
+            //nada
+        }
+        else{
+            pregunta_clicada=0;
+        }
+        pregunta_sinGirarCarta = contadorVolteo;
+        pregunta_clicada++;
     }
-    else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
-        //nada
+    else if (easy==true) {
+
+        if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
+
+            var modal_aviso = document.getElementById('AvisoPregunta');
+            var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+
+            modal_aviso.style.display = "block";
+            
+            boton_cerrar.onclick = function() {
+                modal_aviso.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal_aviso) {
+                    modal_aviso.style.display = "none";
+                }
+            }
+        }
+        else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
+            //nada
+        }
+        else{
+            pregunta_clicada=0;
+        }
+        pregunta_sinGirarCarta = contadorVolteo;
+        pregunta_clicada++;
+
     }
-    else{
-        pregunta_clicada=0;
-    }
-    pregunta_sinGirarCarta = contadorVolteo;
-    pregunta_clicada++;
 }
 
 function funcionContadorPreguntas() {
@@ -138,54 +227,142 @@ function funcionContadorPreguntas() {
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
 }
 
-function activarModoEasy() {
-    //Si activamos el boton easy, aparecera un texto diciendolo.
-    document.getElementById("buttonEasy").style.display="none";
-    document.getElementById("textoEasy").innerHTML = "Modo Easy Activado";
-}
-
 function desaparecerBotonEasy() {
     //Si hacemos la pregunta, simplemente desactivara el boton
-    document.getElementById("buttonEasy").style.display="none";
+    document.getElementById("dificultad").style.display="none";
+    document.getElementById("parrafoElegirDificultad").style.display="none";
+}
+
+function leerDatosCartaServidor(){
+    return {
+        nombre: document.getElementById("nombre_php-js").innerHTML,
+        gafas: document.getElementById("gafas_php-js").innerHTML,
+        cabello: document.getElementById("cabello_php-js").innerHTML,
+        sexo: document.getElementById("sexo_php-js").innerHTML 
+    };
 }
 
 function preguntarAlServer() {
-    respuestasPosiblesCBox = [].slice.call(document.getElementsByClassName("cbox"));
 
-    // Si no han respondido = 3, si han respondido una = 2
-    // Si han respondido mas de una = 0 o 1
-    var semaforo = 0;
-    var id;
-    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        if (respuestasPosiblesCBox[i].value != "---") {
-            id = respuestasPosiblesCBox[i].getAttribute("class");
-            id = id.replace("cbox ","");
-        } else {
-            semaforo++;            
+    var datosCartaServidor = leerDatosCartaServidor();
+
+    var selectPregunta = document.getElementById('pregunta');    
+    var preguntaCombo = selectPregunta.options[selectPregunta.selectedIndex].getAttribute('name');
+    var respuestaCombo = selectPregunta.value;
+    var respuestaServidor = datosCartaServidor[preguntaCombo];
+
+    var i = 0;
+
+    if (!datosCartaServidor[preguntaCombo]) {
+        document.getElementById('texto_salida').innerHTML = "Esa pregunta no estaba prevista.";
+        document.getElementById("botonDeColorRojo").style.display = "none";
+        document.getElementById("botonDeColorVerde").style.display = "none";
+        return false;
+    } 
+    
+    if (datosCartaServidor[preguntaCombo] == respuestaCombo) {
+        girarAutomaticamente(pregunta, respuestaServidor, true);
+        preguntaCorrecta();
+    } else {
+        girarAutomaticamente(pregunta, respuestaCombo, false);
+        preguntaIncorrecta();
+    }
+}
+
+/**
+ * girarSiNoEsRespuesta:
+ *  Si es true girara las que NO coincidan con la respuesta
+ *  Si es false girara las que SI coincidan con la respuesta
+ */
+function girarAutomaticamente(pregunta, respuesta, girarSiNoEsRespuesta) {
+    alert(respuesta);
+    alert(pregunta);
+    if (easy == true || veryeasy == true) {
+        var cartasSinRotar = obtenerListadoCartasSinRotar();
+        for (var c = 0; c < cartasSinRotar.length; c++) {
+            var carta = cartasSinRotar[c];
+            var valorCarta = carta.getElementsByClassName("container");
+            //var posibleRespuesta = valorCarta.
+
+            if (valorCarta != respuesta && girar|| girarSiNoEsRespuesta) {
+                girarCarta(carta);
+            }
         }
     }
-    //Si no se deshabilita el gif, aparecera doble cuando se vuelva a hacer otra pregunta
-    document.getElementById("botonDeColorVerde").style.display = "none";
+}
+
+function preguntaCorrecta(){
+    document.getElementById('texto_salida').innerHTML = "SI";
     document.getElementById("botonDeColorRojo").style.display = "none";
+    document.getElementById("botonDeColorVerde").style.display = "block";
+    funcionContadorPreguntas();
+    sacarMensajeAlertaSinVolteo();
+    saberSiHaGanado();
+}
 
-    if (semaforo == 3) {
-        document.getElementById('texto_salida').innerHTML =
-        "No hay nada seleccionado";
-    
-    } else if (semaforo == 2) {
-        // Esto es correcto
-        sacarMensajeAlertaSinVolteo();
-        funcionContadorPreguntas();
-        responderAlJugador(id);
-        
-    } else if (semaforo == 1 || semaforo == 0) {
-        document.getElementById('texto_salida').innerHTML =
-        "No se pueden seleccionar más de dos elementos";
+function preguntaIncorrecta(){
+    document.getElementById('texto_salida').innerHTML = "NO";
+    document.getElementById("botonDeColorVerde").style.display = "none";
+    document.getElementById("botonDeColorRojo").style.display = "block";
+    funcionContadorPreguntas();
+    sacarMensajeAlertaSinVolteo();
+    saberSiHaGanado();
+}
 
-    } else {
-        document.getElementById('texto_salida').innerHTML = "ERROR";
+function saberSiHaGanado(){
+    if (contadorVolteo >= 11) {
+
+        //se utiliza para saber el nombre de la carta principal:
+        var datosCartaServidor = leerDatosCartaServidor();
+
+        for (var i = 0; i < 12; i++) {
+            if (isNaN(document.getElementsByClassName("carta card")[i].id)==false){
+                //se guardara la ultima carta para luego compararla con la principal:
+                nun=array_atributos[i].indexOf(nombre_carta);
+            }
+        }
+        if (nun>0) {
+            haGanado=true;
+        }
+        else{
+            haGanado=false;
+        }
+
+        finDelJuego();
     }
-    resetearComboBox(id);
+}
+
+function activarBoton(){
+
+    var lista = document.getElementById("pregunta");
+    botonHacerPregunta = document.getElementById("hacerPregunta");
+    if(lista.selectedIndex !=0 )
+      botonHacerPregunta.disabled = false;
+    else{
+      botonHacerPregunta.disabled = true;
+    }
+
+}
+
+function fijarDificultad(){
+
+    var lista = document.getElementById("dificultad");
+    document.getElementById("textoEasy").innerHTML = "Modo "+document.getElementById("dificultad").value+ " Activado, ya no podras girar cartas!";
+    //devuelve en texto el combo que has seleccionado
+
+    if(lista.selectedIndex == 1 || lista.selectedIndex == 2) {
+        lista.disabled = true;  
+        if (lista.selectedIndex == 1){
+            document.getElementById("parrafoElegirDificultad").style.display="none";
+            easy=true;
+
+        }
+        if (lista.selectedIndex == 2){
+            document.getElementById("parrafoElegirDificultad").style.display="none";
+            veryeasy=true;
+            var cont = document.getElementsByClassName('container')[0];
+        }
+    }    
 }
 
 function resetearComboBox(id) {
@@ -195,69 +372,94 @@ function resetearComboBox(id) {
     }
 }
 
-function responderAlJugador(id) {
-    nombre_carta = document.getElementById("nombre_php-js").innerHTML;
-    gafas_carta = document.getElementById("gafas_php-js").innerHTML;
-    cabello_carta = document.getElementById("cabello_php-js").innerHTML;
-    sexo_carta = document.getElementById("sexo_php-js").innerHTML;
+function girarCuandoDeba(){
 
-    llevaGafas = document.getElementById('gafas')[document.getElementById('gafas').selectedIndex];
-    llevaCabello = document.getElementById('cabello')[document.getElementById('cabello').selectedIndex];
-    llevaSexo = document.getElementById('sexo')[document.getElementById('sexo').selectedIndex];
+    if (easy==false && veryeasy==false) {
+        clearTimeout(intervalo1);
+        //Para parar el contador, sino volvera a llamar a la funcion y se restara de 2 en 2
+        totalTiempo=20;
+        //Cuando llamemos a la funcion, el contador vuelve a estar en 20
+        tiempoRecursivo();
+    }
+}
 
-    if (id == "gafas") {
-        if (llevaGafas.value == gafas_carta && llevaGafas.value != "---") {
-            document.getElementById('texto_salida').innerHTML = "SI";
-            document.getElementById("botonDeColorVerde").style.display = "block";
-        } else {
-            document.getElementById('texto_salida').innerHTML = "NO";
-            document.getElementById("botonDeColorRojo").style.display = "block";
+function tiempoRecursivo(){
+    document.getElementById('CuentaAtras').innerHTML = "Te quedan "+totalTiempo+" segundos para girar una carta";
+    if(totalTiempo==0){
+        document.getElementById('CuentaAtras').innerHTML = "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "+totalTiempo+" segundos)";
+    }
+    else{
+        /* Restamos un segundo al tiempo restante */
+        totalTiempo--;
+        /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+        intervalo1 = setTimeout("tiempoRecursivo()",1000);
+    }
+}
+
+function puedeGirarCarta(event){
+     if(easy==true || veryeasy==true || totalTiempo==0){
+         //No la podra girar, ya que no tiene tiempo
         }
-    
-    } else if (id == "cabello") {
-        if (llevaCabello.value == cabello_carta && llevaCabello.value != "---") {
-            document.getElementById('texto_salida').innerHTML = "SI";
-            document.getElementById("botonDeColorVerde").style.display = "block";
-        } else {
-            document.getElementById('texto_salida').innerHTML = "NO";
-            document.getElementById("botonDeColorRojo").style.display = "block";
-        }
-    } else if (id == "sexo") {
-        if (llevaSexo.value == sexo_carta && llevaSexo.value != "---") {
-            document.getElementById('texto_salida').innerHTML = "SI";
-            document.getElementById("botonDeColorVerde").style.display = "block";
-        } else {
-            document.getElementById('texto_salida').innerHTML = "NO";
-            document.getElementById("botonDeColorRojo").style.display = "block";
-        }
-    } else {
-        document.getElementById('texto_salida').innerHTML = "ERROR";
-        document.getElementById("botonDeColorVerde").style.display = "none";
-        document.getElementById("botonDeColorRojo").style.display = "none";
+    else{
+        //podra girar la carta
+        girarCarta(event);
     }
 }
 
 function finDelJuego(){
 
-    ////Modal
-    var modal_fin_juego = document.getElementById('Fin_del_juego');
-    var boton_NoGuardar = document.getElementsByClassName("fin_Opcion_No")[0];
-    var boton_Guardar = document.getElementsByClassName("fin_Opcion_Si")[0];
+    // Rotamos la carta del servidor
+    flipCard(document.getElementById('cartaElegida'));
+    
+    if (haGanado==true) {
+        juegoGanado();
+    }
+    if (haGanado==false){
+        juegoPerdido();
+    }
+    
+}
+
+function juegoGanado(){
+    winSound.play();
+    document.getElementById("canvas").style.visibility = "visible";
+    
+    var modal_fin_juego = document.getElementById('Fin_del_juego_bueno');
+    var boton_NoGuardar = document.getElementsByClassName("ganado_Opcion_No")[0];
+    var boton_Guardar = document.getElementsByClassName("ganado_Opcion_Si")[0];
 
     modal_fin_juego.style.display = "block";
         
     boton_NoGuardar.onclick = function() {
-       modal_fin_juego.style.display = "none";
-    }
-    boton_Guardar.onclick = function() {
-        //document.getElementById("canvas").style.visibility = "visible";
         modal_fin_juego.style.display = "none";
+    }
+    boton_Guardar.onclick = function(){
+        modal_fin_juego.style.display = "none";
+        guardarUsuario();
+    }
+}
+
+
+function juegoPerdido(){
+    loseSound.play();
+    var modal_fin_juego = document.getElementById('Fin_del_juego_malo');
+    var boton_NoGuardar = document.getElementsByClassName("perdido_Opcion_Cerrar")[0];
+    modal_fin_juego.style.display = "block";
         
+    boton_NoGuardar.onclick = function() {
+        modal_fin_juego.style.display = "none";
+    }
+}
+
+//guardar datos
+function guardarUsuario() {
         var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
 
         var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
 
         var enviarNombre = document.getElementsByClassName("enviarNombre")[0];
+
+        document.formulario.puntuacionJugador.value = contadorPreguntas;
 
         modal_guardar_nombre.style.display = "block";
         
@@ -266,222 +468,20 @@ function finDelJuego(){
         }
 
         enviarNombre.onclick = function() {
-            var nombreJugador = document.getElementById('nombre_para_enviar').value;
-            alert(nombreJugador);
+            modal_guardar_nombre.style.display = "none";
+            introducirDatos();
         }
-
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal_fin_juego) {
-            modal_fin_juego.style.display = "none";
-        }
-    }
-    ///Fin modal
-    
 }
 
-function recogerCartaServidor() {
-    cartaServidor = document.getElementsByClassName("cartaElegida")[0];
-    return cartaServidor.name;
-}
-
-function mostrarCartaServer() {
-    var chosenOneCard = recogerCartaServidor();
-    var elementos = document.getElementsByClassName(cartaElegida)[0];
-    elementos.setAttribute(cartaElegida, final);
-    document.cartaelegida.src="cartas/"+chosenOneCard;
-}
-
-
-
-
-function compararServerConUsuario() {
-    //var cartaFinal = recogerCartaUsuario();
-    cartaServidor = recogerCartaServidor();
-    /*
-    if (cartaFinal == cartaServidor) {
-        return true;
-    }
-    */
-    return false;
-}
-
-// No me sale :(
-function recogerCartaUsuario() {
-    // Aqui compararemos la imagen que tiene el server con la que tiene el usuario
-    arrayCartasPosibles = document.getElementsByClassName("card");
-    var cartaUsuario;
-    for (var i = 0; i < arrayCartasPosibles.length; i++) {
-        var elemento = arrayCartasPosibles[i].classList.value
+function introducirDatos() {
         
-        if (elemento == "carta card") {
-            cartaUsuario = arrayCartasPosibles[i];
-            alert(cartaUsuario);
-            return cartaUsuario.name;
+        var guardar_en_txt = document.getElementById('guardar_en_txt');
+
+        var Cerrar_Guardado = document.getElementsByClassName("Cerrar_Guardado")[0];
+
+        guardar_en_txt.style.display = "block";
+        
+        Cerrar_Guardado.onclick = function() {
+            guardar_en_txt.style.display = "none";
         }
-    }
 }
-
-
-////Fireworks 
-"use strict";
-
-let canvas, width, height, ctx;
-let fireworks = [];
-let particles = [];
-
-function setup() {
-    canvas = document.getElementById("canvas");
-    setSize(canvas);
-    ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-    fireworks.push(new Firework(Math.random()*(width-200)+100));
-    window.addEventListener("resize",windowResized);
-    document.addEventListener("click",onClick);
-}
-
-setTimeout(setup,1);
-
-function loop(){
-    ctx.globalAlpha = 0.1;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-    ctx.globalAlpha = 1;
-
-    for(let i=0; i<fireworks.length; i++){
-        let done = fireworks[i].update();
-        fireworks[i].draw();
-        if(done) fireworks.splice(i, 1);
-    }
-
-    for(let i=0; i<particles.length; i++){
-        particles[i].update();
-        particles[i].draw();
-        if(particles[i].lifetime>90) particles.splice(i,1);
-    }
-
-    if(Math.random()<1/60) fireworks.push(new Firework(Math.random()*(width-200)+50));
-}
-setInterval(loop, 1/50);
-class Particle{
-    constructor(x, y, col){
-        this.x = x;
-        this.y = y;
-        this.col = col;
-        this.vel = randomVec(2);
-        this.lifetime = 0;
-    }
-
-    update(){
-        this.x += this.vel.x;
-        this.y += this.vel.y;
-        this.vel.y += 0.02;
-        this.vel.x *= 0.99;
-        this.vel.y *= 0.99;
-        this.lifetime++;
-    }
-
-    draw(){
-        ctx.globalAlpha = Math.max(1-this.lifetime/80, 0);
-        ctx.fillStyle = this.col;
-        ctx.fillRect(this.x, this.y, 2, 2);
-    }
-}
-
-class Firework{
-    constructor(x){
-        this.x = x;
-        this.y = height;
-        this.isBlown = false;
-        this.col = randomCol();
-    }
-
-    update(){
-        this.y -= 3;
-        if(this.y < 350-Math.sqrt(Math.random()*500)*40){
-            this.isBlown = true;
-            for(let i=0; i<60; i++){
-                particles.push(new Particle(this.x, this.y, this.col))
-            }
-        }
-        return this.isBlown;
-    }
-
-    draw(){
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = this.col;
-        ctx.fillRect(this.x, this.y, 2, 2);
-    }
-}
-
-function randomCol(){
-    var letter = '0123456789ABCDEF';
-    var nums = [];
-
-    for(var i=0; i<3; i++){
-        nums[i] = Math.floor(Math.random()*256);
-    }
-
-    let brightest = 0;
-    for(var i=0; i<3; i++){
-        if(brightest<nums[i]) brightest = nums[i];
-    }
-
-    brightest /=255;
-    for(var i=0; i<3; i++){
-        nums[i] /= brightest;
-    }
-
-    let color = "#";
-    for(var i=0; i<3; i++){
-        color += letter[Math.floor(nums[i]/16)];
-        color += letter[Math.floor(nums[i]%16)];
-    }
-    return color;
-}
-
-function randomVec(max){
-    let dir = Math.random()*Math.PI*2;
-    let spd = Math.random()*max;
-    return{x: Math.cos(dir)*spd, y: Math.sin(dir)*spd};
-}
-
-function setSize(canv){
-    canv.style.width = (innerWidth) + "px";
-    canv.style.height = (innerHeight) + "px";
-    width = innerWidth;
-    height = innerHeight;
-
-    canv.width = innerWidth*window.devicePixelRatio;
-    canv.height = innerHeight*window.devicePixelRatio;
-    canvas.getContext("2d").scale(window.devicePixelRatio, window.devicePixelRatio);
-}
-
-function onClick(e){
-    fireworks.push(new Firework(e.clientX));
-}
-
-function windowResized(){
-    setSize(canvas);
-    ctx.fillStyle = "#22264b";
-    ctx.fillRect(0, 0, width, height);
-}
-/////Fin FIREWORKS
-
-
-///set intentos en input secreto en modulo nombre
-function setIntentos(){
-
-    document.modulonombre.intentos.value = contadorPreguntas;
-    document.forms["modulonombre"].submit();
-}
-
-function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
-// To disable f5
-    /* jQuery < 1.7 */
-$(document).bind("keydown", disableF5);
-/* OR jQuery >= 1.7 */
-$(document).on("keydown", disableF5);
