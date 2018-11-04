@@ -4,3 +4,6 @@ La imagen 'sandra.png' se repite 2 veces
 Dia y Hora del error:	26/10/2018	18:55
 De la foto 'sofia.png' no existe el atributo 'moreno'
 
+Dia y Hora del error:	02/11/2018	21:17
+De la foto 'paula.png' no existe el atributo 'no'
+
