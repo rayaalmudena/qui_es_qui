@@ -6,14 +6,16 @@ var contadorPreguntas = 0;
 var cartaServidor;
 var totalTiempo=20;//funcion de girar carta
 var intervalo1;//funcion de girar carta
+var state = 0;
+var konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
+var botonHacerPregunta = document.getElementById("hacerPregunta");
+
+//para saber si la carta ganadora ha sido bajada ya.
+var haGanado=true;
 
 //easy y very easy se quedaran en false hasta que sean activados
 var easy=false;
 var veryeasy=false;
-
-var nombreJugador;
-
-var nombre_carta;
 
 //Le da un ID al back de la carta para que se gire con el easy.
 var asignarid=0;
@@ -24,7 +26,8 @@ var contador_array=0;
 //Array de atributos para pasarlos al javascript
 var array_atributos = {};
 
-var haGanado=true;
+//La primera vez los atributos no salen ordenados, asi que los guardamos en una segunda variable:
+var array_atributos_ordenados = {};
 
 
 // Audios
@@ -45,10 +48,13 @@ function girarCarta(event) {
     else{
         var element = event.currentTarget;
         if (element.className != "card cardE") {
-            if(element.style.transform == "rotateY(180deg)") {
-
-            } else {
-                element.style.transform = "rotateY(180deg)";
+            if(!isCardFlipped(element)) {
+                flipCard(element);
+                ///Es necesario para el contador, para que no se junte con el easy
+                id_elemento=element.id;
+                document.getElementById(id_elemento).id="card rotated";
+                document.getElementById(id_elemento).id="card rotated";
+                ///
                 contadorVolteo++;
                 flipCardSound.play();
             }
@@ -56,7 +62,7 @@ function girarCarta(event) {
     }
 
     if (contadorVolteo >= 11) {
-        hasAcabado();
+        saberSiHaGanado();
     }
 }
 
@@ -74,7 +80,7 @@ function asignarID(){
 }
 
 function pasaNombre(posicion,nombre,gafas,cabello,sexo){
-
+    //guarda los atributos
     array_atributos[contador_array]=posicion+nombre+gafas+cabello+sexo;
 
     buscaindex = array_atributos[contador_array].indexOf("_");
@@ -83,17 +89,20 @@ function pasaNombre(posicion,nombre,gafas,cabello,sexo){
         array_atributos[contador_array]=array_atributos[contador_array].replace("_", " ");
         buscaindex = array_atributos[contador_array].indexOf("_");
     }
-    //alert(array_atributos[contador_array]);
-    //alert(document.getElementById(1));
     contador_array++;
+}
 
-    cogerDatos();
-    //alert(nombre_carta);
-    //alert(haGanado);
-    //alert(document.getElementById('1')."cabello");
-    //flipCard(document.getElementById('3'));
-    if (nombre==nombre_carta){
-        haGanado=false;
+function ordenarArrayDeAtributos(){
+    //en el primer intento, el array sale desordenado, asi que lo ordenaremos para que funcione bien tanto easy como very easy
+    posicion_nuevo_array=0;
+    while(array_atributos_ordenados[11]==null){
+        for (var i = 0; i < 12; i++) {
+            buscaindex = array_atributos[i].indexOf("posicion:"+posicion_nuevo_array+" ");
+            if (buscaindex>-1) {
+                array_atributos_ordenados[posicion_nuevo_array]=array_atributos[i];
+                posicion_nuevo_array++;
+            }
+        }    
     }
 }
 
@@ -105,78 +114,114 @@ function isCardFlipped(card) {
     return card.classList.contains('rotated');
 }
 
-
 document.addEventListener('DOMContentLoaded', function(){
     // Activa el botón y todas las funciones que hay dentro de él
     botonHacerPregunta = document.getElementById("hacerPregunta");
     botonHacerPregunta.addEventListener("click", botonActivado);
 });
 
-if ( window.addEventListener ) {
+function activarEasterEgg() {
+    if ( ! window.addEventListener ) {
+        return false;
+    }
     // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
-    var state = 0, konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];  
-    window.addEventListener("keydown", function(e) {  
-        if ( e.keyCode == konami[state] ) state++;  
-        else state = 0;  
-        if ( state == 11 )  {            
-            // cambiamos los sonidos del programa
-            flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
-            winSound = new Audio("easter_egg/konamiWin.mp3");
-            loseSound = new Audio("easter_egg/konamiLose.mp3");
-            var backgroundMusic = new Audio("easter_egg/konamiBackground.mp3");
-            
-            backgroundMusic.addEventListener('ended', function() {
-                this.currentTime = 0;
-                this.play();
-            }, false);
-            backgroundMusic.play();
-      }
-  }, true);  
-}  
+    window.addEventListener("keydown", konamiCode, true);   
+}
 
+function konamiCode(e) {
+    if ( e.keyCode == konami[state] ) state++;  
+    else state = 0;  
+    if ( state == 11 )  {            
+        // cambiamos los sonidos del programa
+        flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
+        winSound = new Audio("easter_egg/konamiWin.mp3");
+        loseSound = new Audio("easter_egg/konamiLose.mp3");
+        var backgroundMusic = new Audio("easter_egg/konamiBackground.mp3");
+        
+        backgroundMusic.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        backgroundMusic.play();
+
+        window.removeEventListener("keydown", konamiCode, true);
+    }
+}
+
+activarEasterEgg();
 
 function botonActivado() {
     desaparecerBotonEasy();
     preguntarAlServer();
+    if (veryeasy==true){
+        eliminarOpcion();
+    }
+    else{
+        resetearComboBox();
+    }
+    botonHacerPregunta.disabled = true;
+}
+
+function eliminarOpcion(){
+    var x = document.getElementById("pregunta");
+    x.remove(x.selectedIndex);
+    x.selectedIndex = 0;
 }
 
 function sacarMensajeAlertaSinVolteo() {
-    if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
 
-        var modal_aviso = document.getElementById('AvisoPregunta');
-        var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+    if (easy==false && veryeasy==false) {
 
-        modal_aviso.style.display = "block";
-        
-        boton_cerrar.onclick = function() {
-            modal_aviso.style.display = "none";
-        }
+        if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal_aviso) {
+            var modal_aviso = document.getElementById('AvisoPregunta');
+            var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+
+            modal_aviso.style.display = "block";
+            
+            boton_cerrar.onclick = function() {
                 modal_aviso.style.display = "none";
             }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal_aviso) {
+                    modal_aviso.style.display = "none";
+                }
+            }
         }
+        else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
+            //nada
+        }
+        else{
+            pregunta_clicada=0;
+        }
+        pregunta_sinGirarCarta = contadorVolteo;
+        pregunta_clicada++;
     }
-    else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
-        //nada
-    }
-    else{
-        pregunta_clicada=0;
-    }
-    pregunta_sinGirarCarta = contadorVolteo;
-    pregunta_clicada++;
 }
 
 function funcionContadorPreguntas() {
-    contadorPreguntas++;
+
+    if (easy==true){
+        //si el modo easy esta activado, sumara de 3 en 3
+        contadorPreguntas=contadorPreguntas+3;
+    }
+    else if (veryeasy==true){
+        //si el modo very easy esta activado, sumara de 4 en 4
+        contadorPreguntas=contadorPreguntas+4;
+    }
+    else{
+        //si no, solamente sumara 1
+        contadorPreguntas++;
+    }
     document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
 }
 
 function desaparecerBotonEasy() {
     //Si hacemos la pregunta, simplemente desactivara el boton
     document.getElementById("dificultad").style.display="none";
+    document.getElementById("parrafoElegirDificultad").style.display="none";
 }
 
 function cogerDatos(){
@@ -188,22 +233,65 @@ function cogerDatos(){
 
 function preguntarAlServer() {
 
-    cogerDatos();
 
-    var pregunta_combo = document.getElementById('pregunta')[document.getElementById('pregunta').selectedIndex].value;
+    cogerDatos();
+    pregunta_combo = document.getElementById('pregunta').value;
 
     var i=0;
 
-    if (pregunta_combo == "Es Hombre?" && sexo_carta == "hombre") {
+    array_combo=["hombre","hombre","mujer","mujer","si","si","no","no"];
+    array_carta=["hombre","mujer","mujer","hombre","si","no","no","si"];
+    array_index=["sexo:mujer","sexo:hombre","sexo:hombre","sexo:mujer","gafas:no","gafas:si","gafas:si","gafas:no"];
+
+      
+    xxl=2;
+    xl=0;
+
+    while (xl<=7){
+        if (pregunta_combo == array_combo[xl] && sexo_carta == array_carta[xl]) {
+
+            if (easy==true || veryeasy==true){
+                while (i<12){
+                    buscaindex = array_atributos_ordenados[i].indexOf(array_index[xl]);
+                    if (buscaindex>0) {
+                        if (document.getElementById(i)) {
+                            giraCartaV2(i);
+                            document.getElementById(i).id="card rotated";
+                            document.getElementById(i).id="card rotated";
+                            
+                        }
+                    }
+                    i++;
+                }
+            }
+            if (xxl% 2 === 0) {
+                preguntaCorrecta();
+            }
+            else{
+                preguntaIncorrecta();
+            }
+        }
+        xxl++;
+        xl++;
+    }
+
+    //////////////////////////
+
+
+
+    /*
+
+    if (pregunta_combo == "hombre" && sexo_carta == "hombre") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("sexo:mujer");
+                buscaindex = array_atributos_ordenados[i].indexOf("sexo:mujer");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -213,16 +301,17 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Hombre?" && sexo_carta == "mujer") {
+    else if (pregunta_combo == "hombre" && sexo_carta == "mujer") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("sexo:hombre");
+                buscaindex = array_atributos_ordenados[i].indexOf("sexo:hombre");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -232,15 +321,16 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Mujer?" && sexo_carta == "mujer") {
+    else if (pregunta_combo == "mujer" && sexo_carta == "mujer") {
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("sexo:hombre");
+                buscaindex = array_atributos_ordenados[i].indexOf("sexo:hombre");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -250,15 +340,16 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Mujer?" && sexo_carta == "hombre") {
+    else if (pregunta_combo == "mujer" && sexo_carta == "hombre") {
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("sexo:mujer");
+                buscaindex = array_atributos_ordenados[i].indexOf("sexo:mujer");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -268,16 +359,17 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Tiene Gafas?" && gafas_carta == "si") {
+    else if (pregunta_combo == "si" && gafas_carta == "si") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("gafas:no");
+                buscaindex = array_atributos_ordenados[i].indexOf("gafas:no");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -287,16 +379,17 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Tiene Gafas?" && gafas_carta == "no") {
+    else if (pregunta_combo == "si" && gafas_carta == "no") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("gafas:si");
+                buscaindex = array_atributos_ordenados[i].indexOf("gafas:si");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -306,16 +399,17 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "No Tiene Gafas?" && gafas_carta == "no") {
+    else if (pregunta_combo == "no" && gafas_carta == "no") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("gafas:si");
+                buscaindex = array_atributos_ordenados[i].indexOf("gafas:si");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -325,16 +419,17 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "No Tiene Gafas?" && gafas_carta == "si") {
+    else if (pregunta_combo == "no" && gafas_carta == "si") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("gafas:no");
+                buscaindex = array_atributos_ordenados[i].indexOf("gafas:no");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -343,18 +438,76 @@ function preguntarAlServer() {
 
         preguntaIncorrecta();
     }
+    */
+    array_combo2=["rubio","rubio","rubio","moreno","moreno","moreno","pelirrojo","pelirrojo","pelirrojo"]
+    array_carta2=["rubio","moreno","pelirrojo","moreno","rubio","pelirrojo","pelirrojo","rubio","moreno"]
+    array_index12=["cabello:moreno","cabello:rubio","cabello:rubio","cabello:rubio","cabello:moreno","cabello:moreno","cabello:moreno","cabello:pelirrojo","cabello:pelirrojo"]
+    array_index22=["cabello:pelirrojo","cabello:pelirrojo","cabello:rubio"]
 
-    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "rubio") {
+    px=0;
+    pxx=3;
+
+
+    while (px<=8){
+
+        if (pregunta_combo == array_combo2[px] && cabello_carta == array_carta2[px]) {
+
+            if (easy==true || veryeasy==true){
+                while (i<12){
+
+                    if (pxx% 3 === 0) {
+
+                        buscaindex = array_atributos_ordenados[i].indexOf(array_index12[px]);
+                        buscaindex2 = array_atributos_ordenados[i].indexOf(array_index22[pxx]);
+                        if (buscaindex>0 || buscaindex2>0) {
+                            if (document.getElementById(i)) {
+                                giraCartaV2(i);
+                                document.getElementById(i).id="card rotated";
+                                document.getElementById(i).id="card rotated";
+                                
+                            }
+                        }
+                    }
+                    else{
+                        buscaindex = array_atributos_ordenados[i].indexOf(array_index12[px]);
+                        if (buscaindex>0) {
+                            if (document.getElementById(i)) {
+                                giraCartaV2(i);
+                                document.getElementById(i).id="card rotated";
+                                document.getElementById(i).id="card rotated";
+                                
+                            }
+                        }
+                    }
+                    i++;
+                }
+            }
+
+            if (pxx% 3 === 0) {
+                preguntaCorrecta();
+            }
+            else{
+                preguntaIncorrecta();
+            }
+        }
+        px++;
+        pxx++;
+    }
+
+    /*
+
+    else if (pregunta_combo == "rubio" && cabello_carta == "rubio") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:moreno");
-                buscaindex2 = array_atributos[i].indexOf("cabello:pelirrojo");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:moreno");
+                buscaindex2 = array_atributos_ordenados[i].indexOf("cabello:pelirrojo");
                 if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -364,16 +517,17 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "moreno") {
+    else if (pregunta_combo == "rubio" && cabello_carta == "moreno") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:rubio");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:rubio");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -383,16 +537,17 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Rubio?" && cabello_carta == "pelirrojo") {
+    else if (pregunta_combo == "rubio" && cabello_carta == "pelirrojo") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:rubio");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:rubio");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -402,17 +557,18 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "moreno") {
+    else if (pregunta_combo == "moreno" && cabello_carta == "moreno") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:rubio");
-                buscaindex2 = array_atributos[i].indexOf("cabello:pelirrojo");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:rubio");
+                buscaindex2 = array_atributos_ordenados[i].indexOf("cabello:pelirrojo");
                 if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -422,16 +578,17 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "rubio") {
+    else if (pregunta_combo == "moreno" && cabello_carta == "rubio") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:moreno");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:moreno");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -441,16 +598,17 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Moreno?" && cabello_carta == "pelirrojo") {
+    else if (pregunta_combo == "moreno" && cabello_carta == "pelirrojo") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:moreno");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:moreno");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -460,17 +618,18 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "pelirrojo") {
+    else if (pregunta_combo == "pelirrojo" && cabello_carta == "pelirrojo") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:moreno");
-                buscaindex2 = array_atributos[i].indexOf("cabello:rubio");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:moreno");
+                buscaindex2 = array_atributos_ordenados[i].indexOf("cabello:rubio");
                 if (buscaindex>0 || buscaindex2>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -480,16 +639,17 @@ function preguntarAlServer() {
         preguntaCorrecta();
     }
 
-    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "rubio") {
+    else if (pregunta_combo == "pelirrojo" && cabello_carta == "rubio") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:pelirrojo");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:pelirrojo");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -499,16 +659,17 @@ function preguntarAlServer() {
         preguntaIncorrecta();
     }
 
-    else if (pregunta_combo == "Es Pelirrojo?" && cabello_carta == "moreno") {
+    else if (pregunta_combo == "pelirrojo" && cabello_carta == "moreno") {
 
         if (easy==true || veryeasy==true){
             while (i<12){
-                buscaindex = array_atributos[i].indexOf("cabello:pelirrojo");
+                buscaindex = array_atributos_ordenados[i].indexOf("cabello:pelirrojo");
                 if (buscaindex>0) {
                     if (document.getElementById(i)) {
                         giraCartaV2(i);
                         document.getElementById(i).id="card rotated";
-                         document.getElementById(i).id="card rotated";
+                        document.getElementById(i).id="card rotated";
+                        
                     }
                 }
                 i++;
@@ -517,18 +678,15 @@ function preguntarAlServer() {
 
         preguntaIncorrecta();
     }
-    ///Esta, con el cambio del ultimo sprint, ya no hará falta.
-    /*else if (pregunta_combo == "----") {
-        document.getElementById('texto_salida').innerHTML = "Selecciona una pregunta";
-        document.getElementById("botonDeColorRojo").style.display = "none";
-        document.getElementById("botonDeColorVerde").style.display = "none";
-    }*/
-    else if (pregunta_combo != "Es Hombre?" && pregunta_combo != "Es Mujer?" && pregunta_combo != "Tiene Gafas?" && 
-        pregunta_combo != "No Tiene Gafas?" && pregunta_combo != "Es Rubio?" && pregunta_combo != "Es Moreno?" && pregunta_combo != "Es Pelirrojo?" && pregunta_combo != "----"){
+    */
+
+   /*
+    else {
         document.getElementById('texto_salida').innerHTML = "Esa pregunta no estaba prevista.";
         document.getElementById("botonDeColorRojo").style.display = "none";
         document.getElementById("botonDeColorVerde").style.display = "none";
     }
+    */
 }
 
 function preguntaCorrecta(){
@@ -537,31 +695,55 @@ function preguntaCorrecta(){
     document.getElementById("botonDeColorVerde").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
-    winSound.play();
-    if (contadorVolteo >= 11) {
-        hasAcabado();
-    }
+    girarCuandoDeba();
+    saberSiHaGanado();
 }
+
 function preguntaIncorrecta(){
     document.getElementById('texto_salida').innerHTML = "NO";
     document.getElementById("botonDeColorVerde").style.display = "none";
     document.getElementById("botonDeColorRojo").style.display = "block";
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
-    loseSound.play();
-    if (contadorVolteo >= 11) {
-        hasAcabado();
+    girarCuandoDeba();
+    saberSiHaGanado();
+}
+
+function saberSiHaGanado(){
+    if (contadorVolteo == 11) {
+
+        //se utiliza para saber el nombre de la carta principal:
+        cogerDatos();
+
+        for (var i = 0; i < 12; i++) {
+            if (isNaN(document.getElementsByClassName("carta card")[i].id)==false){
+                //se guardara la ultima carta para luego compararla con la principal:
+                nun=array_atributos_ordenados[i].indexOf(nombre_carta);
+            }
+        }
+        if (nun>0) {
+            haGanado=true;
+        }
+        else{
+            haGanado=false;
+        }
+        finDelJuego();
+    }
+    if (contadorVolteo == 12){
+        haGanado=false;
+        finDelJuego();
+
     }
 }
 
 function activarBoton(){
 
     var lista = document.getElementById("pregunta");
-    var boton = document.getElementById("hacerPregunta");
+    botonHacerPregunta = document.getElementById("hacerPregunta");
     if(lista.selectedIndex !=0 )
-      boton.disabled = false;
+      botonHacerPregunta.disabled = false;
     else{
-      boton.disabled = true;
+      botonHacerPregunta.disabled = true;
     }
 
 }
@@ -570,25 +752,27 @@ function fijarDificultad(){
 
     var lista = document.getElementById("dificultad");
     document.getElementById("textoEasy").innerHTML = "Modo "+document.getElementById("dificultad").value+ " Activado, ya no podras girar cartas!";
+    //devuelve en texto el combo que has seleccionado
+
     if(lista.selectedIndex == 1 || lista.selectedIndex == 2) {
         lista.disabled = true;  
         if (lista.selectedIndex == 1){
+            document.getElementById("parrafoElegirDificultad").style.display="none";
+             document.getElementById("textoEasy").innerHTML =  document.getElementById("textoEasy").innerHTML + "<br> (al haber activado el modo easy, se sumaran los intentos de 3 en 3)"
             easy=true;
+
         }
         if (lista.selectedIndex == 2){
+            document.getElementById("parrafoElegirDificultad").style.display="none";
+            document.getElementById("textoEasy").innerHTML =  document.getElementById("textoEasy").innerHTML + "<br> (al haber activado el modo very easy, se sumaran los intentos de 4 en 4)"
             veryeasy=true;
-            var cont = document.getElementsByClassName('container')[0];
-            cont.style.pointerEvents = "none";
         }
-    }
-    
+    }    
 }
 
-function resetearComboBox(id) {
-    for (var i = 0; i < respuestasPosiblesCBox.length; i++) {
-        id = respuestasPosiblesCBox[i];
-        id.selectedIndex = 0;
-    }
+function resetearComboBox() {
+    var x = document.getElementById("pregunta");
+    x.selectedIndex = 0;
 }
 
 function girarCuandoDeba(){
@@ -604,61 +788,45 @@ function girarCuandoDeba(){
 
 function tiempoRecursivo(){
     document.getElementById('CuentaAtras').innerHTML = "Te quedan "+totalTiempo+" segundos para girar una carta";
-        if(totalTiempo==0){
-                document.getElementById('CuentaAtras').innerHTML = "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "+totalTiempo+" segundos)";
-            }
-            else{
-                /* Restamos un segundo al tiempo restante */
-                totalTiempo-=1;
-                /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
-                intervalo1 = setTimeout("tiempoRecursivo()",1000);
-        }
+    if(totalTiempo==0){
+        document.getElementById('CuentaAtras').innerHTML = "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "+totalTiempo+" segundos)";
+    }
+    else{
+        /* Restamos un segundo al tiempo restante */
+        totalTiempo--;
+        /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+        intervalo1 = setTimeout("tiempoRecursivo()",1000);
+    }
 }
 
 function puedeGirarCarta(event){
-    if(easy==true || veryeasy==true || totalTiempo==0)
-        {
+     if(easy==true || veryeasy==true || totalTiempo==0){
          //No la podra girar, ya que no tiene tiempo
         }
     else{
         //podra girar la carta
-        //var x = document.getElementById("hola").id;
-        //var x = document.getElementsByClassName("carta card")[1].id;
-        //alert(x);
         girarCarta(event);
-
-/*
-        var element = event.currentTarget;
-        alert(event.currentTarget.id);
-            if(element.style.transform == "rotateY(180deg)") {
-                alert(element[1]);
-            } else {
-                element.style.transform = "rotateY(180deg)";
-                
-            }
-
-        if (document.getElementsByClassName("carta card") == "rotateY(180deg)") {
-            alert("girada");
-        }*/
     }
 }
 
-function hasAcabado(){
+function finDelJuego(){
 
-    //if ganado:
+    // Rotamos la carta del servidor
+    flipCard(document.getElementById('cartaElegida'));
+    
     if (haGanado==true) {
         juegoGanado();
-    }else{
-    //if perdido:
+    }
+    if (haGanado==false){
         juegoPerdido();
     }
     
 }
 
 function juegoGanado(){
-
+    winSound.play();
     document.getElementById("canvas").style.visibility = "visible";
-
+    
     var modal_fin_juego = document.getElementById('Fin_del_juego_bueno');
     var boton_NoGuardar = document.getElementsByClassName("ganado_Opcion_No")[0];
     var boton_Guardar = document.getElementsByClassName("ganado_Opcion_Si")[0];
@@ -720,195 +888,3 @@ function introducirDatos() {
             guardar_en_txt.style.display = "none";
         }
 }
-
-
-function recogerCartaServidor() {
-    cartaServidor = document.getElementsByClassName("cartaElegida")[0];
-    return cartaServidor.name;
-}
-
-function mostrarCartaServer() {
-    var chosenOneCard = recogerCartaServidor();
-    var elementos = document.getElementsByClassName(cartaElegida)[0];
-    element.removeAttribute('src')
-    elementos.setAttribute(src, chosenOneCard);
-}
-
-
-
-
-function compararServerConUsuario() {
-    //var cartaFinal = recogerCartaUsuario();
-    cartaServidor = recogerCartaServidor();
-    /*
-    if (cartaFinal == cartaServidor) {
-        return true;
-    }
-    */
-    return false;
-}
-
-// No me sale :(
-function recogerCartaUsuario() {
-    // Aqui compararemos la imagen que tiene el server con la que tiene el usuario
-    arrayCartasPosibles = document.getElementsByClassName("card");
-    var cartaUsuario;
-    for (var i = 0; i < arrayCartasPosibles.length; i++) {
-        var elemento = arrayCartasPosibles[i].classList.value
-        
-        if (elemento == "carta card") {
-            cartaUsuario = arrayCartasPosibles[i];
-            alert(cartaUsuario);
-            return cartaUsuario.name;
-        }
-    }
-}
-
-
-
-
-////Fireworks 
-"use strict";
-
-let canvas, width, height, ctx;
-let fireworks = [];
-let particles = [];
-
-function setup() {
-    canvas = document.getElementById("canvas");
-    setSize(canvas);
-    ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-    fireworks.push(new Firework(Math.random()*(width-200)+100));
-    window.addEventListener("resize",windowResized);
-    document.addEventListener("click",onClick);
-}
-
-setTimeout(setup,1);
-
-function loop(){
-    ctx.globalAlpha = 0.1;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-    ctx.globalAlpha = 1;
-
-    for(let i=0; i<fireworks.length; i++){
-        let done = fireworks[i].update();
-        fireworks[i].draw();
-        if(done) fireworks.splice(i, 1);
-    }
-
-    for(let i=0; i<particles.length; i++){
-        particles[i].update();
-        particles[i].draw();
-        if(particles[i].lifetime>90) particles.splice(i,1);
-    }
-
-    if(Math.random()<1/60) fireworks.push(new Firework(Math.random()*(width-200)+50));
-}
-setInterval(loop, 1/50);
-class Particle{
-    constructor(x, y, col){
-        this.x = x;
-        this.y = y;
-        this.col = col;
-        this.vel = randomVec(2);
-        this.lifetime = 0;
-    }
-
-    update(){
-        this.x += this.vel.x;
-        this.y += this.vel.y;
-        this.vel.y += 0.02;
-        this.vel.x *= 0.99;
-        this.vel.y *= 0.99;
-        this.lifetime++;
-    }
-
-    draw(){
-        ctx.globalAlpha = Math.max(1-this.lifetime/80, 0);
-        ctx.fillStyle = this.col;
-        ctx.fillRect(this.x, this.y, 2, 2);
-    }
-}
-
-class Firework{
-    constructor(x){
-        this.x = x;
-        this.y = height;
-        this.isBlown = false;
-        this.col = randomCol();
-    }
-
-    update(){
-        this.y -= 3;
-        if(this.y < 350-Math.sqrt(Math.random()*500)*40){
-            this.isBlown = true;
-            for(let i=0; i<60; i++){
-                particles.push(new Particle(this.x, this.y, this.col))
-            }
-        }
-        return this.isBlown;
-    }
-
-    draw(){
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = this.col;
-        ctx.fillRect(this.x, this.y, 2, 2);
-    }
-}
-
-function randomCol(){
-    var letter = '0123456789ABCDEF';
-    var nums = [];
-
-    for(var i=0; i<3; i++){
-        nums[i] = Math.floor(Math.random()*256);
-    }
-
-    let brightest = 0;
-    for(var i=0; i<3; i++){
-        if(brightest<nums[i]) brightest = nums[i];
-    }
-
-    brightest /=255;
-    for(var i=0; i<3; i++){
-        nums[i] /= brightest;
-    }
-
-    let color = "#";
-    for(var i=0; i<3; i++){
-        color += letter[Math.floor(nums[i]/16)];
-        color += letter[Math.floor(nums[i]%16)];
-    }
-    return color;
-}
-
-function randomVec(max){
-    let dir = Math.random()*Math.PI*2;
-    let spd = Math.random()*max;
-    return{x: Math.cos(dir)*spd, y: Math.sin(dir)*spd};
-}
-
-function setSize(canv){
-    canv.style.width = (innerWidth) + "px";
-    canv.style.height = (innerHeight) + "px";
-    width = innerWidth;
-    height = innerHeight;
-
-    canv.width = innerWidth*window.devicePixelRatio;
-    canv.height = innerHeight*window.devicePixelRatio;
-    canvas.getContext("2d").scale(window.devicePixelRatio, window.devicePixelRatio);
-}
-
-function onClick(e){
-    fireworks.push(new Firework(e.clientX));
-}
-
-function windowResized(){
-    setSize(canvas);
-    ctx.fillStyle = "#22264b";
-    ctx.fillRect(0, 0, width, height);
-}
-/////Fin FIREWORKS

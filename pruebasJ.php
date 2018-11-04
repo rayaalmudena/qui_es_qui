@@ -5,10 +5,30 @@
 	<title>¿Quién es quién?</title>
 	<link rel="stylesheet" type="text/css" href="style.css">	
 	<script type="text/javascript" src="pruebasJ.js"></script>
+	<script type="text/javascript" src="js/fireworks.js"></script>
 </head>
-<body onload="asignarID()">
+<body onload="asignarID(), ordenarArrayDeAtributos()">
 	
 	<?php 
+	function explodeConfigValues($config, $totalPreguntas = 2) {
+		$data = array();
+
+		$combo = explode(" ", $config);
+		$keyPregunta = substr($combo[0], 0, -1);
+		
+		for ($n = 0; $n < $totalPreguntas; $n++) {
+			$posicionRespuesta = 1 + $n;
+			$posicionPregunta = 1 + $totalPreguntas + $n;
+			$data[] = array(
+				$keyPregunta,
+				$combo[$posicionRespuesta],
+				str_replace("_", " ", $combo[$posicionPregunta])
+			);
+		}
+
+		return $data;
+	}
+
 	//Comienzo de los posibles errores
 	//Los errores apareceran por orden que indica en la guia del leandro, primero apareceran los nombres repetidos,
 	//luego los atributos repetidos y luego los atributos que no existan en el config
@@ -220,26 +240,12 @@
 				}
 				return $tabla;
 			}
-
 			
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
 			echo "<br>";
 			$arrayTablero=arrayCartas();
 			echo tableroCartas($arrayTablero);
-
-			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
-			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
-			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
-			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
-			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
-
-			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
-			echo "<p id='nombre_php-js' >$nombre_carta</p>
-			<p id='gafas_php-js' hidden>$gafas_carta</p>
-			<p id='cabello_php-js' hidden>$cabello_carta</p>
-			<p id='sexo_php-js' hidden>$sexo_carta</p>";
-			
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
 
@@ -247,7 +253,7 @@
 			?>
 			<div id="divtexto">
 			<div id="comboDif">
-				<p>Elige dificultad </p>
+				<p id="parrafoElegirDificultad">Elige dificultad </p>
 				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
 					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
 					<option  name="dificultad" value="Easy">EASY</option>
@@ -255,7 +261,7 @@
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>
+			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p>
 
 			<div id="combobox">
 
@@ -270,28 +276,22 @@
 				}
 				fclose($file2);
 
-				$nuevoCombobox=[];
+				$nuevoCombobox= array_merge(
+					explodeConfigValues($config_array[0], 2),
+					explodeConfigValues($config_array[1], 3),
+					explodeConfigValues($config_array[2], 2)
+				);
 
-				$combo_gafas = explode(" ", $config_array[0]);
-				unset($combo_gafas[0],$combo_gafas[1],$combo_gafas[2]);
-
-				$combo_cabello = explode(" ", $config_array[1]);
-				unset($combo_cabello[0],$combo_cabello[1],$combo_cabello[2],$combo_cabello[3]);
-
-				$combo_sexo = explode(" ", $config_array[2]);
-				unset($combo_sexo[0],$combo_sexo[1],$combo_sexo[2]);
-
-
-				$nuevoCombobox = str_replace("_", " ",array_merge($combo_gafas,$combo_cabello,$combo_sexo));
 				echo "<select id='pregunta' onchange='activarBoton()'>";
 				echo "<option>----</option>";
-					foreach ($nuevoCombobox as $key => $value) {
-						echo "<option name='pregunta_combo' value='$value'>$value</option>";
+					foreach ($nuevoCombobox as $data) {
+						echo "<option name='".$data[0]."' 
+							value='".$data[1]."'>".$data[2]."</option>";
 					}
 				echo "</select> <br><br>";
 
 
-				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta</button>";
+				echo "<button id='hacerPregunta' disabled>Fes la pregunta</button>";
 
 				?>
 
@@ -307,8 +307,20 @@
 
 			</div>
 			</div>
-			<?php
-			
+			<?php 
+
+
+			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
+			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
+			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
+			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
+			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
+
+			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
+			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
+			<p id='gafas_php-js' hidden>$gafas_carta</p>
+			<p id='cabello_php-js' hidden>$cabello_carta</p>
+			<p id='sexo_php-js' hidden>$sexo_carta</p>";
 		}
 
 	?>
@@ -351,9 +363,8 @@
 
   <!-- Modal content -->
   <div class="modal-content_perdido">
-    <p id="letra_modal_aviso_perdido">Has perdido.., Quieres guardar tu puntuacion?</p>
-	<button class="perdido_Opcion_Si">Si</button>
-	<button class="perdido_Opcion_No">No</button>
+    <p id="letra_modal_aviso_perdido">Has perdido.., buena suerte la proxima vez!</p>
+	<button class="perdido_Opcion_Cerrar">Cerrar</button>
   </div>
 </div>
 <!-- acaba el modal del fin del juego perdido..-->
