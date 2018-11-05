@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<title>¿Quién es quién?</title>
 	<link rel="stylesheet" type="text/css" href="style.css">	
-	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="pruebasJ.js"></script>
 	<script type="text/javascript" src="js/fireworks.js"></script>
 </head>
 <body onload="asignarID(), ordenarArrayDeAtributos()">
