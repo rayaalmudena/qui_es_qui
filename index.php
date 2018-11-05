@@ -401,16 +401,10 @@
 </div>
 <!-- acaba el modal que se utilizara para guardar los datos introducidos -->
 
-<<<<<<< HEAD
-<form name="pruueba" action="destroysession.php" method="POST">
-	<button>BORRAR SESSION</button>
-</form>
-=======
-<!-- Comienza el modal del aviso -->
+<!-- Comienza el modal del easter egg -->
 
 <div id="AvisoEasterEgg" class="modal">
 
-  <!-- Modal content -->
   <div class="modal-content">
     <p id="letra_modal_aviso">Easter Egg Activado!</p>
 	<button class="cerrarEgg">Ok</button>
@@ -418,8 +412,11 @@
   </div>
 
 </div>
-<!-- acaba el modal del aviso -->
->>>>>>> 39841255ce4ca49a046bc3050070c75f9ca10581
+<!-- acaba el modal del easter egg -->
+
+<form name="pruueba" action="destroysession.php" method="POST">
+	<button>BORRAR SESSION</button>
+</form>
 
 </body>
 </html>
