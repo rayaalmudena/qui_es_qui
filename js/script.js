@@ -19,6 +19,9 @@ var haGanado=true;
 var easy=false;
 var veryeasy=false;
 
+//Le da un ID al back de la carta para que se gire con el easy.
+var asignarid=0;
+
 //Es un contador que se utiliza para las posiciones del array de atributos
 var contador_array=0;
 
@@ -70,6 +73,7 @@ function obtenerListadoCartasSinRotar() {
     }
 
     return cartasSinRotar;
+    // cartas = document.getElementsByClassName("card");
 }
 function instanciarClicsCartas() {
     for (var i = 0; i < cartas.length; i++) {
@@ -83,6 +87,13 @@ function giraCartaV2(i){
     contadorVolteo++;
 }
 
+function asignarID(){
+    //Le da un ID al back de la carta para que se gire.
+    while (asignarid<12){
+        document.getElementById('$c').id=asignarid;
+        asignarid++;
+    }
+}
 
 function flipCard(card) {
     card.classList.toggle('rotated');
@@ -124,6 +135,22 @@ function konamiCode(e) {
         }, false);
         backgroundMusic.play();
 
+        //modal
+        var modal_Egg = document.getElementById('AvisoEasterEgg');
+        var cerrarEgg = document.getElementsByClassName("cerrarEgg")[0];
+
+        modal_Egg.style.display = "block";
+            
+        cerrarEgg.onclick = function() {            
+            modal_Egg.style.display = "none";
+            }
+
+        // Cuando el usuario clica en cualquier otro lado que no sea el modal, lo cierra
+        window.onclick = function(event) {
+            if (event.target == modal_Egg) {
+                modal_Egg.style.display = "none";
+            }
+        }
         window.removeEventListener("keydown", konamiCode, true);
     }
 }

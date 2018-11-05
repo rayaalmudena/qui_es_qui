@@ -267,13 +267,13 @@
 			<div id="comboDif">
 				<p id="parrafoElegirDificultad">Elige dificultad </p>
 				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
-					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
+					<option  name="dificultad" selected="selected" value="--NORMAL--">--NORMAL--</option>
 					<option  name="dificultad" value="Easy">EASY</option>
 					<option  name="dificultad" value="Very Easy">VERY EASY</option>
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p>
+			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>	
 
 			<div id="combobox">
 
@@ -401,9 +401,25 @@
 </div>
 <!-- acaba el modal que se utilizara para guardar los datos introducidos -->
 
+<<<<<<< HEAD
 <form name="pruueba" action="destroysession.php" method="POST">
 	<button>BORRAR SESSION</button>
 </form>
+=======
+<!-- Comienza el modal del aviso -->
+
+<div id="AvisoEasterEgg" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <p id="letra_modal_aviso">Easter Egg Activado!</p>
+	<button class="cerrar_Aviso">Ok</button>
+
+  </div>
+
+</div>
+<!-- acaba el modal del aviso -->
+>>>>>>> 39841255ce4ca49a046bc3050070c75f9ca10581
 
 </body>
 </html>
