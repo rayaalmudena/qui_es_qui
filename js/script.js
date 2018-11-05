@@ -56,7 +56,7 @@ function girarCarta(event) {
         }
     }
 
-    // saberSiHaGanado();
+    saberSiHaGanado();
 }
 
 function obtenerListadoCartas() {
