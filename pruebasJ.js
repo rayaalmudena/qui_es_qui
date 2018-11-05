@@ -239,48 +239,6 @@ function preguntarAlServer() {
 
     var i=0;
 
-    array_combo=["hombre","hombre","mujer","mujer","si","si","no","no"];
-    array_carta=["hombre","mujer","mujer","hombre","si","no","no","si"];
-    array_index=["sexo:mujer","sexo:hombre","sexo:hombre","sexo:mujer","gafas:no","gafas:si","gafas:si","gafas:no"];
-
-      
-    xxl=2;
-    xl=0;
-
-    while (xl<=7){
-        if (pregunta_combo == array_combo[xl] && sexo_carta == array_carta[xl]) {
-
-            if (easy==true || veryeasy==true){
-                while (i<12){
-                    buscaindex = array_atributos_ordenados[i].indexOf(array_index[xl]);
-                    if (buscaindex>0) {
-                        if (document.getElementById(i)) {
-                            giraCartaV2(i);
-                            document.getElementById(i).id="card rotated";
-                            document.getElementById(i).id="card rotated";
-                            
-                        }
-                    }
-                    i++;
-                }
-            }
-            if (xxl% 2 === 0) {
-                preguntaCorrecta();
-            }
-            else{
-                preguntaIncorrecta();
-            }
-        }
-        xxl++;
-        xl++;
-    }
-
-    //////////////////////////
-
-
-
-    /*
-
     if (pregunta_combo == "hombre" && sexo_carta == "hombre") {
 
         if (easy==true || veryeasy==true){
@@ -438,63 +396,6 @@ function preguntarAlServer() {
 
         preguntaIncorrecta();
     }
-    */
-    array_combo2=["rubio","rubio","rubio","moreno","moreno","moreno","pelirrojo","pelirrojo","pelirrojo"]
-    array_carta2=["rubio","moreno","pelirrojo","moreno","rubio","pelirrojo","pelirrojo","rubio","moreno"]
-    array_index12=["cabello:moreno","cabello:rubio","cabello:rubio","cabello:rubio","cabello:moreno","cabello:moreno","cabello:moreno","cabello:pelirrojo","cabello:pelirrojo"]
-    array_index22=["cabello:pelirrojo","cabello:pelirrojo","cabello:rubio"]
-
-    px=0;
-    pxx=3;
-
-
-    while (px<=8){
-
-        if (pregunta_combo == array_combo2[px] && cabello_carta == array_carta2[px]) {
-
-            if (easy==true || veryeasy==true){
-                while (i<12){
-
-                    if (pxx% 3 === 0) {
-
-                        buscaindex = array_atributos_ordenados[i].indexOf(array_index12[px]);
-                        buscaindex2 = array_atributos_ordenados[i].indexOf(array_index22[pxx]);
-                        if (buscaindex>0 || buscaindex2>0) {
-                            if (document.getElementById(i)) {
-                                giraCartaV2(i);
-                                document.getElementById(i).id="card rotated";
-                                document.getElementById(i).id="card rotated";
-                                
-                            }
-                        }
-                    }
-                    else{
-                        buscaindex = array_atributos_ordenados[i].indexOf(array_index12[px]);
-                        if (buscaindex>0) {
-                            if (document.getElementById(i)) {
-                                giraCartaV2(i);
-                                document.getElementById(i).id="card rotated";
-                                document.getElementById(i).id="card rotated";
-                                
-                            }
-                        }
-                    }
-                    i++;
-                }
-            }
-
-            if (pxx% 3 === 0) {
-                preguntaCorrecta();
-            }
-            else{
-                preguntaIncorrecta();
-            }
-        }
-        px++;
-        pxx++;
-    }
-
-    /*
 
     else if (pregunta_combo == "rubio" && cabello_carta == "rubio") {
 
@@ -678,15 +579,11 @@ function preguntarAlServer() {
 
         preguntaIncorrecta();
     }
-    */
-
-   /*
     else {
         document.getElementById('texto_salida').innerHTML = "Esa pregunta no estaba prevista.";
         document.getElementById("botonDeColorRojo").style.display = "none";
         document.getElementById("botonDeColorVerde").style.display = "none";
     }
-    */
 }
 
 function preguntaCorrecta(){
