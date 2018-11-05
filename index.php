@@ -413,7 +413,7 @@
   <!-- Modal content -->
   <div class="modal-content">
     <p id="letra_modal_aviso">Easter Egg Activado!</p>
-	<button class="cerrar_Aviso">Ok</button>
+	<button class="cerrarEgg">Ok</button>
 
   </div>
 
