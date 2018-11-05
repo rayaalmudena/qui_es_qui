@@ -209,7 +209,6 @@
 				$Elegida .=$cartaElegida;
 				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
 
-
 				if (isset($_SESSION["sesion_carta_elegida"])){
 					echo $_SESSION["sesion_carta_elegida"];
 				}
@@ -254,12 +253,14 @@
 			$arrayTablero=arrayCartas();
 			
 
-			$_SESSION["sesion_tablero"] = tableroCartas($arrayTablero);
-
-			echo $_SESSION["sesion_tablero"];
-
-
-			echo tableroCartas($arrayTablero);
+			if (isset($_SESSION["sesion_tablero"])){
+				echo $_SESSION["sesion_tablero"];
+			}
+			else{
+				$_SESSION["sesion_tablero"] = tableroCartas($arrayTablero);
+				echo tableroCartas($arrayTablero);
+			}
+			
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
 			?>
@@ -400,6 +401,8 @@
   </div>
 </div>
 <!-- acaba el modal que se utilizara para guardar los datos introducidos -->
-
+<form name="pruueba" action="destroysession.php" method="POST">
+	<button>BORRAR SESSION</button>
+</form>
 </body>
 </html>
