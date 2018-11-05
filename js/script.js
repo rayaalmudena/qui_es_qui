@@ -19,6 +19,9 @@ var haGanado=true;
 var easy=false;
 var veryeasy=false;
 
+//Le da un ID al back de la carta para que se gire con el easy.
+var asignarid=0;
+
 //Es un contador que se utiliza para las posiciones del array de atributos
 var contador_array=0;
 
@@ -70,6 +73,7 @@ function obtenerListadoCartasSinRotar() {
     }
 
     return cartasSinRotar;
+    // cartas = document.getElementsByClassName("card");
 }
 function instanciarClicsCartas() {
     for (var i = 0; i < cartas.length; i++) {
@@ -83,6 +87,13 @@ function giraCartaV2(i){
     contadorVolteo++;
 }
 
+function asignarID(){
+    //Le da un ID al back de la carta para que se gire.
+    while (asignarid<12){
+        document.getElementById('$c').id=asignarid;
+        asignarid++;
+    }
+}
 
 function flipCard(card) {
     card.classList.toggle('rotated');
@@ -106,14 +117,12 @@ function activarEasterEgg() {
     }
     // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
     window.addEventListener("keydown", konamiCode, true);   
-
 }
 
 function konamiCode(e) {
     if ( e.keyCode == konami[state] ) state++;  
     else state = 0;  
     if ( state == 11 )  {            
-
         // cambiamos los sonidos del programa
         flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
         winSound = new Audio("easter_egg/konamiWin.mp3");
@@ -126,32 +135,27 @@ function konamiCode(e) {
         }, false);
         backgroundMusic.play();
 
-        window.removeEventListener("keydown", konamiCode, true);
+        //modal
+        var modal_Egg = document.getElementById('AvisoEasterEgg');
+        var cerrarEgg = document.getElementsByClassName("cerrarEgg")[0];
 
+        modal_Egg.style.display = "block";
+            
+        cerrarEgg.onclick = function() {            
+            modal_Egg.style.display = "none";
+            }
+
+        // Cuando el usuario clica en cualquier otro lado que no sea el modal, lo cierra
+        window.onclick = function(event) {
+            if (event.target == modal_Egg) {
+                modal_Egg.style.display = "none";
+            }
         }
-
+        window.removeEventListener("keydown", konamiCode, true);
+    }
 }
 
 activarEasterEgg();
-
-function mensanjeEasteregg(){
-    //Modal easteregg
-        var modal_aviso = document.getElementById('AvisoEasterEgg');
-            var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
-
-            modal_aviso.style.display = "block";
-            
-            boton_cerrar.onclick = function() {
-                modal_aviso.style.display = "none";
-            }
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal_aviso) {
-                    modal_aviso.style.display = "none";
-                }
-
-}
 
 function botonActivado() {
     desaparecerBotonEasy();
