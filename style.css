@@ -22,6 +22,12 @@ canvas{
   left: 0;
 }
 
+.ryu_egg {
+  height: 200px;
+  float: left;
+  /* float: right; */
+}
+
 .cartaElegida {
   height: 200px;
   background-image: url("cartas/backgroundCS.png");

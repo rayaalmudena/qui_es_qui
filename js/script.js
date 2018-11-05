@@ -142,7 +142,6 @@ function konamiCode(e) {
             
         cerrarEgg.onclick = function() {            
             modal_Egg.style.display = "none";
-            location.reload(true);
             }
 
         // Cuando el usuario clica en cualquier otro lado que no sea el modal, lo cierra
