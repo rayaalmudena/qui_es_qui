@@ -4,15 +4,14 @@
 	<meta charset="utf-8" />
 	<title>¿Quién es quién?</title>
 	<link rel="stylesheet" type="text/css" href="style.css">	
-	<script type="text/javascript" src="pruebasJ.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/fireworks.js"></script>
 </head>
-<body onload="asignarID(), ordenarArrayDeAtributos()">
+<body>
 	
 	<?php 
 	function explodeConfigValues($config, $totalPreguntas = 2) {
 		$data = array();
-
 		$combo = explode(" ", $config);
 		$keyPregunta = substr($combo[0], 0, -1);
 		
@@ -25,10 +24,8 @@
 				str_replace("_", " ", $combo[$posicionPregunta])
 			);
 		}
-
 		return $data;
 	}
-
 	//Comienzo de los posibles errores
 	//Los errores apareceran por orden que indica en la guia del leandro, primero apareceran los nombres repetidos,
 	//luego los atributos repetidos y luego los atributos que no existan en el config
@@ -208,8 +205,6 @@
 				$Elegida .=$cartaElegida;
 				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
 				echo $Elegida;
-
-
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
@@ -218,10 +213,9 @@
 				$backCarta="<img src='cartas/back.png'>";
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
-					$cartaImg="<img src='cartas/$carta[nombre]' id='$c' class='carta card' gafas='$carta[gafas]' cabello='$carta[cabello]' sexo='$carta[sexo]' name='$carta[nombre]' 
-					onload=pasaNombre('posicion:$c','_nombre:$carta[nombre]_','gafas:$carta[gafas]_','cabello:$carta[cabello]_','sexo:$carta[sexo]')>";
+					$cartaImg="<img src='cartas/$carta[nombre]' id='carta-$c' class='carta card'>";
 					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card" id="$c" onclick="puedeGirarCarta(event)"><div class="front">';
+					$tabla .='<td><div class="container"><div class="card card-container" id="$c" gafas="'.$carta['gafas'].'" cabello="'.$carta['cabello'].'" sexo="'.$carta['sexo'].'" name="'.$carta['nombre'].'"><div class="front">';
 					$tabla .=$cartaImg;
 					$tabla .='</div><div class="back">';
 					$tabla .=$backCarta;	
@@ -248,8 +242,6 @@
 			echo tableroCartas($arrayTablero);
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
-
-
 			?>
 			<div id="divtexto">
 			<div id="comboDif">
@@ -267,7 +259,6 @@
 
 				<?php 
 				$config_array=[];
-
 				$file2 = fopen("config.txt", "r");
 				$z=0;
 				while(!feof($file2)) {
@@ -275,13 +266,11 @@
 					$z=$z+1;
 				}
 				fclose($file2);
-
 				$nuevoCombobox= array_merge(
 					explodeConfigValues($config_array[0], 2),
 					explodeConfigValues($config_array[1], 3),
 					explodeConfigValues($config_array[2], 2)
 				);
-
 				echo "<select id='pregunta' onchange='activarBoton()'>";
 				echo "<option>----</option>";
 					foreach ($nuevoCombobox as $data) {
@@ -289,10 +278,7 @@
 							value='".$data[1]."'>".$data[2]."</option>";
 					}
 				echo "</select> <br><br>";
-
-
-				echo "<button id='hacerPregunta' disabled>Fes la pregunta</button>";
-
+				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta</button>";
 				?>
 
 
@@ -308,21 +294,17 @@
 			</div>
 			</div>
 			<?php 
-
-
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
 			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
 			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
 			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
 			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
-
 			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
 			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
 			<p id='gafas_php-js' hidden>$gafas_carta</p>
 			<p id='cabello_php-js' hidden>$cabello_carta</p>
 			<p id='sexo_php-js' hidden>$sexo_carta</p>";
 		}
-
 	?>
 
 	
@@ -381,7 +363,7 @@
 		    <input type="text" id="puntuacionJugador" name="puntuacionJugador" hidden>
 		    <button type="button" class="enviarNombre">Aceptar</button>
 		    <button type="button" class="Cerrar_Ventana_Usuario"> Cancelar</button>
-		   
+		</form>
   </div>
 
 </div>
@@ -391,9 +373,10 @@
 
 <div id="guardar_en_txt" class="modal">
   <div class="modal-content">
-		    <p id="letra_modal_aviso2">Tu nombre se ha guardado correctamente!</p>
-		    <button class="Cerrar_Guardado">Aceptar</button>
-	    </form>
+  	<form name="formulario" action="taularecords.php" method="POST" target="_blank">
+		<p id="letra_modal_aviso2">Tu nombre se ha guardado correctamente!</p>
+		<button class="Cerrar_Guardado">Aceptar</button>
+	</form>
   </div>
 </div>
 <!-- acaba el modal que se utilizara para guardar los datos introducidos -->
