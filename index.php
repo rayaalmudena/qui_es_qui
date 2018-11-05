@@ -390,7 +390,7 @@
 		    <input type="text" id="puntuacionJugador" name="puntuacionJugador" hidden>
 		    <button type="button" class="enviarNombre">Aceptar</button>
 		    <button type="button" class="Cerrar_Ventana_Usuario"> Cancelar</button>
-		</form>
+
   </div>
 
 </div>
@@ -400,7 +400,6 @@
 
 <div id="guardar_en_txt" class="modal">
   <div class="modal-content">
-  	<form name="formulario" action="taularecords.php" method="POST" target="_blank">
 		<p id="letra_modal_aviso2">Tu nombre se ha guardado correctamente!</p>
 		<button class="Cerrar_Guardado">Aceptar</button>
 	</form>
@@ -413,9 +412,9 @@
 <div id="AvisoEasterEgg" class="modal">
 
   <div class="modal-content">
-    <p id="letra_modal_aviso">Easter Egg Activado!</p>
-	    <img class="ryu_egg" src="easter_egg/ryuP.png">
-		<!-- <img class="ryu_egg" src="easter_egg/Ryurender.png"> -->
+    <p id="letra_modal_egg">Easter Egg Activado!</p>
+    <img class="ryu_egg" src="easter_egg/ryuP.png">
+	<!-- <img class="ryu_egg" src="easter_egg/Ryurender.png"> -->
 	<button class="cerrarEgg">Ok</button>
 
   </div>
