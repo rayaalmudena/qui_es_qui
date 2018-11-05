@@ -197,7 +197,14 @@
 						$cartaNueva= array("nombre"=>$nombre,"gafas"=>$gafas,"cabello"=>$cabello,"sexo"=>$sexo);
 						$cartasFinal[]=$cartaNueva;	
 		    	}
-				return $cartasFinal;
+		    	//Esto es para la session
+				if (isset($_SESSION["sesion_cartasFinal"])){
+					return $_SESSION["sesion_cartasFinal"];
+				}
+				else{
+					$_SESSION["sesion_cartasFinal"] = $cartasFinal;
+					return $cartasFinal;
+				}
 			}
 			function cartaElegida($cartas){
 				$cartaElegida = $cartas[0];
@@ -407,8 +414,6 @@
 
   <div class="modal-content">
     <p id="letra_modal_aviso">Easter Egg Activado!</p>
-	<img class="ryu_egg" src="easter_egg/ryuP.png">
-	<!-- <img class="ryu_egg" src="easter_egg/Ryurender.png"> -->
 	<button class="cerrarEgg">Ok</button>
 
   </div>
