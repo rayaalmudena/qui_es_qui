@@ -253,7 +253,7 @@
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p>
+			<p id="p_contador_preguntas">Contador de preguntas:<p id="contador_preguntas"></p>
 
 			<div id="combobox">
 
