@@ -10,6 +10,10 @@
 <body>
 	
 	<?php 
+
+	// Comienza la session (F5)
+	session_start();
+	
 	function explodeConfigValues($config, $totalPreguntas = 2) {
 		$data = array();
 		$combo = explode(" ", $config);
@@ -204,7 +208,14 @@
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
 				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
-				echo $Elegida;
+				//Esto es para la session
+				if (isset($_SESSION["sesion_carta_elegida"])){
+					echo $_SESSION["sesion_carta_elegida"];
+				}
+				else{
+					$_SESSION["sesion_carta_elegida"] = $Elegida;
+					echo $Elegida;
+				}
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
@@ -239,7 +250,16 @@
 			cartaElegida($arrayCartaAdivinar);
 			echo "<br>";
 			$arrayTablero=arrayCartas();
-			echo tableroCartas($arrayTablero);
+
+			//Esto es para la session
+			if (isset($_SESSION["sesion_tablero"])){
+				echo $_SESSION["sesion_tablero"];
+			}
+			else{
+				$_SESSION["sesion_tablero"] = tableroCartas($arrayTablero);
+				echo tableroCartas($arrayTablero);
+			}
+
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
 			?>
@@ -253,7 +273,7 @@
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p></p>	
+			<p id="p_contador_preguntas">Contador de preguntas:<p id="contador_preguntas"></p>
 
 			<div id="combobox">
 
@@ -381,11 +401,10 @@
 </div>
 <!-- acaba el modal que se utilizara para guardar los datos introducidos -->
 
-<!-- Comienza el modal del aviso -->
+<!-- Comienza el modal del easter egg -->
 
 <div id="AvisoEasterEgg" class="modal">
 
-  <!-- Modal content -->
   <div class="modal-content">
     <p id="letra_modal_aviso">Easter Egg Activado!</p>
 	<button class="cerrarEgg">Ok</button>
@@ -393,7 +412,11 @@
   </div>
 
 </div>
-<!-- acaba el modal del aviso -->
+<!-- acaba el modal del easter egg -->
+
+<form name="pruueba" action="destroysession.php" method="POST">
+	<button>BORRAR SESSION</button>
+</form>
 
 </body>
 </html>
