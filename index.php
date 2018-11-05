@@ -7,9 +7,13 @@
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/fireworks.js"></script>
 </head>
-<body onload="asignarID()">
+<body>
 	
 	<?php 
+
+	// Comienza la session (F5)
+	session_start();
+	
 	function explodeConfigValues($config, $totalPreguntas = 2) {
 		$data = array();
 		$combo = explode(" ", $config);
@@ -204,7 +208,14 @@
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
 				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
-				echo $Elegida;
+				//Esto es para la session
+				if (isset($_SESSION["sesion_carta_elegida"])){
+					echo $_SESSION["sesion_carta_elegida"];
+				}
+				else{
+					$_SESSION["sesion_carta_elegida"] = $Elegida;
+					echo $Elegida;
+				}
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
@@ -239,7 +250,16 @@
 			cartaElegida($arrayCartaAdivinar);
 			echo "<br>";
 			$arrayTablero=arrayCartas();
-			echo tableroCartas($arrayTablero);
+
+			//Esto es para la session
+			if (isset($_SESSION["sesion_tablero"])){
+				echo $_SESSION["sesion_tablero"];
+			}
+			else{
+				$_SESSION["sesion_tablero"] = tableroCartas($arrayTablero);
+				echo tableroCartas($arrayTablero);
+			}
+
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
 			?>
@@ -247,7 +267,7 @@
 			<div id="comboDif">
 				<p id="parrafoElegirDificultad">Elige dificultad </p>
 				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
-					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
+					<option  name="dificultad" selected="selected" value="--NORMAL--">--NORMAL--</option>
 					<option  name="dificultad" value="Easy">EASY</option>
 					<option  name="dificultad" value="Very Easy">VERY EASY</option>
 				</select>
@@ -380,6 +400,23 @@
   </div>
 </div>
 <!-- acaba el modal que se utilizara para guardar los datos introducidos -->
+
+<!-- Comienza el modal del easter egg -->
+
+<div id="AvisoEasterEgg" class="modal">
+
+  <div class="modal-content">
+    <p id="letra_modal_aviso">Easter Egg Activado!</p>
+	<button class="cerrarEgg">Ok</button>
+
+  </div>
+
+</div>
+<!-- acaba el modal del easter egg -->
+
+<form name="pruueba" action="destroysession.php" method="POST">
+	<button>BORRAR SESSION</button>
+</form>
 
 </body>
 </html>
