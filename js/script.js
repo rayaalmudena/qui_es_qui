@@ -62,7 +62,8 @@ function girarCarta(event) {
 function obtenerListadoCartas() {
     cartas = document.getElementsByClassName("card-container");
 }
-function obtenerListadoCartasSinRotar() {
+function actualizarListadoCartasSinRotar() {
+    cartasSinRotar = [];
     for (var c = 0; c < cartas.length; c++) {
         var carta = cartas[c];
         if (!isCardFlipped(carta)) {
@@ -305,7 +306,7 @@ function preguntarAlServer() {
  */
 function girarAutomaticamente(pregunta, respuesta, girarMismaRespuesta) {
     if (easy == true || veryeasy == true) {
-        var cartasSinRotar = obtenerListadoCartasSinRotar();
+        actualizarListadoCartasSinRotar();
         for (var c = 0; c < cartasSinRotar.length; c++) {
             var carta = cartasSinRotar[c];
             var valorCarta = carta.getAttribute(pregunta);
@@ -332,28 +333,20 @@ function preguntaIncorrecta(){
 }
 
 function saberSiHaGanado(){
-    var cartasSinRotar = obtenerListadoCartasSinRotar();
+    actualizarListadoCartasSinRotar();
     if (cartasSinRotar.length == 1) {
-        alert("texto de salida loco");
         //se utiliza para saber el nombre de la carta principal:
         var datosCartaServidor = leerDatosCartaServidor();
         var haGanado = false;
         console.log(datosCartaServidor);
-
-        // for (var i = 0; i < 12; i++) {
-        //     if (isNaN(document.getElementsByClassName("carta card")[i].id)==false){
-        //         //se guardara la ultima carta para luego compararla con la principal:
-        //         nun=array_atributos[i].indexOf(nombre_carta);
-        //     }
-        // }
-        // if (nun>0) {
-        //     haGanado=true;
-        // }
-        // else{
-        //     haGanado=false;
-        // }
+        console.log(datosCartaServidor.nombre, cartasSinRotar[0].getAttribute('name'));
+        if (datosCartaServidor.nombre == cartasSinRotar[0].getAttribute('name')) {
+            haGanado = true;
+        }
 
         finDelJuego(haGanado);
+    } else if (cartasSinRotar.length < 1) {
+        finDelJuego(false);
     }
 }
 
