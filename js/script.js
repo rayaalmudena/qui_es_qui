@@ -106,12 +106,14 @@ function activarEasterEgg() {
     }
     // Arriba, Arriba, Abajo, Abajo, Deracha, Izquierda, Derecha, Izquierda, B, A, Enter
     window.addEventListener("keydown", konamiCode, true);   
+
 }
 
 function konamiCode(e) {
     if ( e.keyCode == konami[state] ) state++;  
     else state = 0;  
     if ( state == 11 )  {            
+
         // cambiamos los sonidos del programa
         flipCardSound = new Audio("easter_egg/konamiFlip3.mp3");
         winSound = new Audio("easter_egg/konamiWin.mp3");
@@ -125,10 +127,31 @@ function konamiCode(e) {
         backgroundMusic.play();
 
         window.removeEventListener("keydown", konamiCode, true);
-    }
+
+        }
+
 }
 
 activarEasterEgg();
+
+function mensanjeEasteregg(){
+    //Modal easteregg
+        var modal_aviso = document.getElementById('AvisoEasterEgg');
+            var boton_cerrar = document.getElementsByClassName("cerrar_Aviso")[0];
+
+            modal_aviso.style.display = "block";
+            
+            boton_cerrar.onclick = function() {
+                modal_aviso.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal_aviso) {
+                    modal_aviso.style.display = "none";
+                }
+
+}
 
 function botonActivado() {
     desaparecerBotonEasy();
