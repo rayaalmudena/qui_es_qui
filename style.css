@@ -1,26 +1,42 @@
+
+html{
+ background: url(background.jpeg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+body{  
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+canvas{
+  visibility: hidden;
+  position: fixed;
+  top: 0px;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  left: 0;
+}
+
 .cartaElegida {
   height: 200px;
-  background:url("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0516/3875/rQmark_shop_preview.png");
-  border: solid 3px black;
-  text-align: center;
+  background-image: url("cartas/backgroundCS.png");
+  background-repeat:repeat;
+  background-size: 100px;
 }
 
-.carta{
-  height: 134px;
-  } 
-
-table{
-  height: 100%;
-  background-color: green;
-  padding: 10px;
-  border-spacing: 5px;
-}
 #records {
+  left: 0px;
+  margin-left: auto;
+  margin-right: auto;
   border-collapse: collapse;
-  width: 100%;
+  width: 50%;
   background-color: #93df8a ;
-  border-style: solid;  
-
+  border-style: solid; 
 }
 #records th,tr{
   border: 1px solid black;
@@ -33,46 +49,25 @@ table{
   padding: 10px;  
 }
 
-#combobox {
-  position: absolute;
-  top: 20em;
-  left: 40em;
-  height: 100px;
-  width: 250px;
-}
-#buttonEasy{
-  position: absolute;
-  top: 17em;
-  left: 45em;
-}
-#textoEasy{
-  position: absolute;
-  top: 15em;
-  left: 40em;
-}
-#contador_preguntas{
-  position: absolute;
-  top: 14em;
-  left: 45em;
-}
-
-canvas{
-  position: fixed;
-  top: 0px;
-  margin: 0px;
-  height: 100%;
-  width: 100%;
-}
-#enlaceRecords{
-  position: fixed;
-  top: 0;
-  right: 0;  
-  padding:5px;
-  border:1px solid black;
+#enlaceRecords{ 
+  margin-left: 30px;
+  border: solid 3px #dfc416; 
+  padding:11px;
   background-color: #dfc416;
 }
+#enlaceRecords:hover{ 
+  border: solid 3px green;
+}
 
-
+table{  
+  position: relative;
+  top: 0;
+  height: 100%;
+  padding: 5px;
+  background-color: green;
+  border-spacing: 5px;
+  border: 10px solid white;
+}
 
 div {
     width: 100%;
@@ -85,38 +80,190 @@ div {
   height: 136px;
   perspective: 1000px;
 }
-
+.containerElegida{
+  width: 200px;
+  height: 200px;
+  perspective: 1000px;
+}
+.containerElegida .front{
+  background-image: url("cartas/backgroundCS.png");
+  background-repeat:repeat;
+  background-size: 100px;
+  border: 5px solid white;
+}
 .card {
   transition: transform 2s;
   transform-style: preserve-3d;
   cursor: pointer;
 }
-
 .front, .back {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   backface-visibility: hidden;
+  overflow: hidden;
 }
-
+.front img, .back img {
+  width: 100%;
+  height: 100%;
+}
+.rotated {
+  transform: rotateY(180deg);
+}
 .front {
-  border: 3px solid grey;
+  border: 3px solid white;
 }
-
 .front:hover {
   box-shadow: 0px 0px 20px 1px #000;
-  background-color: grey;
+  background-color: white;
 }
-
 .back {
   border: 3px solid white;
   transform: rotateY(180deg);
   background-color: grey;
 }
-
 .back:hover {
   background-color: black;
   border: 3px solid red;
 }
+
+#botonDeColorRojo{
+  height: 25px;
+  display: none;
+}
+#botonDeColorVerde{
+  height: 25px;
+  display: none;
+}
+
+/* ************************************************************ */
+/*A partir de aqui son los modals*/
+
+/* es el background  del modal*/
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/*  Contenido del modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 55%;
+    height: 30%;
+}
+.modal-content_ganado, .modal-content_perdido {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 55%;
+    height: 25%;
+}
+/* Para cerrar el boton */
+.Cerrar_Ventana_Usuario, .enviarNombre {
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    left: 37%;
+}
+#nombre_para_enviar{
+  font-size: 18px;
+  position: relative;
+  left: 40%;
+}
+.cerrar_Aviso, .ganado_Opcion_Si, .ganado_Opcion_No, .perdido_Opcion_Cerrar, .Cerrar_Guardado {
+  /*modal del aviso*/
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    left: 44%;
+}
+#letra_modal_aviso_ganado, #letra_modal_aviso_predido, #letra_modal_aviso, #letra_modal_aviso2, #letra_modal_aviso_perdido{
+  /*modal del aviso*/
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+/* Hover de la cruz para cerrar el modal*/
+.Cerrar_Ventana_Usuario:hover, .cerrar_Aviso:hover, .ganado_Opcion_Si:hover, .ganado_Opcion_No:hover, .perdido_Opcion_Cerrar:hover, .Cerrar_Guardado:hover
+.Cerrar_Ventana_Usuario:focus, .cerrar_Aviso:focus, .ganado_Opcion_Si:focus, .ganado_Opcion_No:focus, .perdido_Opcion_Cerrar:focus, .Cerrar_Guardado:focus{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* ************************************************************ */
+/*Aqui acaba el modal*/
+
+div#lateral{  
+  float: right; 
+  display: block;
+  height: 300px;
+  width: auto;
+}
+div#tablero{
+  float: left;
+  height: auto;
+  width: 491px;
+  margin-top: 3px;
+  margin-bottom: 30px;
+  margin-right: 30px;
+}
+div#divtexto{
+  position: relative;
+  top:0px;
+  overflow: hidden;
+  border-radius: 25px;
+  background: green;
+  width: 485px;
+  padding: 5px;
+  border: 10px solid white;
+}
+
+@media screen and (max-width: 600px) {
+             
+      div#tablero{
+          width: 40%;
+          margin-left: 19%;
+      }
+      div#divtexto{
+        width: 90%;
+}
+      div#tablero table {
+           width:20%;
+       }
+       div#tablero thead {
+           display: none;
+       }
+       div#tablero tr:nth-of-type(2n) {
+           background-color: inherit;
+       }
+      
+       div#tablero tbody td {
+           display: block;
+           text-align:center;
+       }
+     
+        #records {
+          width: 90%;
+        }
+  
+  
+  
+  }
+

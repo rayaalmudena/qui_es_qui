@@ -6,8 +6,22 @@
 	<link rel="stylesheet" type="text/css" href="style.css">	
 	<script type="text/javascript" src="script.js"></script>
 </head>
-<body>
+<body onload="guardarUsuario()">
 				<?php 
+
+				if ($_POST==null){
+					  //entra a la pagina sin guardar informacion
+					} else{
+					  	$nombre_jugador = $_POST["nombreJugador"];
+						$puntuacion_jugador = $_POST["puntuacionJugador"];
+
+						$flog = fopen("taularecords.txt","a");
+						fwrite($flog, $puntuacion_jugador." ".$nombre_jugador . PHP_EOL);
+						fclose($flog);
+					}  
+
+				
+
 			function ordenarRecords(){
 				$records=[];
 				$file = fopen("taularecords.txt", "r");
@@ -17,37 +31,36 @@
 					if (empty($record)) {
 						# salto
 					} else {
-						array_push($records,$record);
+						$recordArray;
+						$record=explode(' ',$record);						
+						$puntuacion=array_shift($record);
+						$nombre=implode(" ", $record);
+						$recordArray[]=array($puntuacion,$nombre);
+
+						$records=$records+$recordArray;
+						
+
 					} 	
 		  		}
 		    		fclose($file);
-		    		sort($records);
+		    		asort($records);
+		    		return $records;
 		    	
-		    	foreach ($records as $record) {
-						$recordNueva;
-						$record=explode(' ',$record);						
-						$puntuacion=array_shift($record);
-						$nombre=implode(" ", $record);;
-						$recordNueva= array("nombre"=>$nombre,"puntuacion"=>$puntuacion);
-						$recordFinal[]=$recordNueva;	
-		    	}
-				return $recordFinal;
 			}
-		
+
 			function tableroCartas($records){
 
-				$tablaRec='<table id="records"> <tr><th>Nombre</th><th>Puntuación</th></tr>';
-				foreach ($records as $r) {
-					$numero="$r[nombre]";
-					$nombre="$r[puntuacion]";
-					$tablaRec .="<tr><td>$numero</td><td>$nombre</td></tr>\n";
+				$tablaRec='<div id="tablaRecords"><table id="records"> <tr><th>Nombre</th><th>Puntuación</th></tr>';
+				foreach ($records as $rank) {
+					$tablaRec .="<tr><td>$rank[1]</td><td>$rank[0]</td></tr>\n";
 				}
-				$tablaRec .='</table>';
+				$tablaRec .='</table></div>';
 				return $tablaRec;
 			}
-			
 			$tablarecord=tableroCartas(ordenarRecords());
 			echo "$tablarecord";
+
+
 	?>
 
 
