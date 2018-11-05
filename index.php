@@ -414,6 +414,8 @@
 
   <div class="modal-content">
     <p id="letra_modal_aviso">Easter Egg Activado!</p>
+	    <img class="ryu_egg" src="easter_egg/ryuP.png">
+		<!-- <img class="ryu_egg" src="easter_egg/Ryurender.png"> -->
 	<button class="cerrarEgg">Ok</button>
 
   </div>
