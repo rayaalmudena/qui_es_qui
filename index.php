@@ -207,7 +207,8 @@
 				}
 			}
 			function cartaElegida($cartas){
-				$cartaElegida = $cartas[0];
+				$cartaElegida = $cartas[array_rand($cartas)];
+				$nomCartaElegida = $cartaElegida;
 				$cartaElegida= "<img  src='cartas/$cartaElegida[nombre]' class='cartaElegida' carta='front' gafas='$cartaElegida[gafas]' cabello='$cartaElegida[cabello]'sexo='$cartaElegida[sexo]' name='$cartaElegida[nombre]'>";
 				$backCarta="<img src='cartas/back.png'>";
 				$Elegida='<div id="lateral"><div class="container containerElegida"><div class="card cardE" id="cartaElegida"><div class="front">';
@@ -222,6 +223,7 @@
 				else{
 					$_SESSION["sesion_carta_elegida"] = $Elegida;
 					echo $Elegida;
+					$_SESSION["sesion_nomCartaElegida"] = $nomCartaElegida;
 				}
 			}
 			function tableroCartas($cartas){
@@ -322,10 +324,10 @@
 			</div>
 			<?php 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
-			$nombre_carta=trim($arrayCartaAdivinar[0]["nombre"]);
-			$gafas_carta=trim($arrayCartaAdivinar[0]["gafas"]);
-			$cabello_carta=trim($arrayCartaAdivinar[0]["cabello"]);
-			$sexo_carta=trim($arrayCartaAdivinar[0]["sexo"]);
+			$nombre_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
+			$gafas_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
+			$cabello_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
+			$sexo_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
 			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
 			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
 			<p id='gafas_php-js' hidden>$gafas_carta</p>
