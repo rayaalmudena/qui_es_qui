@@ -325,9 +325,9 @@
 			<?php 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
 			$nombre_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
-			$gafas_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
-			$cabello_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
-			$sexo_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
+			$gafas_carta=trim($_SESSION["sesion_nomCartaElegida"]["gafas"]);
+			$cabello_carta=trim($_SESSION["sesion_nomCartaElegida"]["cabello"]);
+			$sexo_carta=trim($_SESSION["sesion_nomCartaElegida"]["sexo"]);
 			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
 			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
 			<p id='gafas_php-js' hidden>$gafas_carta</p>
