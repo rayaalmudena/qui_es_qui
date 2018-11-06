@@ -13,7 +13,7 @@
 
 	// Comienza la session (F5)
 	session_start();
-
+	
 	function explodeConfigValues($config, $totalPreguntas = 2) {
 		$data = array();
 		$combo = explode(" ", $config);
@@ -197,7 +197,14 @@
 						$cartaNueva= array("nombre"=>$nombre,"gafas"=>$gafas,"cabello"=>$cabello,"sexo"=>$sexo);
 						$cartasFinal[]=$cartaNueva;	
 		    	}
-				return $cartasFinal;
+		    	//Esto es para la session
+				if (isset($_SESSION["sesion_cartasFinal"])){
+					return $_SESSION["sesion_cartasFinal"];
+				}
+				else{
+					$_SESSION["sesion_cartasFinal"] = $cartasFinal;
+					return $cartasFinal;
+				}
 			}
 			function cartaElegida($cartas){
 				$cartaElegida = $cartas[0];
@@ -207,8 +214,8 @@
 				$Elegida .=$backCarta;
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
-				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
-
+				$Elegida .='</div></div></div><br><a id="enlaceRecords" href="taularecords.php" class="button">Taula de records</a></div>';
+				//Esto es para la session
 				if (isset($_SESSION["sesion_carta_elegida"])){
 					echo $_SESSION["sesion_carta_elegida"];
 				}
@@ -216,7 +223,6 @@
 					$_SESSION["sesion_carta_elegida"] = $Elegida;
 					echo $Elegida;
 				}
-
 			}
 			function tableroCartas($cartas){
 				$tabla ="\n";
@@ -251,8 +257,8 @@
 			cartaElegida($arrayCartaAdivinar);
 			echo "<br>";
 			$arrayTablero=arrayCartas();
-			
 
+			//Esto es para la session
 			if (isset($_SESSION["sesion_tablero"])){
 				echo $_SESSION["sesion_tablero"];
 			}
@@ -260,7 +266,7 @@
 				$_SESSION["sesion_tablero"] = tableroCartas($arrayTablero);
 				echo tableroCartas($arrayTablero);
 			}
-			
+
 			//Fuegos artificiales
 			echo '<canvas id="canvas"></canvas>';
 			?>
@@ -268,13 +274,13 @@
 			<div id="comboDif">
 				<p id="parrafoElegirDificultad">Elige dificultad </p>
 				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
-					<option  name="dificultad" value="--NORMAL--">--NORMAL--</option>
+					<option  name="dificultad" selected="selected" value="--NORMAL--">--NORMAL--</option>
 					<option  name="dificultad" value="Easy">EASY</option>
 					<option  name="dificultad" value="Very Easy">VERY EASY</option>
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
-			<p id="p_contador_preguntas">Contador de clicks:<p id="contador_preguntas"></p>
+			<p id="p_contador_preguntas">Contador de preguntas:<p id="contador_preguntas"></p>
 
 			<div id="combobox">
 
@@ -354,8 +360,10 @@
   <!-- Modal content -->
   <div class="modal-content_ganado">
     <p id="letra_modal_aviso_ganado">Felicidades, has ganado!, Quieres guardar tu puntuacion?</p>
-	<button class="ganado_Opcion_Si">Si</button>
-	<button class="ganado_Opcion_No">No</button>
+    <form name="destruir_sesion" action="destroysession.php" method="POST">
+		<button type="button" class="ganado_Opcion_Si">Si</button>
+		<button class="ganado_Opcion_No">No</button>
+	</form>
   </div>
 </div>
 <!-- acaba el modal del fin del juego ganando!-->
@@ -367,7 +375,9 @@
   <!-- Modal content -->
   <div class="modal-content_perdido">
     <p id="letra_modal_aviso_perdido">Has perdido.., buena suerte la proxima vez!</p>
-	<button class="perdido_Opcion_Cerrar">Cerrar</button>
+    	<form name="destruir_sesion" action="destroysession.php" method="POST">
+			<button class="perdido_Opcion_Cerrar">Cerrar</button>
+		</form>
   </div>
 </div>
 <!-- acaba el modal del fin del juego perdido..-->
@@ -378,13 +388,13 @@
 
   <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
-  		<form name="formulario" action="taularecords.php" method="POST" target="_blank">
+  		<form name="formulario" action="taularecords.php" method="POST">
 		    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
 		    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
 		    <input type="text" id="puntuacionJugador" name="puntuacionJugador" hidden>
 		    <button type="button" class="enviarNombre">Aceptar</button>
-		    <button type="button" class="Cerrar_Ventana_Usuario"> Cancelar</button>
-		</form>
+		    <button type="submit" class="Cerrar_Ventana_Usuario" formaction="destroysession.php"> Cancelar</button>
+
   </div>
 
 </div>
@@ -394,15 +404,27 @@
 
 <div id="guardar_en_txt" class="modal">
   <div class="modal-content">
-  	<form name="formulario" action="taularecords.php" method="POST" target="_blank">
 		<p id="letra_modal_aviso2">Tu nombre se ha guardado correctamente!</p>
 		<button class="Cerrar_Guardado">Aceptar</button>
 	</form>
   </div>
 </div>
 <!-- acaba el modal que se utilizara para guardar los datos introducidos -->
-<form name="pruueba" action="destroysession.php" method="POST">
-	<button>BORRAR SESSION</button>
-</form>
+
+<!-- Comienza el modal del easter egg -->
+
+<div id="AvisoEasterEgg" class="modal">
+
+  <div class="modal-content">
+    <p id="letra_modal_egg">Easter Egg Activado!</p>
+    <img class="ryu_egg" src="easter_egg/ryuP.png">
+	<!-- <img class="ryu_egg" src="easter_egg/Ryurender.png"> -->
+	<button class="cerrarEgg">Ok</button>
+
+  </div>
+
+</div>
+<!-- acaba el modal del easter egg -->
+
 </body>
 </html>
