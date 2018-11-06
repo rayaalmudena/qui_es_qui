@@ -214,7 +214,7 @@
 				$Elegida .=$backCarta;
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
-				$Elegida .='</div></div></div><br><a id="enlaceRecords" target="_blank" href="taularecords.php" class="button">Taula de records</a></div>';
+				$Elegida .='</div></div></div><br><a id="enlaceRecords" href="taularecords.php" class="button">Taula de records</a></div>';
 				//Esto es para la session
 				if (isset($_SESSION["sesion_carta_elegida"])){
 					echo $_SESSION["sesion_carta_elegida"];
@@ -360,8 +360,10 @@
   <!-- Modal content -->
   <div class="modal-content_ganado">
     <p id="letra_modal_aviso_ganado">Felicidades, has ganado!, Quieres guardar tu puntuacion?</p>
-	<button class="ganado_Opcion_Si">Si</button>
-	<button class="ganado_Opcion_No">No</button>
+    <form name="destruir_sesion" action="destroysession.php" method="POST">
+		<button type="button" class="ganado_Opcion_Si">Si</button>
+		<button class="ganado_Opcion_No">No</button>
+	</form>
   </div>
 </div>
 <!-- acaba el modal del fin del juego ganando!-->
@@ -373,7 +375,9 @@
   <!-- Modal content -->
   <div class="modal-content_perdido">
     <p id="letra_modal_aviso_perdido">Has perdido.., buena suerte la proxima vez!</p>
-	<button class="perdido_Opcion_Cerrar">Cerrar</button>
+    	<form name="destruir_sesion" action="destroysession.php" method="POST">
+			<button class="perdido_Opcion_Cerrar">Cerrar</button>
+		</form>
   </div>
 </div>
 <!-- acaba el modal del fin del juego perdido..-->
@@ -384,12 +388,12 @@
 
   <!-- Contenido del modal de introducir datos -->
   <div class="modal-content">
-  		<form name="formulario" action="taularecords.php" method="POST" target="_blank">
+  		<form name="formulario" action="taularecords.php" method="POST">
 		    <p id="letra_modal_aviso2">Escribe tu nombre o nick para guardar récord:</p>
 		    <input type="text" name="nombreJugador" id="nombre_para_enviar"><br><br>
 		    <input type="text" id="puntuacionJugador" name="puntuacionJugador" hidden>
 		    <button type="button" class="enviarNombre">Aceptar</button>
-		    <button type="button" class="Cerrar_Ventana_Usuario"> Cancelar</button>
+		    <button type="submit" class="Cerrar_Ventana_Usuario" formaction="destroysession.php"> Cancelar</button>
 
   </div>
 
@@ -421,10 +425,6 @@
 
 </div>
 <!-- acaba el modal del easter egg -->
-
-<form name="pruueba" action="destroysession.php" method="POST">
-	<button>BORRAR SESSION</button>
-</form>
 
 </body>
 </html>

@@ -60,6 +60,8 @@
 			$tablarecord=tableroCartas(ordenarRecords());
 			echo "$tablarecord";
 
+			echo '</div></div></div><br><a id="enlacephp2" href="destroysession.php" class="button">Vuelve al juego</a></div>';;
+
 
 	?>
 

@@ -45,6 +45,10 @@ canvas{
   border-style: solid; 
   text-align: center;
 }
+#enlacephp2 {
+  position: relative;
+  left: 42%;
+}
 #records th,tr{
   border: 1px solid black;
 }
@@ -57,13 +61,13 @@ canvas{
   padding: 10px;  
 }
 
-#enlaceRecords{ 
+#enlaceRecords, #enlacephp2{ 
   margin-left: 30px;
   border: solid 3px #dfc416; 
   padding:11px;
   background-color: #dfc416;
 }
-#enlaceRecords:hover{ 
+#enlaceRecords:hover, #enlacephp2:hover{ 
   border: solid 3px green;
 }
 
