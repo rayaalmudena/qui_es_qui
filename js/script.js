@@ -295,7 +295,6 @@ function preguntarAlServer() {
 
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
-    saberSiHaGanado();
 }
 
 /**
@@ -338,8 +337,9 @@ function saberSiHaGanado(){
         var datosCartaServidor = leerDatosCartaServidor();
         var haGanado = false;
         console.log(datosCartaServidor);
-        console.log(datosCartaServidor.nombre, cartasSinRotar[0].getAttribute('name'));
-        if (datosCartaServidor.nombre == cartasSinRotar[0].getAttribute('name')) {
+        console.log(cartasSinRotar[0].getAttribute('name'));
+        var nameDefinitive = cartasSinRotar[0].getAttribute('name')
+        if (datosCartaServidor.nombre == nameDefinitive) {
             haGanado = true;
         }
 
@@ -427,7 +427,8 @@ function puedeGirarCarta(event){
 }
 
 function finDelJuego(haGanado){
-
+    console.log(true);
+    var lacasitos = true;
     // Rotamos la carta del servidor
     flipCard(document.getElementById('cartaElegida'));
     
