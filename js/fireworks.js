@@ -8,7 +8,7 @@ function setup() {
     canvas = document.getElementById("canvas");
     setSize(canvas);
     ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, width, height);
 
     fireworks.push(new Firework(Math.random()*(width-200)+100));
@@ -20,7 +20,7 @@ setTimeout(setup,1);
 
 function loop(){
     ctx.globalAlpha = 0.1;
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, width, height);
 
     // quitar las tres de arriba y poner esta linea para que sea transparente
