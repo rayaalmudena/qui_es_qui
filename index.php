@@ -270,7 +270,6 @@
 			}
 
 			//Fuegos artificiales
-			echo '<canvas id="canvas"></canvas>';
 			?>
 			<div id="divtexto">
 			<div id="comboDif">
@@ -361,6 +360,7 @@
 
   <!-- Modal content -->
   <div class="modal-content_ganado">
+  	<canvas id="canvas"></canvas>
     <p id="letra_modal_aviso_ganado">Felicidades, has ganado!, Quieres guardar tu puntuacion?</p>
     <form name="destruir_sesion" action="destroysession.php" method="POST">
 		<button type="button" class="ganado_Opcion_Si">Si</button>
