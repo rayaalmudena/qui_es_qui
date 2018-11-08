@@ -31,4 +31,4 @@ Existe otro archivo, que es el archivo `taularecords`, que es el archivo que car
 
 
 ## Aviso Importante <a name="aviso"></a>
-Es probable que requiera de permisos nuestro proyecto. En ese caso, se deberá usar el comando chmod en Ubuntu para dárselos.
+Es probable que requiera de permisos nuestro proyecto. En ese caso, se deberá usar el comando `chmod` en Ubuntu para dárselos.
