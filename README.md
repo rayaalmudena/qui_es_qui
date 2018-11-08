@@ -15,11 +15,11 @@ El equipo está formado por:
 
 ## Carpetas y Archivos <a name="carpetas-archivos"></a>
 Dentro del proyecto, tenemos varias carpetas:
-- Botones: donde hemos puesto las imagenes de los botones de correcto/incorrecto
-- Cartas: donde están ubicadas todas las cartas, tanto el retrato como la parte trasera
-- Easter_Egg: ¿Qué puede ser?
-- JS: dentro de esta carpeta tenemos los dos archivos principales del código, que son el script principal y el script de los fuegos artificiales que aparecen cuando ganas la partida
-- Sounds: cualquier efecto de sonido que tenga el juego lo tenemos aqui
+- **Botones**: donde hemos puesto las imagenes de los botones de correcto/incorrecto
+- **Cartas**: donde están ubicadas todas las cartas, tanto el retrato como la parte trasera
+- **Easter_Egg**: ¿Qué puede ser?
+- **JS**: dentro de esta carpeta tenemos los dos archivos principales del código, que son el script principal y el script de los fuegos artificiales que aparecen cuando ganas la partida
+- **Sounds**: cualquier efecto de sonido que tenga el juego lo tenemos aqui
 
 ### Archivos de configuración y txt <a name="archivos-configuracion"></a>
 Por lo general, todos los archivos .txt del proyecto son archivos de configuración. Tenemos el archivo de `imagenes`, donde podremos añadir personas o quitarlas, siempre con sus características; el `config`, que es donde tenemos las reglas de las características a parte de las preguntas del proyecto; y finalmente el `log`, que es donde aparecerán todos los errores.
