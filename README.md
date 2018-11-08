@@ -1,6 +1,6 @@
 # Proyecto 1: Quién es quién?
 
-# Tabla de contenidos
+## Tabla de contenidos
 1. [¿Quienes somos?](#quienes-somos)
 2. [Carpetas y Archivos](#carpetas-archivos)
    1. [Archivos de configuración y txt](#archivos-configuracion)
