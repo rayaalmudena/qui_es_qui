@@ -199,6 +199,7 @@ div {
 #nombre_para_enviar{
   font-size: 18px;
   position: relative;
+  width: 90%;
 }
 .cerrar_Aviso, .ganado_Opcion_Si, .ganado_Opcion_No, .perdido_Opcion_Cerrar, .Cerrar_Guardado, .cerrarEgg {
   /*modal del aviso*/
@@ -309,7 +310,7 @@ div#divtexto{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 290px;
+    width: 290px;/*Secret numer para centrar*/
   }
  #records{
   border: 10px solid white;
