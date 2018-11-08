@@ -295,8 +295,10 @@
 
 					$preguntas = explode(" ", rtrim(explode(", ", $respuesta_general)[1])); 
 					//se queda las preguntas (Tiene_Gafas?...)
-					$array_preguntas[$key] =  $preguntas;					
-				}				
+					$array_preguntas[$key] =  $preguntas;
+					$array_preguntas[$key] =  str_replace("_", " ", $array_preguntas[$key]);
+					//quita las "_"	de las preguntas
+				}
 
 				echo "<select id='pregunta' onchange='activarBoton()'>";
 				echo "<option>----</option>";
