@@ -24,9 +24,10 @@ canvas{
 }
 
 .ryu_egg {
-  height: 200px;
-  float: left;
-  /* float: right; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
 }
 
 .cartaElegida {
@@ -175,37 +176,36 @@ div {
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 55%;
-    height: 30%;
+    width: 60%;
+    height: auto;
+    text-align:center;
 }
 .modal-content_ganado, .modal-content_perdido {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 55%;
-    height: 25%;
+    width: 60%;
+    height: auto;
+    text-align:center;
 }
 /* Para cerrar el boton */
 .Cerrar_Ventana_Usuario, .enviarNombre {
     color: #aaaaaa;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
     position: relative;
-    left: 37%;
 }
 #nombre_para_enviar{
   font-size: 18px;
   position: relative;
-  left: 40%;
 }
 .cerrar_Aviso, .ganado_Opcion_Si, .ganado_Opcion_No, .perdido_Opcion_Cerrar, .Cerrar_Guardado, .cerrarEgg {
   /*modal del aviso*/
     color: #aaaaaa;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
     position: relative;
-    left: 44%;
 }
 #letra_modal_aviso_ganado, #letra_modal_aviso_predido, #letra_modal_aviso, #letra_modal_egg, #letra_modal_aviso2, #letra_modal_aviso_perdido{
   /*modal del aviso*/
@@ -220,63 +220,98 @@ div {
     text-decoration: none;
     cursor: pointer;
 }
+#AvisoEasterEgg .modal-content{
+  width: 100%;
+  height: auto;
+}
 /* ************************************************************ */
 /*Aqui acaba el modal*/
 
-div#lateral{  
-  float: right; 
+div#lateral{   
   display: block;
-  height: 300px;
-  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  width: 220px;
+  height: auto;
+
 }
+div#divjuntos{
+  width: 100%;
+  margin-top: 20px;
+  text-align:center;  
+}
+
 div#tablero{
-  float: left;
+  display:inline-block;
   height: auto;
   width: 491px;
   margin-top: 3px;
-  margin-bottom: 30px;
-  margin-right: 30px;
+  margin-bottom: 15px;
 }
 div#divtexto{
-  position: relative;
-  top:0px;
+  display:inline-block; 
+  vertical-align:top; 
   overflow: hidden;
-  border-radius: 25px;
   background: green;
-  width: 485px;
-  padding: 5px;
+  width: 28%;
+  padding: 6px;
+  margin-top: 3px;
+  margin-left: 25px;
   border: 10px solid white;
+  text-align: left;
 }
 
-@media screen and (max-width: 600px) {
-             
-      div#tablero{
-          width: 40%;
-          margin-left: 19%;
-      }
-      div#divtexto{
-        width: 90%;
+@media screen and (max-width: 600px) {          
+  #records {
+   width: 90%;
+  }  
 }
-      div#tablero table {
-           width:20%;
-       }
-       div#tablero thead {
-           display: none;
-       }
-       div#tablero tr:nth-of-type(2n) {
-           background-color: inherit;
-       }
-      
-       div#tablero tbody td {
-           display: block;
-           text-align:center;
-       }
-     
-        #records {
-          width: 90%;
-        }
+@media screen and (max-width: 819px) {
+  div#divtexto{  
+    width: 491px;
+    margin-left: 25px;
+  }     
+}
   
-  
-  
+@media screen and (max-width: 587px) {
+  div#divtexto{  
+    width: 90%;
+    margin-left:0px;
+    border: 5px solid white;
+} 
+
+  table{
+    padding: 0px;
+    border-spacing: 5px;
+    border: 3px solid white;
   }
-
+  .container {
+    margin: 0px;
+    width: 80px;
+    height: 80px;
+    perspective: 1000px;
+  }
+  .containerElegida{  
+    margin: 5px;
+    width: 200px;
+    height: 200px;
+  }
+  .front {
+    border: 1px solid white;
+  }
+  .back {
+    border: 1px solid white;
+  }
+  .back:hover {
+    border: 1px solid red;
+  }
+  div#tablero{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 290px;
+  }
+ #records{
+  border: 10px solid white;
+ }
+}

@@ -216,6 +216,7 @@
 				$Elegida .='</div><div class="back">';
 				$Elegida .=$cartaElegida;
 				$Elegida .='</div></div></div><br><a id="enlaceRecords" href="taularecords.php" class="button">Taula de records</a></div>';
+				$Elegida .='<div id="divjuntos">';
 				//Esto es para la session
 				if (isset($_SESSION["sesion_carta_elegida"])){
 					echo $_SESSION["sesion_carta_elegida"];
@@ -234,10 +235,14 @@
 				while ($c< count($cartas)){
 					$carta=$cartas[$c];
 					$cartaImg="<img src='cartas/$carta[nombre]' id='carta-$c' class='carta card'>";
-					$tabla .="\n";
-					$tabla .='<td><div class="container"><div class="card card-container" id="$c" gafas="'.$carta['gafas'].'" cabello="'.$carta['cabello'].'" sexo="'.$carta['sexo'].'" name="'.$carta['nombre'].'"><div class="front">';
+					$tabla .="\n";	
+					$tabla .='<td><div class="container">';
+					$tabla .="\n\t\t";
+					$tabla .='<div class="card card-container" id="$c" gafas="'.$carta['gafas'].'" cabello="'.$carta['cabello'].'" sexo="'.$carta['sexo'].'" name="'.$carta['nombre'].'"><div class="front">';
 					$tabla .=$cartaImg;
-					$tabla .='</div><div class="back">';
+					$tabla .='</div>';
+					$tabla .="\n\t\t";
+					$tabla .='<div class="back">';
 					$tabla .=$backCarta;	
 					$tabla .='</div></div></div><td>';
 					$c++;
@@ -257,7 +262,6 @@
 			
 			$arrayCartaAdivinar=arrayCartas();			
 			cartaElegida($arrayCartaAdivinar);
-			echo "<br>";
 			$arrayTablero=arrayCartas();
 
 			//Esto es para la session
@@ -269,7 +273,7 @@
 				echo tableroCartas($arrayTablero);
 			}
 
-			//Fuegos artificiales
+			
 			?>
 			<div id="divtexto">
 			<div id="comboDif">
@@ -319,6 +323,7 @@
 
 				<p id="CuentaAtras"></p>
 
+			</div>
 			</div>
 			</div>
 			<?php 
