@@ -28,7 +28,9 @@ Existe otro archivo, que es el archivo `taularecords`, que es el archivo que car
 
 ## Easter Egg <a name="easteregg"></a>
 **↑** + **↑** + **↓** + **↓** + **←** + **→** + **←** + **→** + **B** + **A** + **Start**
+
 ↑ + ↑ + ↓ + ↓ + ← + → + ← + → + B + A + Start
+
 **↑** **↑** **↓** **↓** **←** **→** **←** **→** **B** **A** **Start**
 
 
