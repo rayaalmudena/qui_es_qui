@@ -55,7 +55,6 @@ function girarCarta(event) {
             }
         }
     }
-    saberSiHaGanado();
 }
 
 function obtenerListadoCartas() {
@@ -309,6 +308,7 @@ function girarAutomaticamente(pregunta, respuesta, girarMismaRespuesta) {
                 girarCarta(carta);
             }
         }
+        saberSiHaGanado();
     }
 }
 
@@ -413,6 +413,7 @@ function puedeGirarCarta(event){
     else{
         //podra girar la carta
         girarCarta(event);
+        saberSiHaGanado();
     }
 }
 
