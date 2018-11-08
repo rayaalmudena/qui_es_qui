@@ -219,7 +219,6 @@
 				//Esto es para la session
 				if (isset($_SESSION["sesion_carta_elegida"])){
 					echo $_SESSION["sesion_carta_elegida"];
-					
 				}
 				else{
 					$_SESSION["sesion_carta_elegida"] = $Elegida;
@@ -227,7 +226,6 @@
 					$_SESSION["sesion_nomCartaElegida"] = $nomCartaElegida;
 				}
 			}
-
 			function tableroCartas($cartas){
 				$tabla ="\n";
 				$tabla .='<div id="tablero"><table><tr>';
@@ -268,11 +266,10 @@
 			}
 			else{
 				$_SESSION["sesion_tablero"] = tableroCartas($arrayTablero);
-				echo tableroCartas($arrayTablero);	
+				echo tableroCartas($arrayTablero);
 			}
 
 			//Fuegos artificiales
-			echo '<canvas id="canvas"></canvas>';
 			?>
 			<div id="divtexto">
 			<div id="comboDif">
@@ -289,24 +286,38 @@
 			<div id="combobox">
 
 				<?php 
+
 				$config_array=[];
+
 				$file2 = fopen("config.txt", "r");
 				$z=0;
 				while(!feof($file2)) {
-					$config_array[$z]=trim(str_replace(" ,", "",(fgets($file2))));
+					$config_array[$z]=trim(fgets($file2));
 					$z=$z+1;
 				}
 				fclose($file2);
-				$nuevoCombobox= array_merge(
-					explodeConfigValues($config_array[0], 2),
-					explodeConfigValues($config_array[1], 3),
-					explodeConfigValues($config_array[2], 2)
-				);
+
+				foreach ($config_array as $key => $value) {
+					$extraccion = explode(":", $config_array[$key]);
+					$palabras_clave[$key] = $extraccion[0]; //se queda con la primera posicion ("gafas, cabello y sexo")
+
+					$respuesta_general = ltrim($extraccion[1]); //se queda con lo demas (respuestas[0] y preguntas[1])
+
+					$respuestas = explode(" ", trim(explode(",", $respuesta_general)[0])); //se queda con las respuestas (si, no, rubio, moreno, mujer, hombre...) pero por separado	
+					$array_respuestas[$key] =  $respuestas;
+
+					$preguntas = explode(" ", rtrim(explode(", ", $respuesta_general)[1])); //se queda las preguntas (Tiene_Gafas?...)
+					$array_preguntas[$key] =  $preguntas;					
+					
+				}				
+
 				echo "<select id='pregunta' onchange='activarBoton()'>";
 				echo "<option>----</option>";
-					foreach ($nuevoCombobox as $data) {
-						echo "<option name='".$data[0]."' 
-							value='".$data[1]."'>".$data[2]."</option>";
+					foreach ($array_preguntas as $key => $value) {
+						foreach ($value as $key2 => $value2) {
+							echo "<option name='".$palabras_clave[$key]."' 
+							value='".$array_respuestas[$key][$key2]."'>".$value2."</option>";
+						}
 					}
 				echo "</select> <br><br>";
 				echo "<button id='hacerPregunta' onclick='girarCuandoDeba()' disabled>Fes la pregunta</button>";
@@ -327,9 +338,9 @@
 			<?php 
 			//Esto y el siguiente echo es para pasar datos al JS para la respuesta del server
 			$nombre_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
-			$gafas_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
-			$cabello_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
-			$sexo_carta=trim($_SESSION["sesion_nomCartaElegida"]["nombre"]);
+			$gafas_carta=trim($_SESSION["sesion_nomCartaElegida"]["gafas"]);
+			$cabello_carta=trim($_SESSION["sesion_nomCartaElegida"]["cabello"]);
+			$sexo_carta=trim($_SESSION["sesion_nomCartaElegida"]["sexo"]);
 			//Este echo se utiliza para guardar o enviar variables entre el php y el javascript.
 			echo "<p id='nombre_php-js' hidden>$nombre_carta</p>
 			<p id='gafas_php-js' hidden>$gafas_carta</p>
@@ -363,6 +374,7 @@
 
   <!-- Modal content -->
   <div class="modal-content_ganado">
+  	<canvas id="canvas"></canvas>
     <p id="letra_modal_aviso_ganado">Felicidades, has ganado!, Quieres guardar tu puntuacion?</p>
     <form name="destruir_sesion" action="destroysession.php" method="POST">
 		<button type="button" class="ganado_Opcion_Si">Si</button>
