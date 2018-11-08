@@ -55,7 +55,6 @@ function girarCarta(event) {
             }
         }
     }
-
     saberSiHaGanado();
 }
 
@@ -70,10 +69,9 @@ function actualizarListadoCartasSinRotar() {
             cartasSinRotar.push(carta);
         }
     }
-
     return cartasSinRotar;
-    // cartas = document.getElementsByClassName("card");
 }
+
 function instanciarClicsCartas() {
     for (var i = 0; i < cartas.length; i++) {
         var carta = cartas[i];
@@ -142,14 +140,10 @@ function konamiCode(e) {
             
         cerrarEgg.onclick = function() {            
             modal_Egg.style.display = "none";
-            }
+        }
 
         // Cuando el usuario clica en cualquier otro lado que no sea el modal, lo cierra
-        window.onclick = function(event) {
-            if (event.target == modal_Egg) {
-                modal_Egg.style.display = "none";
-            }
-        }
+        cerrarModal();
         window.removeEventListener("keydown", konamiCode, true);
     }
 }
@@ -164,7 +158,6 @@ function botonActivado() {
     } else {
         resetearComboBox();
     }
-    
     activarBoton()
 }
 
@@ -173,13 +166,18 @@ function eliminarOpcion(){
     x.remove(x.selectedIndex);
     x.selectedIndex = 0;
     botonHacerPregunta.disabled = true;
+}
 
+function cerrarModal() {
+    window.onclick = function(event) {
+        if (event.target == modal_aviso) {
+            modal_aviso.style.display = "none";
+        }
+    }
 }
 
 function sacarMensajeAlertaSinVolteo() {
-
     if (easy==false && veryeasy==false) {
-
         if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
 
             var modal_aviso = document.getElementById('AvisoPregunta');
@@ -194,11 +192,7 @@ function sacarMensajeAlertaSinVolteo() {
             }
 
             // Cuando el usuario clica en cualquier otro lado que no sea el modal, lo cierra
-            window.onclick = function(event) {
-                if (event.target == modal_aviso) {
-                    modal_aviso.style.display = "none";
-                }
-            }
+            cerrarModal();
         }
         else if (pregunta_clicada >= 1 && pregunta_sinGirarCarta == contadorVolteo) {
             //nada
@@ -209,6 +203,7 @@ function sacarMensajeAlertaSinVolteo() {
         pregunta_sinGirarCarta = contadorVolteo;
         pregunta_clicada++;
     }
+
     else if (easy==true) {
 
         if (pregunta_clicada == 1 && pregunta_sinGirarCarta == contadorVolteo) {
@@ -295,7 +290,6 @@ function preguntarAlServer() {
 
     funcionContadorPreguntas();
     sacarMensajeAlertaSinVolteo();
-    saberSiHaGanado();
 }
 
 /**
@@ -312,7 +306,6 @@ function girarAutomaticamente(pregunta, respuesta, girarMismaRespuesta) {
 
             if (valorCarta == respuesta && girarMismaRespuesta ||
                 valorCarta != respuesta && !girarMismaRespuesta) {
-                // contadorVolteo++;
                 girarCarta(carta);
             }
         }
@@ -338,8 +331,9 @@ function saberSiHaGanado(){
         var datosCartaServidor = leerDatosCartaServidor();
         var haGanado = false;
         console.log(datosCartaServidor);
-        console.log(datosCartaServidor.nombre, cartasSinRotar[0].getAttribute('name'));
-        if (datosCartaServidor.nombre == cartasSinRotar[0].getAttribute('name')) {
+        console.log(cartasSinRotar[0].getAttribute('name'));
+        var nameDefinitive = cartasSinRotar[0].getAttribute('name')
+        if (datosCartaServidor.nombre == nameDefinitive) {
             haGanado = true;
         }
 
@@ -358,11 +352,9 @@ function activarBoton() {
     else{
       botonHacerPregunta.disabled = true;
     }
-
 }
 
 function fijarDificultad(){
-
     var lista = document.getElementById("dificultad");
     document.getElementById("textoEasy").innerHTML = "Modo "
     +document.getElementById("dificultad").value
@@ -390,7 +382,6 @@ function resetearComboBox() {
 }
 
 function girarCuandoDeba(){
-
     if (easy==false && veryeasy==false) {
         clearTimeout(intervalo1);
         //Para parar el contador, sino volvera a llamar a la funcion y se restara de 2 en 2
@@ -403,12 +394,11 @@ function girarCuandoDeba(){
 function tiempoRecursivo(){
     document.getElementById('CuentaAtras').innerHTML = "Te quedan "
     +totalTiempo+" segundos para girar una carta";
-    if(totalTiempo==0){
+    if (totalTiempo == 0) {
         document.getElementById('CuentaAtras').innerHTML = 
         "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "
         +totalTiempo+" segundos)";
-    }
-    else{
+    } else {
         /* Restamos un segundo al tiempo restante */
         totalTiempo--;
         /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
@@ -427,17 +417,13 @@ function puedeGirarCarta(event){
 }
 
 function finDelJuego(haGanado){
-
     // Rotamos la carta del servidor
     flipCard(document.getElementById('cartaElegida'));
-    
     if (haGanado==true) {
         juegoGanado();
-    }
-    if (haGanado==false){
+    } else if (haGanado==false){
         juegoPerdido();
     }
-    
 }
 
 function juegoGanado(){
@@ -473,35 +459,31 @@ function juegoPerdido(){
 
 //guardar datos
 function guardarUsuario() {
-        var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
+    var modal_guardar_nombre = document.getElementById('modal_guardar_nombre');
+    var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
+    var enviarNombre = document.getElementsByClassName("enviarNombre")[0];
 
-        var Cerrar_Ventana_Usuario = document.getElementsByClassName("Cerrar_Ventana_Usuario")[0];
+    document.formulario.puntuacionJugador.value = contadorPreguntas;
 
-        var enviarNombre = document.getElementsByClassName("enviarNombre")[0];
+    modal_guardar_nombre.style.display = "block";
+    
+    Cerrar_Ventana_Usuario.onclick = function() {
+        modal_guardar_nombre.style.display = "none";
+    }
 
-        document.formulario.puntuacionJugador.value = contadorPreguntas;
-
-        modal_guardar_nombre.style.display = "block";
-        
-        Cerrar_Ventana_Usuario.onclick = function() {
-            modal_guardar_nombre.style.display = "none";
-        }
-
-        enviarNombre.onclick = function() {
-            modal_guardar_nombre.style.display = "none";
-            introducirDatos();
-        }
+    enviarNombre.onclick = function() {
+        modal_guardar_nombre.style.display = "none";
+        introducirDatos();
+    }
 }
 
-function introducirDatos() {
-        
-        var guardar_en_txt = document.getElementById('guardar_en_txt');
+function introducirDatos() {    
+    var guardar_en_txt = document.getElementById('guardar_en_txt');
+    var Cerrar_Guardado = document.getElementsByClassName("Cerrar_Guardado")[0];
 
-        var Cerrar_Guardado = document.getElementsByClassName("Cerrar_Guardado")[0];
-
-        guardar_en_txt.style.display = "block";
-        
-        Cerrar_Guardado.onclick = function() {
-            guardar_en_txt.style.display = "none";
-        }
+    guardar_en_txt.style.display = "block";
+    
+    Cerrar_Guardado.onclick = function() {
+        guardar_en_txt.style.display = "none";
+    }
 }
