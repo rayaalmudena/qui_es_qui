@@ -27,13 +27,7 @@ Por lo general, todos los archivos .txt del proyecto son archivos de configuraci
 Existe otro archivo, que es el archivo `taularecords`, que es el archivo que carga la tabla con todos los récords que tengamos registrados hasta el momento.
 
 ## Easter Egg <a name="easteregg"></a>
-**↑** + **↑** + **↓** + **↓** + **←** + **→** + **←** + **→** + **B** + **A** + **Start**
-
-↑ + ↑ + ↓ + ↓ + ← + → + ← + → + B + A + Start
-
 **↑** **↑** **↓** **↓** **←** **→** **←** **→** **B** **A** **Start**
-
-
 
 
 ## Aviso Importante <a name="aviso"></a>
