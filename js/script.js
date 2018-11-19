@@ -4,6 +4,7 @@ var botonHacerPregunta;
 var contadorVolteo = 0;
 var respuestasPosiblesCBox;
 var contadorPreguntas = 0;
+var contadorPreguntas
 var cartaServidor;
 var totalTiempo = 20;//funcion de girar carta
 var intervalo1;//funcion de girar carta
@@ -18,6 +19,7 @@ var haGanado=true;
 //easy y very easy se quedaran en false hasta que sean activados
 var easy=false;
 var veryeasy=false;
+var hard=false;
 
 //Le da un ID al back de la carta para que se gire con el easy.
 var asignarid=0;
@@ -79,7 +81,7 @@ function instanciarClicsCartas() {
 }
 
 function giraCartaV2(i){
-    flipCard(document.getElementById(i));
+    //flipCard(document.getElementById(i));
     contadorVolteo++;
 }
 
@@ -104,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function(){
     obtenerListadoCartas();
     instanciarClicsCartas();
     botonHacerPregunta = document.getElementById("hacerPregunta");
-    botonHacerPregunta.addEventListener("click", botonActivado);
+    botonHacerPregunta.addEventListener("click", botonActivado);//llamar a la funcion la iniciar la partida con preguntas
 });
 
 function activarEasterEgg() {
@@ -150,14 +152,23 @@ function konamiCode(e) {
 activarEasterEgg();
 
 function botonActivado() {
-    desaparecerBotonEasy();
+    desaparecerBotonEasy();//desaparecen l
     preguntarAlServer();
     if (veryeasy==true){
-        eliminarOpcion();
-    } else {
+        eliminarOpcion(); 
+    }
+
+     else {
         resetearComboBox();
     }
     activarBoton()
+}
+
+
+
+function borrarPregunta(comboSeleccionado) {
+    var x = document.getElementById("pregunta");
+    x.remove(x[comboSeleccionado]);
 }
 
 function eliminarOpcion(){
@@ -235,16 +246,7 @@ function sacarMensajeAlertaSinVolteo() {
     }
 }
 
-function funcionContadorPreguntas() {
-    if (easy == true) {
-        contadorPreguntas += 3;
-    } else if (veryeasy == true) {
-        contadorPreguntas += 4;
-    } else {
-        contadorPreguntas++;
-    }
-    document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
-}
+
 
 function desaparecerBotonEasy() {
     //Si hacemos la pregunta, simplemente desactivara el boton
@@ -358,10 +360,10 @@ function fijarDificultad(){
     var lista = document.getElementById("dificultad");
     document.getElementById("textoEasy").innerHTML = "Modo "
     +document.getElementById("dificultad").value
-    +" Activado, ya no podras girar cartas!";
+    +" Activado!";
     //devuelve en texto el combo que has seleccionado
 
-    if(lista.selectedIndex == 1 || lista.selectedIndex == 2) {
+    if(lista.selectedIndex == 1 || lista.selectedIndex == 2 || lista.selectedIndex == 3) {
         lista.disabled = true;  
         if (lista.selectedIndex == 1){
             document.getElementById("parrafoElegirDificultad").style.display="none";
@@ -371,7 +373,12 @@ function fijarDificultad(){
         if (lista.selectedIndex == 2){
             document.getElementById("parrafoElegirDificultad").style.display="none";
             veryeasy=true;
-            var cont = document.getElementsByClassName('container')[0];
+            //var cont = document.getElementsByClassName('container')[0];
+        }
+        if (lista.selectedIndex == 3){
+            document.getElementById("parrafoElegirDificultad").style.display="none";
+            hard=true;
+            //var cont = document.getElementsByClassName('container')[0];
         }
     }    
 }
@@ -381,30 +388,7 @@ function resetearComboBox() {
     x.selectedIndex = 0;
 }
 
-function girarCuandoDeba(){
-    if (easy==false && veryeasy==false) {
-        clearTimeout(intervalo1);
-        //Para parar el contador, sino volvera a llamar a la funcion y se restara de 2 en 2
-        totalTiempo=20;
-        //Cuando llamemos a la funcion, el contador vuelve a estar en 20
-        tiempoRecursivo();
-    }
-}
 
-function tiempoRecursivo(){
-    document.getElementById('CuentaAtras').innerHTML = "Te quedan "
-    +totalTiempo+" segundos para girar una carta";
-    if (totalTiempo == 0) {
-        document.getElementById('CuentaAtras').innerHTML = 
-        "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "
-        +totalTiempo+" segundos)";
-    } else {
-        /* Restamos un segundo al tiempo restante */
-        totalTiempo--;
-        /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
-        intervalo1 = setTimeout("tiempoRecursivo()",1000);
-    }
-}
 
 function puedeGirarCarta(event){
      if(easy==true || veryeasy==true || totalTiempo==0){
@@ -488,3 +472,67 @@ function introducirDatos() {
         guardar_en_txt.style.display = "none";
     }
 }
+
+
+////////HARD MODE 
+    //He modificado el html para añadir la opcion hard more en el combobox
+        //<option  name="dificultad" value="Hard">HARD MODE</option>
+function funcionContadorPreguntas() {
+    if (easy == true) {
+        contadorPreguntas += 3;
+    }else if (veryeasy == true) {
+        contadorPreguntas += 4;
+    }else if (hard==true) {
+        contadorPreguntas += 0.5;
+    }else {
+        contadorPreguntas++;
+    }
+    document.getElementById('contador_preguntas').innerHTML = contadorPreguntas;
+}
+
+function tiempoRecursivo(){
+   document.getElementById('CuentaAtras').innerHTML = "Te quedan "
+    +totalTiempo+" segundos para girar una carta";
+    if (totalTiempo == 0) {
+        document.getElementById('CuentaAtras').innerHTML = 
+        "Se ha acabado tu tiempo, vuelve a preguntar <br> para poder seguir volteando cartas! <br> (Te quedan "
+        +totalTiempo+" segundos)";
+    } else {
+        /* Restamos un segundo al tiempo restante */
+        totalTiempo--;
+        /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+        intervalo1 = setTimeout("tiempoRecursivo()",1000);
+/////////Comprovamos si es modo hard y el tiempo restante
+            if(totalTiempo ==2  && hard==true){
+                //Escondemos la respuesta del servidor
+                esconderRespuesta();
+            }
+    }
+}
+
+function girarCuandoDeba(){
+    if (easy==false && veryeasy==false && hard==false) {
+        clearTimeout(intervalo1);
+        //Para parar el contador, sino volvera a llamar a la funcion y se restara de 2 en 2
+        totalTiempo=20;
+        //Cuando llamemos a la funcion, el contador vuelve a estar en 20
+        tiempoRecursivo();
+    } else if (hard == true) {
+        //cambiar el contador
+        clearTimeout(intervalo1);
+        //Para parar el contador, sino volvera a llamar a la funcion y se restara de 2 en 2
+        totalTiempo=5;   
+        tiempoRecursivo();
+
+    }
+}
+//funcion para esconder la respuesta del servido que se añadira a la funcion tiempo recursivo para esconderla
+function esconderRespuesta(){
+    //Escondemos Si o no
+    document.getElementById('texto_salida').innerHTML = "";
+    // Escodemos los dos botones
+    document.getElementById("botonDeColorRojo").style.display = "none";
+    document.getElementById("botonDeColorVerde").style.display = "none";
+}
+
+////////HARD MODE 

@@ -261,10 +261,11 @@
 			<div id="divtexto">
 			<div id="comboDif">
 				<p id="parrafoElegirDificultad">Elige dificultad </p>
-				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>
+				<select id="dificultad" class="cboxdificultad" onchange='fijarDificultad()'>						
 					<option  name="dificultad" selected="selected" value="--NORMAL--">--NORMAL--</option>
 					<option  name="dificultad" value="Easy">EASY</option>
 					<option  name="dificultad" value="Very Easy">VERY EASY</option>
+					<option  name="dificultad" value="Hard">HARD MODE</option>
 				</select>
 			</div>
 			<p id="textoEasy"></p>	
